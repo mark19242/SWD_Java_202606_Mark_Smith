@@ -1,0 +1,36 @@
+# Mac generated files
+.DS_Store
+.AppleDouble
+.LSOverride
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Sensitive Information
+config.py
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Python Environment Files
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Cached Files
+**/__pycache__
+**/__pycache__/*
+
+# Individual Directory
+./Data/
+Data/
+
+# Individual Files
+*.xlsx
+file.tmp
