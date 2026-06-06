@@ -1,7 +1,0 @@
-1,apple,red
-2,banana,yellow
-3,cherry,red
-4,date,brown
-5,elderberry,black
-6,fig,purple
-7,grape,green
