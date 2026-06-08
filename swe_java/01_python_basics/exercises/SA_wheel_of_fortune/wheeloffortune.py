@@ -2,8 +2,16 @@ from pathlib import Path
 import random
 import config
 
+# =========================
+# Setup
+# =========================
+
 app_dir = Path(__file__).parent.resolve()
 
+
+# =========================
+# Functions
+# =========================
 
 def load_words():
     with open(f"{app_dir}/{config.dictionaryloc}", "r") as file:
@@ -18,6 +26,7 @@ def load_wheel():
 
     return wheel_values
 
+
 def mask_phrase(phrase):
     masked_phrase = ""
 
@@ -28,6 +37,7 @@ def mask_phrase(phrase):
             masked_phrase += "_"
 
     return masked_phrase
+
 
 def create_players():
     players = {
@@ -42,47 +52,39 @@ def create_players():
 def spin_wheel(wheel):
     return random.choice(wheel)
 
+
 def show_menu():
     print("\nChoose an action:")
     print("1. Spin Wheel")
     print("2. Buy Vowel")
     print("3. Solve Puzzle")
 
-current_player = "Player 1"
+
+# =========================
+# Main Program
+# =========================
 
 words = load_words()
 wheel = load_wheel()
-
-spin_result = spin_wheel(wheel)
-
-print(f"\nCurrent Player: {current_player}")
-print("\nWheel Spin:")
-print(spin_result)
-
-show_menu()
-phrase = random.choice(words)
-hidden_phrase = mask_phrase(phrase)
 players = create_players()
 
-spin = random.choice(wheel)
+phrase = random.choice(words)
+hidden_phrase = mask_phrase(phrase)
 
+current_player = "Player 1"
+
+print(f"\nCurrent Player: {current_player}")
 
 print("\nPlayers:")
 print(players)
 
-
-
-print("Words loaded:")
-print(words)
-
 print("\nRandom phrase:")
 print(phrase)
 
-print("\nWheel loaded:")
-print(wheel)
-
-print("\nRandom spin:")
-print(spin)
-
 print("\nHidden phrase:")
 print(hidden_phrase)
+
+show_menu()
+
+choice = input("\nEnter your choice: ")
+print(f"You selected: {choice}")
