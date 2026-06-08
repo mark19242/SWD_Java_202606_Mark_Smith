@@ -104,6 +104,16 @@ if choice == "1":
     else:
         print(f"{current_player} spun ${spin_result}.")
 
+        consonant = input("Guess a consonant: ").lower()
+
+        if consonant in phrase.lower():
+            players[current_player] += int(spin_result)
+            print(f"Correct! {current_player} earns ${spin_result}.")
+            print(players)
+
+        else:
+            print("Sorry, that consonant is not in the phrase.")
+
 elif choice == "2":
 
     print("\nBuying a vowel...")
