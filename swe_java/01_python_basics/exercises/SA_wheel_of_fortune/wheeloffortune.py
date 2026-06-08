@@ -38,18 +38,34 @@ def create_players():
 
     return players
 
-current_player = "Player 1"
 
-print(f"\nCurrent Player: {current_player}")
+def spin_wheel(wheel):
+    return random.choice(wheel)
+
+def show_menu():
+    print("\nChoose an action:")
+    print("1. Spin Wheel")
+    print("2. Buy Vowel")
+    print("3. Solve Puzzle")
+
+current_player = "Player 1"
 
 words = load_words()
 wheel = load_wheel()
 
+spin_result = spin_wheel(wheel)
+
+print(f"\nCurrent Player: {current_player}")
+print("\nWheel Spin:")
+print(spin_result)
+
+show_menu()
 phrase = random.choice(words)
 hidden_phrase = mask_phrase(phrase)
 players = create_players()
 
 spin = random.choice(wheel)
+
 
 print("\nPlayers:")
 print(players)
