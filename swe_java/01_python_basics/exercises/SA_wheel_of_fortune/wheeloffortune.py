@@ -18,11 +18,23 @@ def load_wheel():
 
     return wheel_values
 
+def mask_phrase(phrase):
+    masked_phrase = ""
+
+    for letter in phrase:
+        if letter == " ":
+            masked_phrase += " "
+        else:
+            masked_phrase += "_"
+
+    return masked_phrase
 
 words = load_words()
 wheel = load_wheel()
 
 phrase = random.choice(words)
+hidden_phrase = mask_phrase(phrase)
+
 spin = random.choice(wheel)
 
 print("Words loaded:")
@@ -36,3 +48,6 @@ print(wheel)
 
 print("\nRandom spin:")
 print(spin)
+
+print("\nHidden phrase:")
+print(hidden_phrase)
