@@ -87,4 +87,21 @@ print(hidden_phrase)
 show_menu()
 
 choice = input("\nEnter your choice: ")
-print(f"You selected: {choice}")
+if choice == "1":
+
+    spin_result = spin_wheel(wheel)
+
+    print("\nWheel Spin:")
+    print(spin_result)
+
+elif choice == "2":
+
+    print("\nBuying a vowel...")
+
+elif choice == "3":
+
+    print("\nSolving the puzzle...")
+
+else:
+
+    print("\nInvalid choice.")
