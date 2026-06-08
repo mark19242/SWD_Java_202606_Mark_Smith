@@ -59,6 +59,18 @@ def show_menu():
     print("2. Buy Vowel")
     print("3. Solve Puzzle")
 
+def update_hidden_phrase(phrase, guessed_letters):
+    updated_phrase = ""
+
+    for letter in phrase:
+        if letter == " ":
+            updated_phrase += " "
+        elif letter.lower() in guessed_letters:
+            updated_phrase += letter
+        else:
+            updated_phrase += "_"
+
+    return updated_phrase
 
 # =========================
 # Main Program
@@ -72,6 +84,7 @@ phrase = random.choice(words)
 hidden_phrase = mask_phrase(phrase)
 
 current_player = "Player 1"
+guessed_letters = set()
 
 print(f"\nCurrent Player: {current_player}")
 
@@ -107,9 +120,13 @@ if choice == "1":
         consonant = input("Guess a consonant: ").lower()
 
         if consonant in phrase.lower():
-            players[current_player] += int(spin_result)
-            print(f"Correct! {current_player} earns ${spin_result}.")
-            print(players)
+           guessed_letters.add(consonant)
+           players[current_player] += int(spin_result)
+           hidden_phrase = update_hidden_phrase(phrase, guessed_letters)
+
+           print(f"Correct! {current_player} earns ${spin_result}.")
+           print(f"Phrase: {hidden_phrase}")
+           print(players)
 
         else:
             print("Sorry, that consonant is not in the phrase.")
