@@ -158,7 +158,15 @@ elif choice == "2":
 
 elif choice == "3":
 
-    print("\nSolving the puzzle...")
+    guess = input("Guess the full phrase: ").lower()
+
+    if guess == phrase.lower():
+        print(f"Correct! {current_player} solved the puzzle!")
+        print(f"The phrase was: {phrase}")
+        print(players)
+
+    else:
+        print("Sorry, that is not correct.")
 
 else:
 
