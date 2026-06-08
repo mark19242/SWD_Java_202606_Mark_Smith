@@ -1,7 +1,7 @@
-Change
-this
-to
-be
-your
-wheel
-values
+100
+200
+300
+400
+500
+BANKRUPT
+LOSE A TURN
