@@ -133,7 +133,28 @@ if choice == "1":
 
 elif choice == "2":
 
-    print("\nBuying a vowel...")
+    if players[current_player] >= config.vowelcost:
+        vowel = input("Choose a vowel: ").lower()
+
+        if vowel in ["a", "e", "i", "o", "u"]:
+            players[current_player] -= config.vowelcost
+
+            if vowel in phrase.lower():
+                guessed_letters.add(vowel)
+                hidden_phrase = update_hidden_phrase(phrase, guessed_letters)
+
+                print("Correct vowel!")
+                print(f"Phrase: {hidden_phrase}")
+                print(players)
+
+            else:
+                print("That vowel is not in the phrase.")
+
+        else:
+            print("Invalid vowel.")
+
+    else:
+        print(f"You need at least ${config.vowelcost} to buy a vowel.")
 
 elif choice == "3":
 
