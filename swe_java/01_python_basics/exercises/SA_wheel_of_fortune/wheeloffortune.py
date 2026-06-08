@@ -29,13 +29,29 @@ def mask_phrase(phrase):
 
     return masked_phrase
 
+def create_players():
+    players = {
+        "Player 1": 0,
+        "Player 2": 0,
+        "Player 3": 0
+    }
+
+    return players
+
+
 words = load_words()
 wheel = load_wheel()
 
 phrase = random.choice(words)
 hidden_phrase = mask_phrase(phrase)
+players = create_players()
 
 spin = random.choice(wheel)
+
+print("\nPlayers:")
+print(players)
+
+
 
 print("Words loaded:")
 print(words)
