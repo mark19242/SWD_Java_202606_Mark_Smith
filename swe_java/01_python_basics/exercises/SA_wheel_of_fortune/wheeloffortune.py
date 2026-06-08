@@ -38,6 +38,9 @@ def create_players():
 
     return players
 
+current_player = "Player 1"
+
+print(f"\nCurrent Player: {current_player}")
 
 words = load_words()
 wheel = load_wheel()
