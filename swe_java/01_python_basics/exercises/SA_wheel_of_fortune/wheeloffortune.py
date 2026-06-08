@@ -94,6 +94,16 @@ if choice == "1":
     print("\nWheel Spin:")
     print(spin_result)
 
+    if spin_result == "BANKRUPT":
+        players[current_player] = 0
+        print(f"{current_player} went BANKRUPT!")
+
+    elif spin_result == "LOSE A TURN":
+        print(f"{current_player} lost a turn.")
+
+    else:
+        print(f"{current_player} spun ${spin_result}.")
+
 elif choice == "2":
 
     print("\nBuying a vowel...")
