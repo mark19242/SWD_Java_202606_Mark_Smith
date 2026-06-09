@@ -142,6 +142,10 @@ while game_running:
                 guessed_letters.add(consonant)
                 players[current_player] += int(spin_result)
                 hidden_phrase = update_hidden_phrase(phrase, guessed_letters)
+                
+                if hidden_phrase == phrase:
+                   print(f"{current_player} solved the puzzle!")
+                   game_running = False
 
                 print(f"Correct! {current_player} earns ${spin_result}.")
                 print(f"Phrase: {hidden_phrase}")
@@ -163,6 +167,10 @@ while game_running:
                 if vowel in phrase.lower():
                     guessed_letters.add(vowel)
                     hidden_phrase = update_hidden_phrase(phrase, guessed_letters)
+                    
+                    if hidden_phrase == phrase:
+                      print(f"{current_player} solved the puzzle!")
+                      game_running = False
 
                     print("Correct vowel!")
                     print(f"Phrase: {hidden_phrase}")
