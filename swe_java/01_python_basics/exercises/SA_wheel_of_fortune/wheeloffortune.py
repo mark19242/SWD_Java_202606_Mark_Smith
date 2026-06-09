@@ -72,6 +72,14 @@ def update_hidden_phrase(phrase, guessed_letters):
 
     return updated_phrase
 
+def get_next_player(player_names, current_player_index):
+    current_player_index += 1
+
+    if current_player_index >= len(player_names):
+        current_player_index = 0
+
+    return current_player_index
+
 # =========================
 # Main Program
 # =========================
@@ -83,14 +91,15 @@ players = create_players()
 phrase = random.choice(words)
 hidden_phrase = mask_phrase(phrase)
 
-current_player = "Player 1"
+player_names = list(players.keys())
+current_player_index = 0
+current_player = player_names[current_player_index]
 guessed_letters = set()
 
 print(f"\nCurrent Player: {current_player}")
 
 print("\nPlayers:")
 print(players)
-
 print("\nHidden phrase:")
 print(hidden_phrase)
 
@@ -116,9 +125,13 @@ while game_running:
         if spin_result == "BANKRUPT":
             players[current_player] = 0
             print(f"{current_player} went BANKRUPT!")
+            current_player_index = get_next_player(player_names, current_player_index)
+            current_player = player_names[current_player_index]
 
         elif spin_result == "LOSE A TURN":
             print(f"{current_player} lost a turn.")
+            current_player_index = get_next_player(player_names, current_player_index)
+            current_player = player_names[current_player_index]
 
         else:
             print(f"{current_player} spun ${spin_result}.")
@@ -136,6 +149,8 @@ while game_running:
 
             else:
                 print("Sorry, that consonant is not in the phrase.")
+                current_player_index = get_next_player(player_names, current_player_index)
+                current_player = player_names[current_player_index]
 
     elif choice == "2":
 
@@ -155,12 +170,18 @@ while game_running:
 
                 else:
                     print("That vowel is not in the phrase.")
+                    current_player_index = get_next_player(player_names, current_player_index)
+                    current_player = player_names[current_player_index]
 
             else:
                 print("Invalid vowel.")
+                current_player_index = get_next_player(player_names, current_player_index)
+                current_player = player_names[current_player_index]
 
         else:
             print(f"You need at least ${config.vowelcost} to buy a vowel.")
+            current_player_index = get_next_player(player_names, current_player_index)
+            current_player = player_names[current_player_index]
 
     elif choice == "3":
 
@@ -173,6 +194,8 @@ while game_running:
 
         else:
             print("Sorry, that is not correct.")
+            current_player_index = get_next_player(player_names, current_player_index)
+            current_player = player_names[current_player_index]
 
     else:
         print("\nInvalid choice.")
