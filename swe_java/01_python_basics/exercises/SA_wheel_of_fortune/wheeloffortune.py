@@ -91,83 +91,88 @@ print(f"\nCurrent Player: {current_player}")
 print("\nPlayers:")
 print(players)
 
-print("\nRandom phrase:")
-print(phrase)
-
 print("\nHidden phrase:")
 print(hidden_phrase)
 
-show_menu()
+game_running = True
 
-choice = input("\nEnter your choice: ")
-if choice == "1":
+while game_running:
 
-    spin_result = spin_wheel(wheel)
+    print(f"\nCurrent Player: {current_player}")
+    print(f"Phrase: {hidden_phrase}")
+    print(players)
 
-    print("\nWheel Spin:")
-    print(spin_result)
+    show_menu()
 
-    if spin_result == "BANKRUPT":
-        players[current_player] = 0
-        print(f"{current_player} went BANKRUPT!")
+    choice = input("\nEnter your choice: ")
 
-    elif spin_result == "LOSE A TURN":
-        print(f"{current_player} lost a turn.")
+    if choice == "1":
 
-    else:
-        print(f"{current_player} spun ${spin_result}.")
+        spin_result = spin_wheel(wheel)
 
-        consonant = input("Guess a consonant: ").lower()
+        print("\nWheel Spin:")
+        print(spin_result)
 
-        if consonant in phrase.lower():
-           guessed_letters.add(consonant)
-           players[current_player] += int(spin_result)
-           hidden_phrase = update_hidden_phrase(phrase, guessed_letters)
+        if spin_result == "BANKRUPT":
+            players[current_player] = 0
+            print(f"{current_player} went BANKRUPT!")
 
-           print(f"Correct! {current_player} earns ${spin_result}.")
-           print(f"Phrase: {hidden_phrase}")
-           print(players)
+        elif spin_result == "LOSE A TURN":
+            print(f"{current_player} lost a turn.")
 
         else:
-            print("Sorry, that consonant is not in the phrase.")
+            print(f"{current_player} spun ${spin_result}.")
 
-elif choice == "2":
+            consonant = input("Guess a consonant: ").lower()
 
-    if players[current_player] >= config.vowelcost:
-        vowel = input("Choose a vowel: ").lower()
-
-        if vowel in ["a", "e", "i", "o", "u"]:
-            players[current_player] -= config.vowelcost
-
-            if vowel in phrase.lower():
-                guessed_letters.add(vowel)
+            if consonant in phrase.lower():
+                guessed_letters.add(consonant)
+                players[current_player] += int(spin_result)
                 hidden_phrase = update_hidden_phrase(phrase, guessed_letters)
 
-                print("Correct vowel!")
+                print(f"Correct! {current_player} earns ${spin_result}.")
                 print(f"Phrase: {hidden_phrase}")
                 print(players)
 
             else:
-                print("That vowel is not in the phrase.")
+                print("Sorry, that consonant is not in the phrase.")
+
+    elif choice == "2":
+
+        if players[current_player] >= config.vowelcost:
+            vowel = input("Choose a vowel: ").lower()
+
+            if vowel in ["a", "e", "i", "o", "u"]:
+                players[current_player] -= config.vowelcost
+
+                if vowel in phrase.lower():
+                    guessed_letters.add(vowel)
+                    hidden_phrase = update_hidden_phrase(phrase, guessed_letters)
+
+                    print("Correct vowel!")
+                    print(f"Phrase: {hidden_phrase}")
+                    print(players)
+
+                else:
+                    print("That vowel is not in the phrase.")
+
+            else:
+                print("Invalid vowel.")
 
         else:
-            print("Invalid vowel.")
+            print(f"You need at least ${config.vowelcost} to buy a vowel.")
+
+    elif choice == "3":
+
+        guess = input("Guess the full phrase: ").lower()
+
+        if guess == phrase.lower():
+            print(f"Correct! {current_player} solved the puzzle!")
+            print(f"The phrase was: {phrase}")
+            game_running = False
+
+        else:
+            print("Sorry, that is not correct.")
 
     else:
-        print(f"You need at least ${config.vowelcost} to buy a vowel.")
-
-elif choice == "3":
-
-    guess = input("Guess the full phrase: ").lower()
-
-    if guess == phrase.lower():
-        print(f"Correct! {current_player} solved the puzzle!")
-        print(f"The phrase was: {phrase}")
-        print(players)
-
-    else:
-        print("Sorry, that is not correct.")
-
-else:
-
-    print("\nInvalid choice.")
+        print("\nInvalid choice.")
