@@ -104,6 +104,7 @@ print("\nHidden phrase:")
 print(hidden_phrase)
 
 game_running = True
+round_number = 1
 
 while game_running:
 
@@ -144,9 +145,19 @@ while game_running:
                 hidden_phrase = update_hidden_phrase(phrase, guessed_letters)
                 
                 if hidden_phrase == phrase:
-                   print(f"{current_player} solved the puzzle!")
-                   game_running = False
+                    print(f"{current_player} solved the puzzle!")
+                    print(f"{current_player}'s score: ${players[current_player]}")
 
+                    round_number += 1
+
+                    if round_number > 2:
+                        game_running = False
+                    else:
+                        phrase = random.choice(words)
+                        hidden_phrase = mask_phrase(phrase)
+                        guessed_letters = set()
+                        print(f"\nStarting Round {round_number}")
+                
                 print(f"Correct! {current_player} earns ${spin_result}.")
                 print(f"Phrase: {hidden_phrase}")
                 print(players)
@@ -198,7 +209,18 @@ while game_running:
         if guess == phrase.lower():
             print(f"Correct! {current_player} solved the puzzle!")
             print(f"The phrase was: {phrase}")
-            game_running = False
+            print(f"{current_player}'s score: ${players[current_player]}")
+
+            round_number += 1
+
+            if round_number > 2:
+                game_running = False
+            else:
+                phrase = random.choice(words)
+                hidden_phrase = mask_phrase(phrase)
+                guessed_letters = set()
+
+                print(f"\nStarting Round {round_number}")
 
         else:
             print("Sorry, that is not correct.")
