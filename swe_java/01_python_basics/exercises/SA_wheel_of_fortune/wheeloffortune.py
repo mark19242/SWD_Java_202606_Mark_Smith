@@ -180,8 +180,18 @@ while game_running:
                     hidden_phrase = update_hidden_phrase(phrase, guessed_letters)
                     
                     if hidden_phrase == phrase:
-                      print(f"{current_player} solved the puzzle!")
-                      game_running = False
+                        print(f"{current_player} solved the puzzle!")
+                        print(f"{current_player}'s score: ${players[current_player]}")
+
+                        round_number += 1
+
+                        if round_number > 2:
+                            game_running = False
+                        else:
+                            phrase = random.choice(words)
+                            hidden_phrase = mask_phrase(phrase)
+                            guessed_letters = set()
+                            print(f"\nStarting Round {round_number}")
 
                     print("Correct vowel!")
                     print(f"Phrase: {hidden_phrase}")
