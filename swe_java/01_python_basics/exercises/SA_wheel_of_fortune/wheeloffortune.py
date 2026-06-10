@@ -239,3 +239,14 @@ while game_running:
 
     else:
         print("\nInvalid choice.")
+
+# End of normal rounds
+
+print("\nNormal rounds are complete.")
+print("Final Scores:")
+print(players)
+
+top_player = max(players, key=players.get)
+
+print(f"\n{top_player} advances to the final round!")
+print("Final round coming soon...")
