@@ -80,6 +80,37 @@ def get_next_player(player_names, current_player_index):
 
     return current_player_index
 
+def play_final_round(top_player, words):
+    print("\n===== FINAL ROUND =====")
+    print(f"{top_player} is playing the final round!")
+
+    final_phrase = random.choice(words)
+
+    final_guessed_letters = set(["r", "s", "t", "l", "n", "e"])
+
+    final_hidden_phrase = update_hidden_phrase(final_phrase, final_guessed_letters)
+
+    print(f"\nPhrase: {final_hidden_phrase}")
+
+    print("\nChoose 3 consonants and 1 vowel.")
+    extra_letters = input("Enter your letters: ").lower()
+
+    for letter in extra_letters:
+        final_guessed_letters.add(letter)
+
+    final_hidden_phrase = update_hidden_phrase(final_phrase, final_guessed_letters)
+
+    print(f"\nUpdated Phrase: {final_hidden_phrase}")
+
+    final_guess = input("Final guess: ").lower()
+
+    if final_guess == final_phrase.lower():
+        print(f"Correct! {top_player} wins the final prize!")
+        print(f"Prize: ${config.finalprize}")
+    else:
+        print("Sorry, that is not correct.")
+        print(f"The phrase was: {final_phrase}")
+
 # =========================
 # Main Program
 # =========================
@@ -249,4 +280,4 @@ print(players)
 top_player = max(players, key=players.get)
 
 print(f"\n{top_player} advances to the final round!")
-print("Final round coming soon...")
+play_final_round(top_player, words)
