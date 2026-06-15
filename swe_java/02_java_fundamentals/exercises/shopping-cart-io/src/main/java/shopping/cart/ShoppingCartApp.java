@@ -130,7 +130,7 @@ public class ShoppingCartApp {
             System.out.println(method);
         }
 
-        console.close();
+
     }
 
     // =========================
