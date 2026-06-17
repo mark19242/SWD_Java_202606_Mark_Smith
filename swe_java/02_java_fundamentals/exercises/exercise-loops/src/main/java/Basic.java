@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Basic {
 
-    public static void main(String[] args) {
+    static void main() {
 
         Scanner console = new Scanner(System.in);
 
