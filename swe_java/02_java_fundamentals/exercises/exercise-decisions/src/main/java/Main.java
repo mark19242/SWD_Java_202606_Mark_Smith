@@ -181,7 +181,6 @@ public class Main {
 
         System.out.println("\nThank you for playing!");
 
-        // Close Scanner to prevent resource leaks.
-        console.close();
+
     }
 }
