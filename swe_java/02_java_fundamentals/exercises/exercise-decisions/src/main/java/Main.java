@@ -38,7 +38,7 @@ public class Main {
 
         // Learned about equalsIgnoreCase().
         // This allows the player to type:
-        // yes, Yes, YES, yEs, etc.
+        // yes, Yes, YES, yEs, etc...
         // without causing the program to fail.
 
         if (enterChoice.equalsIgnoreCase("yes")) {
