@@ -97,5 +97,32 @@ public class App {
 
         // TODO Part 4: Advanced Challenges
 
+        // Problem: Shift Elements in an Array
+
+        int[] shiftNumbers = {1, 2, 3, 4, 5};
+
+        // I know I need to move the first number to the end,
+        // so I tried saving the first value first.
+        int firstNumber = shiftNumbers[0];
+
+        // I was trying to shift each number one spot to the left,
+        // but I got confused with the indexes here.
+        for (int i = 0; i < shiftNumbers.length; i++) {
+
+            // This was my attempt to move the next value into the current spot.
+            // The problem is when i gets to the last index,
+            // i + 1 goes outside the array.
+            shiftNumbers[i] = shiftNumbers[i + 1];
+        }
+
+        // I know the first number is supposed to go at the end,
+        // but the loop above crashes before this line can really work.
+        shiftNumbers[shiftNumbers.length - 1] = firstNumber;
+
+        System.out.println("\nShifted array:");
+
+        for (int i = 0; i < shiftNumbers.length; i++) {
+            System.out.println(shiftNumbers[i]);
+        }
     }
 }
