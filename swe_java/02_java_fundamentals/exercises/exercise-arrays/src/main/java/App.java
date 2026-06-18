@@ -64,7 +64,35 @@ public class App {
 
 
         // TODO Part 3: Numeric Arrays & Calculations
+        int[] testScores = {92, 85, 77, 98, 88};
 
+        int sum = 0;
+
+        for (int i = 0; i < testScores.length; i++) {
+            sum += testScores[i];
+        }
+
+        System.out.println("\nTotal test score sum: " + sum);
+
+        int highestScore = testScores[0];
+        int lowestScore = testScores[0];
+
+        for (int i = 0; i < testScores.length; i++) {
+            if (testScores[i] > highestScore) {
+                highestScore = testScores[i];
+            }
+
+            if (testScores[i] < lowestScore) {
+                lowestScore = testScores[i];
+            }
+        }
+
+        System.out.println("Highest score: " + highestScore);
+        System.out.println("Lowest score: " + lowestScore);
+
+        double average = (double) sum / testScores.length;
+
+        System.out.println("Average score: " + average);
 
 
         // TODO Part 4: Advanced Challenges
