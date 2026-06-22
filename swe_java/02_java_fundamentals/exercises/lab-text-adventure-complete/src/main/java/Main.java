@@ -42,41 +42,45 @@ public class Main {
 
         while (keepRunning) {
 
-            String direction = promptString(mainMenu);
+            try {
 
-            int door = Integer.parseInt(direction);
+                String direction = promptString(mainMenu);
 
-            switch (door) {
-                case 1:
-                    findKeyAndDisplayRoomText(rooms, unlockedRooms, keys, door - 1);
-                    break;
+                int door = Integer.parseInt(direction);
 
-                case 2:
-                    findKeyAndDisplayRoomText(rooms, unlockedRooms, keys, door - 1);
-                    break;
+                switch (door) {
+                    case 1:
+                        findKeyAndDisplayRoomText(rooms, unlockedRooms, keys, door - 1);
+                        break;
 
-                case 3:
-                    findKeyAndDisplayRoomText(rooms, unlockedRooms, keys, door - 1);
-                    break;
+                    case 2:
+                        findKeyAndDisplayRoomText(rooms, unlockedRooms, keys, door - 1);
+                        break;
 
-                case 4:
-                    findKeyAndDisplayRoomText(rooms, unlockedRooms, keys, door - 1);
-                    break;
+                    case 3:
+                        findKeyAndDisplayRoomText(rooms, unlockedRooms, keys, door - 1);
+                        break;
 
-                case 5:
-                    if (keys[0] && keys[1] && keys[2] && keys[3]) {
-                        print(room5_unlocked);
-                        keepRunning = false;
-                    } else {
-                        print(room5_locked);
-                    }
-                    break;
+                    case 4:
+                        findKeyAndDisplayRoomText(rooms, unlockedRooms, keys, door - 1);
+                        break;
 
-                default:
-                    print("Unable to find the door you are looking for");
+                    case 5:
+                        if (keys[0] && keys[1] && keys[2] && keys[3]) {
+                            print(room5_unlocked);
+                            keepRunning = false;
+                        } else {
+                            print(room5_locked);
+                        }
+                        break;
+
+                    default:
+                        print("Unable to find the door you are looking for");
+                }
+            } catch (NumberFormatException e) {
+                print("Invalid menu option. Please try again.");
             }
         }
-
         print("\nBye, " + name + "!");
     }
 
