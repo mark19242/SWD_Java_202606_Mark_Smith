@@ -29,7 +29,7 @@ public class StorageLockerApp {
             if (menuChoice.equals("1")) {
                 rentLocker(lockers);
             } else if (menuChoice.equals("2")) {
-                System.out.println("Access a Locker selected.");
+                accessLocker(inputScanner, lockers);
             } else if (menuChoice.equals("3")) {
                 System.out.println("Release a Locker selected.");
             } else {
@@ -52,6 +52,27 @@ public class StorageLockerApp {
             System.out.println("Locker rented successfully.");
             System.out.println("Locker Number: " + (lockerIndex + 1));
             System.out.println("PIN: " + pin);
+        }
+    }
+
+    private static void accessLocker(Scanner inputScanner, String[] lockers) {
+
+        System.out.print("Enter locker number: ");
+        int lockerNumber = Integer.parseInt(inputScanner.nextLine());
+
+        System.out.print("Enter PIN: ");
+        String pin = inputScanner.nextLine();
+
+        int lockerIndex = lockerNumber - 1;
+
+        if (lockerIndex < 0 || lockerIndex >= lockers.length) {
+            System.out.println("Invalid locker number.");
+        } else if (lockers[lockerIndex] == null) {
+            System.out.println("That locker is currently available.");
+        } else if (!lockers[lockerIndex].equals(pin)) {
+            System.out.println("Incorrect PIN.");
+        } else {
+            System.out.println("Access granted. Locker " + lockerNumber + " opened.");
         }
     }
 
