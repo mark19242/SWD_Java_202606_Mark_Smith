@@ -39,6 +39,7 @@ public class StorageLockerApp {
         }
 
     }
+
     private static void rentLocker(String[] lockers) {
 
         int lockerIndex = findNextAvailableLocker(lockers);
@@ -57,8 +58,7 @@ public class StorageLockerApp {
 
     private static void accessLocker(Scanner inputScanner, String[] lockers) {
 
-        System.out.print("Enter locker number: ");
-        int lockerNumber = Integer.parseInt(inputScanner.nextLine());
+        int lockerNumber = getLockerNumber(inputScanner);
 
         System.out.print("Enter PIN: ");
         String pin = inputScanner.nextLine();
@@ -78,8 +78,7 @@ public class StorageLockerApp {
 
     private static void releaseLocker(Scanner inputScanner, String[] lockers) {
 
-        System.out.print("Enter locker number: ");
-        int lockerNumber = Integer.parseInt(inputScanner.nextLine());
+        int lockerNumber = getLockerNumber(inputScanner);
 
         System.out.print("Enter PIN: ");
         String pin = inputScanner.nextLine();
@@ -121,5 +120,16 @@ public class StorageLockerApp {
         int randomNumber = (int) (Math.random() * 10000);
 
         return String.format("%04d", randomNumber);
+    }
+
+    private static int getLockerNumber(Scanner inputScanner) {
+
+        try {
+            System.out.print("Enter locker number: ");
+            return Integer.parseInt(inputScanner.nextLine());
+        } catch (NumberFormatException exception) {
+            System.out.println("Invalid input. Please enter a number.");
+            return -1;
+        }
     }
 }
