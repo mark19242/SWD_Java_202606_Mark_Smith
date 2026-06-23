@@ -27,7 +27,7 @@ public class StorageLockerApp {
             String menuChoice = inputScanner.nextLine();
 
             if (menuChoice.equals("1")) {
-                System.out.println("Rent a Locker selected.");
+                rentLocker(lockers);
             } else if (menuChoice.equals("2")) {
                 System.out.println("Access a Locker selected.");
             } else if (menuChoice.equals("3")) {
@@ -38,5 +38,38 @@ public class StorageLockerApp {
             }
         }
 
+    }
+    private static void rentLocker(String[] lockers) {
+
+        int lockerIndex = findNextAvailableLocker(lockers);
+
+        if (lockerIndex == -1) {
+            System.out.println("Sorry, there are no lockers available.");
+        } else {
+            String pin = generatePin();
+            lockers[lockerIndex] = pin;
+
+            System.out.println("Locker rented successfully.");
+            System.out.println("Locker Number: " + (lockerIndex + 1));
+            System.out.println("PIN: " + pin);
+        }
+    }
+
+    private static int findNextAvailableLocker(String[] lockers) {
+
+        for (int i = 0; i < lockers.length; i++) {
+            if (lockers[i] == null) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    private static String generatePin() {
+
+        int randomNumber = (int) (Math.random() * 10000);
+
+        return String.format("%04d", randomNumber);
     }
 }
