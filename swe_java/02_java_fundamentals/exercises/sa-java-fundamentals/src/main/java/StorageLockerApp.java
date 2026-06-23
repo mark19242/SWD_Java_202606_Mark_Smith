@@ -31,7 +31,7 @@ public class StorageLockerApp {
             } else if (menuChoice.equals("2")) {
                 accessLocker(inputScanner, lockers);
             } else if (menuChoice.equals("3")) {
-                System.out.println("Release a Locker selected.");
+                releaseLocker(inputScanner, lockers);
             } else {
                 keepRunning = false;
                 System.out.println("Program ended.");
@@ -73,6 +73,35 @@ public class StorageLockerApp {
             System.out.println("Incorrect PIN.");
         } else {
             System.out.println("Access granted. Locker " + lockerNumber + " opened.");
+        }
+    }
+
+    private static void releaseLocker(Scanner inputScanner, String[] lockers) {
+
+        System.out.print("Enter locker number: ");
+        int lockerNumber = Integer.parseInt(inputScanner.nextLine());
+
+        System.out.print("Enter PIN: ");
+        String pin = inputScanner.nextLine();
+
+        int lockerIndex = lockerNumber - 1;
+
+        if (lockerIndex < 0 || lockerIndex >= lockers.length) {
+            System.out.println("Invalid locker number.");
+        } else if (lockers[lockerIndex] == null) {
+            System.out.println("That locker is currently available.");
+        } else if (!lockers[lockerIndex].equals(pin)) {
+            System.out.println("Incorrect PIN.");
+        } else {
+            System.out.print("Are you sure you want to release this locker? (yes/no): ");
+            String confirmation = inputScanner.nextLine();
+
+            if (confirmation.equalsIgnoreCase("yes")) {
+                lockers[lockerIndex] = null;
+                System.out.println("Locker " + lockerNumber + " has been released.");
+            } else {
+                System.out.println("Release cancelled.");
+            }
         }
     }
 
