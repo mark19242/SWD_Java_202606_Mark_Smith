@@ -41,6 +41,14 @@
 - Set the locker back to `null` when the release was confirmed.
 - Tested both the confirmation and cancellation scenarios.
 
+### Input Validation
+
+- Added a helper method to safely read the locker number.
+- Used a `try/catch` block to prevent the program from crashing when invalid input was entered.
+- Returned `-1` for invalid input and displayed an appropriate error message.
+- Updated the Access and Release features to use the new helper method.
+- Tested the application with both valid and invalid user input.
+
 ## Conclusion
 
 ### Design Implementation Summary
