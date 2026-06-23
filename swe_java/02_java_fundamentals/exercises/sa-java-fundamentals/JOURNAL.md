@@ -49,8 +49,22 @@
 - Updated the Access and Release features to use the new helper method.
 - Tested the application with both valid and invalid user input.
 
+### Menu Updates
+
+- Added a helper method to determine whether all lockers are full.
+- Updated the main menu to hide the "Rent a Locker" option when no lockers are available.
+- Prevented users from selecting the Rent option after all lockers had been assigned.
+- Tested the menu to verify it updated correctly based on locker availability.
+
 ## Conclusion
 
 ### Design Implementation Summary
 
+I built a Storage Lockers application that allows a user to rent, access, and release lockers. 
+I used a `String` array to keep track of the locker PINs and created separate methods for each feature to help keep the code organized and easier to follow.
+
 ### Prototype-Building Experience and Lessons Learned
+
+This project helped me put together many of the Java concepts we have learned in class. 
+I practiced using arrays, methods, loops, `if` statements, and `try/catch` blocks in one program. 
+One thing I learned was that breaking a large project into smaller methods makes it much easier to build and debug. Overall, this assessment gave me more confidence in writing Java programs and solving problems one step at a time.
