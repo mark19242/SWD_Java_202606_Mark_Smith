@@ -14,12 +14,13 @@
 
 ## June 23, 2026
 
-- Implemented the Rent a Locker feature.
-- Created a method to find the next available locker.
-- Generated a random four-digit PIN using `String.format()` to preserve leading zeros.
-- Stored the PIN in the lockers array.
-- Displayed the assigned locker number and PIN to the user.
-- Tested the feature by renting multiple lockers.
+- Implemented the Access a Locker feature.
+- Prompted the user for a locker number and PIN.
+- Validated the locker number against the lockers array.
+- Checked that the locker was currently rented.
+- Compared the entered PIN with the stored PIN.
+- Displayed appropriate messages for successful access or invalid input.
+- Tested the feature with both valid and invalid PINs.
 
 ## Conclusion
 
