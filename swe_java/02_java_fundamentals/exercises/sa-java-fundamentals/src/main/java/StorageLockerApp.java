@@ -17,7 +17,9 @@ public class StorageLockerApp {
 
         while (keepRunning) {
             System.out.println("\nWhat would you like to do next?");
-            System.out.println("1. Rent a Locker");
+            if (!lockersAreFull(lockers)) {
+                System.out.println("1. Rent a Locker");
+            }
             System.out.println("2. Access a Locker");
             System.out.println("3. Release a Locker");
             System.out.println("---");
@@ -26,7 +28,7 @@ public class StorageLockerApp {
 
             String menuChoice = inputScanner.nextLine();
 
-            if (menuChoice.equals("1")) {
+            if (menuChoice.equals("1") && !lockersAreFull(lockers)) {
                 rentLocker(lockers);
             } else if (menuChoice.equals("2")) {
                 accessLocker(inputScanner, lockers);
@@ -113,6 +115,17 @@ public class StorageLockerApp {
         }
 
         return -1;
+    }
+
+    private static boolean lockersAreFull(String[] lockers) {
+
+        for (int i = 0; i < lockers.length; i++) {
+            if (lockers[i] == null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private static String generatePin() {
