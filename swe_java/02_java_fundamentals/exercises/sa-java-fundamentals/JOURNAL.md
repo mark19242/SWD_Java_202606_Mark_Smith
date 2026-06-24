@@ -14,8 +14,6 @@
 
 ## June 23, 2026
 
-## June 23, 2026
-
 ### Rent a Locker
 - Implemented the Rent a Locker feature.
 - Created a method to find the next available locker.
