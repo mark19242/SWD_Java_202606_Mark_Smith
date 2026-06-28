@@ -42,9 +42,10 @@ public class Main {
             };
 
             devices[i] = newDevice;
+            System.out.println();
         }
 
-        System.out.println("\nCurrent Device States");
+        System.out.println("Current Device States");
         System.out.println("=====================");
 
         for (Connectable device : devices) {
@@ -52,21 +53,11 @@ public class Main {
         }
 
         System.out.println("\nInteract with the devices");
-        System.out.println("=========================\n");
+        System.out.println("=========================");
 
         int menuChoice = 0;
 
         while (menuChoice != 5) {
-
-            System.out.println("\nSelect a device:");
-
-            for (int i = 0; i < devices.length; i++) {
-                System.out.println((i + 1) + ". " + devices[i].getName());
-            }
-
-            int deviceChoice = promptInt("Choose device 1-5: ", 1, devices.length);
-
-            Connectable selectedDevice = devices[deviceChoice - 1];
 
             System.out.println("\nDevice Menu Options:");
             System.out.println("1. Get Device Name");
@@ -76,6 +67,19 @@ public class Main {
             System.out.println("5. Quit");
 
             menuChoice = promptInt("Enter menu choice: ", 1, 5);
+
+            if (menuChoice == 5) {
+                break;
+            }
+
+            System.out.println("\nSelect a device:");
+
+            for (int i = 0; i < devices.length; i++) {
+                System.out.println((i + 1) + ". " + devices[i].getName());
+            }
+
+            int deviceChoice = promptInt("Choose device 1-5: ", 1, devices.length);
+            Connectable selectedDevice = devices[deviceChoice - 1];
 
             if (menuChoice == 1) {
 
@@ -94,7 +98,6 @@ public class Main {
             } else if (menuChoice == 4) {
 
                 printDeviceStatus(selectedDevice);
-
             }
         }
 
@@ -127,7 +130,7 @@ public class Main {
                 break;
 
             } catch (NumberFormatException ex) {
-                System.out.println("Invalid input");
+                System.out.println("Invalid input. Try again.");
             }
         }
 
