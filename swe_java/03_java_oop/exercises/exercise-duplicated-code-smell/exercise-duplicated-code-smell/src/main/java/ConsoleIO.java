@@ -25,23 +25,22 @@ public class ConsoleIO {
     }
 
     public int getIntegerInBetween(String prompt, int min, int max) {
-        boolean goodInput = false;
+
+        boolean valid = false;
         int number = -1;
 
-        while(!goodInput) {
-            writeMessage(prompt);
-            try {
-                number = Integer.parseInt(myScanner.nextLine());
-                if(number >= min && number <= max) {
-                    goodInput = true;
-                }
-                else {
-                    System.out.println("Enter a number between " + min + " and " + max);
-                }
-            } catch(Exception e) {
-                writeMessage("Input a valid number");
+        do {
+
+            number = getInteger(prompt);
+
+            if (number >= min && number <= max) {
+                valid = true;
+            } else {
+                writeMessage("Enter a number between " + min + " and " + max);
             }
-        }
+
+        } while (!valid);
+
         return number;
     }
 
@@ -50,19 +49,21 @@ public class ConsoleIO {
         return myScanner.nextLine();
     }
 
-    public String getNonNullNonEmptyString (String prompt) {
-        boolean goodInput = false;
+    public String getNonNullNonEmptyString(String prompt) {
+
+        boolean invalid = true;
         String result = null;
 
-        while(!goodInput) {
-            writeMessage(prompt);
-            result = myScanner.nextLine();
-            if(result == null || result.length() <= 0) {
+        do {
+            result = getInput(prompt);
+
+            invalid = result == null || result.isBlank();
+
+            if (invalid) {
                 writeMessage("Enter a valid response.");
-            } else {
-                goodInput = true;
             }
-        }
+
+        } while (invalid);
 
         return result;
     }
