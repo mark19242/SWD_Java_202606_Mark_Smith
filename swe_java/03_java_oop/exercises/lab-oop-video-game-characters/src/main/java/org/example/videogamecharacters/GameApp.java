@@ -3,8 +3,20 @@ package org.example.videogamecharacters;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Runs the video game character application.
+ *
+ * This class creates different types of characters and stores them
+ * in a list using the Character superclass type.
+ */
 public class GameApp {
 
+    /**
+     * Starts the program and demonstrates polymorphism by calling
+     * each character's attack method.
+     *
+     * @param args command-line arguments not used in this program
+     */
     public static void main(String[] args) {
 
         List<Character> characters = new ArrayList<>();
