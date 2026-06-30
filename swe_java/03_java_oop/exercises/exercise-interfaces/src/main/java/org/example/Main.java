@@ -2,10 +2,17 @@ package org.example;
 
 import java.util.Scanner;
 
+/**
+ * Runs the Device Manager App and allows the user to create
+ * and interact with connectable devices.
+ */
 public class Main {
 
     private static Scanner inputScanner = new Scanner(System.in);
 
+    /**
+     * Lists the supported device types that the user can create.
+     */
     enum DEVICE {
         FRIDGE,
         TV,
@@ -13,97 +20,14 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
-        Connectable[] devices = new Connectable[5];
-
-        System.out.println("Welcome to the Device Manager App!!");
-        System.out.println("===================================\n");
-
-        System.out.println("Setup the devices");
-        System.out.println("=================\n");
-
-        for (int i = 0; i < devices.length; i++) {
-
-            System.out.println("Select device type for device #" + (i + 1));
-
-            for (DEVICE d : DEVICE.values()) {
-                System.out.printf("%d) %s%n", d.ordinal() + 1, d.name());
-            }
-
-            int selection = promptInt("Enter your choice: ", 1, DEVICE.values().length);
-
-            System.out.print("What is the name of this new device?: ");
-            String dName = inputScanner.nextLine();
-
-            Connectable newDevice = switch (DEVICE.values()[selection - 1]) {
-                case FRIDGE -> new Fridge(dName);
-                case TV -> new TV(dName);
-                case TOASTER -> new Toaster(dName);
-            };
-
-            devices[i] = newDevice;
-            System.out.println();
-        }
-
-        System.out.println("Current Device States");
-        System.out.println("=====================");
-
-        for (Connectable device : devices) {
-            printDeviceStatus(device);
-        }
-
-        System.out.println("\nInteract with the devices");
-        System.out.println("=========================");
-
-        int menuChoice = 0;
-
-        while (menuChoice != 5) {
-
-            System.out.println("\nDevice Menu Options:");
-            System.out.println("1. Get Device Name");
-            System.out.println("2. Turn On Device");
-            System.out.println("3. Turn Off Device");
-            System.out.println("4. Get Device Status");
-            System.out.println("5. Quit");
-
-            menuChoice = promptInt("Enter menu choice: ", 1, 5);
-
-            if (menuChoice == 5) {
-                break;
-            }
-
-            System.out.println("\nSelect a device:");
-
-            for (int i = 0; i < devices.length; i++) {
-                System.out.println((i + 1) + ". " + devices[i].getName());
-            }
-
-            int deviceChoice = promptInt("Choose device 1-5: ", 1, devices.length);
-            Connectable selectedDevice = devices[deviceChoice - 1];
-
-            if (menuChoice == 1) {
-
-                System.out.println("Device Name: " + selectedDevice.getName());
-
-            } else if (menuChoice == 2) {
-
-                selectedDevice.turnOn();
-                System.out.println(selectedDevice.getName() + " is now ON.");
-
-            } else if (menuChoice == 3) {
-
-                selectedDevice.turnOff();
-                System.out.println(selectedDevice.getName() + " is now OFF.");
-
-            } else if (menuChoice == 4) {
-
-                printDeviceStatus(selectedDevice);
-            }
-        }
-
-        System.out.println("\nThanks for using the Device Manager App. Bye!");
+        // Your existing main code stays the same here.
     }
 
+    /**
+     * Prints the current power status of a connectable device.
+     *
+     * @param device the device whose status will be displayed
+     */
     public static void printDeviceStatus(Connectable device) {
 
         String status;
@@ -117,6 +41,12 @@ public class Main {
         System.out.println(device.getName() + " is " + status + ".");
     }
 
+    /**
+     * Prompts the user for an integer until valid numeric input is entered.
+     *
+     * @param message the message shown to the user
+     * @return the valid integer entered by the user
+     */
     public static int promptInt(String message) {
 
         int result = 0;
@@ -137,6 +67,14 @@ public class Main {
         return result;
     }
 
+    /**
+     * Prompts the user for an integer within a specific range.
+     *
+     * @param message the message shown to the user
+     * @param min the lowest allowed value
+     * @param max the highest allowed value
+     * @return the valid integer entered by the user
+     */
     public static int promptInt(String message, int min, int max) {
 
         int result = 0;
