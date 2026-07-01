@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import org.example.model.User;
+import org.example.repo.UserRepo;
 import org.example.model.Album;
 import org.example.model.Artist;
 import org.example.model.Song;
@@ -11,12 +13,12 @@ public class MainMenuController {
     private ConsoleIO io;
     private AlbumRepo albums;
     private ArtistRepo artists;
-//    private static final int CHOICE_VIEW_ALL_ALBUMS = 1;
-//    private static final int CHOICE_VIEW_ALBUMS_BY_ARTIST = 2;
-//    private static final int CHOICE_VIEW_ALBUM = 3;
-//    private static final int CHOICE_QUIT = 4;
-//    private static final int MIN_CHOICE = 1;
-//    private static final int MAX_CHOICE = 4;
+    private UserRepo users;
+
+    // Keeps track of who is currently logged in.
+    // If this is null, no user is logged in.
+    private User currentUser;
+
 
     private enum MenuChoice {
         VIEW_ALL_ALBUMS(1, "View All Albums"),
@@ -56,6 +58,7 @@ public class MainMenuController {
     public MainMenuController(MainMenuConfig config) {
         this.albums = config.getAlbums();
         this.artists = config.getArtists();
+        this.users = config.getUsers();
         this.io = config.getIo();
     }
 
