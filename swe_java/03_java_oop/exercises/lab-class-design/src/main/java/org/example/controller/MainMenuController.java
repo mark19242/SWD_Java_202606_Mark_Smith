@@ -94,7 +94,7 @@ public class MainMenuController {
         }
     }
 
-    private void doTheThing() {
+    private void viewAllAlbums() {
         // List all the albums in the repository
         Album[] discography = albums.getAllAlbums();
         if (discography.length == 0) {
