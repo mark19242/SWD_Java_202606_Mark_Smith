@@ -38,7 +38,7 @@ public class MainMenuController {
 
             switch (choice) {
                 case CHOICE_VIEW_ALL_ALBUMS:
-                    doTheThing();
+                    viewAllAlbums();
                     break;
                 case CHOICE_VIEW_ALBUMS_BY_ARTIST:
                     viewAlbumsByArtist();
