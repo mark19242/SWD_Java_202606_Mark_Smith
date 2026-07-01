@@ -11,13 +11,45 @@ public class MainMenuController {
     private ConsoleIO io;
     private AlbumRepo albums;
     private ArtistRepo artists;
-    private static final int CHOICE_VIEW_ALL_ALBUMS = 1;
-    private static final int CHOICE_VIEW_ALBUMS_BY_ARTIST = 2;
-    private static final int CHOICE_VIEW_ALBUM = 3;
-    private static final int CHOICE_QUIT = 4;
-    private static final int MIN_CHOICE = 1;
-    private static final int MAX_CHOICE = 4;
+//    private static final int CHOICE_VIEW_ALL_ALBUMS = 1;
+//    private static final int CHOICE_VIEW_ALBUMS_BY_ARTIST = 2;
+//    private static final int CHOICE_VIEW_ALBUM = 3;
+//    private static final int CHOICE_QUIT = 4;
+//    private static final int MIN_CHOICE = 1;
+//    private static final int MAX_CHOICE = 4;
 
+    private enum MenuChoice {
+        VIEW_ALL_ALBUMS(1, "View All Albums"),
+        VIEW_ALBUMS_BY_ARTIST(2, "View Albums by Artist"),
+        VIEW_ALBUM(3, "View Album Details"),
+        QUIT(4, "Quit");
+
+        private int value;
+        private String displayText;
+
+        MenuChoice(int value, String displayText) {
+            this.value = value;
+            this.displayText = displayText;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public String getDisplayText() {
+            return displayText;
+        }
+
+        public static MenuChoice fromValue(int value) {
+            for (MenuChoice choice : MenuChoice.values()) {
+                if (choice.getValue() == value) {
+                    return choice;
+                }
+            }
+
+            return null;
+        }
+    }
 
     // The controller now receives one config object instead of multiple separate dependencies.
     // This makes it easier to add more repositories later without changing the constructor every time.
@@ -37,19 +69,20 @@ public class MainMenuController {
 
         while (running) {
             printMainMenuHeader();
-            int choice = io.getIntegerInBetween("> ", MIN_CHOICE, MAX_CHOICE);
+            int choiceNumber = io.getIntegerInBetween("> ", 1, MenuChoice.values().length);
+            MenuChoice choice = MenuChoice.fromValue(choiceNumber);
 
             switch (choice) {
-                case CHOICE_VIEW_ALL_ALBUMS:
+                case VIEW_ALL_ALBUMS:
                     viewAllAlbums();
                     break;
-                case CHOICE_VIEW_ALBUMS_BY_ARTIST:
+                case VIEW_ALBUMS_BY_ARTIST:
                     viewAlbumsByArtist();
                     break;
-                case CHOICE_VIEW_ALBUM:
+                case VIEW_ALBUM:
                     viewAlbum();
                     break;
-                case CHOICE_QUIT:
+                case QUIT:
                     io.writeMessage("Goodbye!");
                     running = false;
                     break;
@@ -112,9 +145,10 @@ public class MainMenuController {
 
     public void printMainMenuHeader() {
         io.writeMessage(">>> Main Menu <<<");
-        io.writeMessage(CHOICE_VIEW_ALL_ALBUMS + "  -  View All Albums");
-        io.writeMessage(CHOICE_VIEW_ALBUMS_BY_ARTIST + "  -  View Albums by Artist");
-        io.writeMessage(CHOICE_VIEW_ALBUM + "  -  View Album Details");
-        io.writeMessage(CHOICE_QUIT + "  -  Quit");
+
+        for (MenuChoice choice : MenuChoice.values()) {
+            io.writeMessage(choice.getValue() + "  -  " + choice.getDisplayText());
+        }
     }
+
 }
