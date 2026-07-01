@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.controller.MainMenuConfig;
 import org.example.controller.MainMenuController;
 import org.example.repo.AlbumRepo;
 import org.example.repo.ArtistRepo;
@@ -19,7 +20,13 @@ public class App
         AlbumRepo albums = AlbumRepoFactory.instance();
         ArtistRepo artists = ArtistRepoFactory.instance();
 
-        MainMenuController mainMenu = new MainMenuController(io, albums, artists);
+        // Create a config object to group everything the main menu needs.
+        MainMenuConfig config = new MainMenuConfig(io, albums, artists);
+
+        // Pass the config object into the controller instead of passing each dependency separately.
+        MainMenuController mainMenu = new MainMenuController(config);
+
+        // Start the menu loop.
         mainMenu.run();
 
 

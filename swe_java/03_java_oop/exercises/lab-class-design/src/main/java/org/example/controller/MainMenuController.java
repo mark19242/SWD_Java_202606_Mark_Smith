@@ -8,9 +8,9 @@ import org.example.repo.ArtistRepo;
 import org.example.view.ConsoleIO;
 
 public class MainMenuController {
-    ConsoleIO io;
-    AlbumRepo albums;
-    ArtistRepo artists;
+    private ConsoleIO io;
+    private AlbumRepo albums;
+    private ArtistRepo artists;
     private static final int CHOICE_VIEW_ALL_ALBUMS = 1;
     private static final int CHOICE_VIEW_ALBUMS_BY_ARTIST = 2;
     private static final int CHOICE_VIEW_ALBUM = 3;
@@ -18,10 +18,13 @@ public class MainMenuController {
     private static final int MIN_CHOICE = 1;
     private static final int MAX_CHOICE = 4;
 
-    public MainMenuController(ConsoleIO io, AlbumRepo albums, ArtistRepo artists) {
-        this.albums = albums;
-        this.artists = artists;
-        this.io = io;
+
+    // The controller now receives one config object instead of multiple separate dependencies.
+    // This makes it easier to add more repositories later without changing the constructor every time.
+    public MainMenuController(MainMenuConfig config) {
+        this.albums = config.getAlbums();
+        this.artists = config.getArtists();
+        this.io = config.getIo();
     }
 
     public void run() {
