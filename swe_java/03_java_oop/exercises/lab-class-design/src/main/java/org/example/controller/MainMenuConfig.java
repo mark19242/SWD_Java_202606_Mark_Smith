@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.repo.ReviewRepo;
 import org.example.repo.AlbumRepo;
 import org.example.repo.ArtistRepo;
 import org.example.repo.UserRepo;
@@ -13,13 +14,15 @@ public class MainMenuConfig {
     private AlbumRepo albums;
     private ArtistRepo artists;
     private UserRepo users;
+    private ReviewRepo reviews;
 
-    public MainMenuConfig(ConsoleIO io, AlbumRepo albums, ArtistRepo artists, UserRepo users) {
+    public MainMenuConfig(ConsoleIO io, AlbumRepo albums, ArtistRepo artists, UserRepo users, ReviewRepo reviews) {
         // Store the dependencies so the controller can access them from one object.
         this.io = io;
         this.albums = albums;
         this.artists = artists;
         this.users = users;
+        this.reviews = reviews;
     }
 
     public ConsoleIO getIo() {
@@ -36,5 +39,9 @@ public class MainMenuConfig {
 
     public UserRepo getUsers() {
         return users;
+    }
+
+    public ReviewRepo getReviews() {
+        return reviews;
     }
 }

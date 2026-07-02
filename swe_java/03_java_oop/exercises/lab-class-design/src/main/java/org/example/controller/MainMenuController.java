@@ -8,12 +8,15 @@ import org.example.repo.AlbumRepo;
 import org.example.repo.ArtistRepo;
 import org.example.repo.UserRepo;
 import org.example.view.ConsoleIO;
+import org.example.model.Review;
+import org.example.repo.ReviewRepo;
 
 public class MainMenuController {
     private ConsoleIO io;
     private AlbumRepo albums;
     private ArtistRepo artists;
     private UserRepo users;
+    private ReviewRepo reviews;
 
     // Keeps track of the current logged-in user.
     // If this is null, nobody is logged in.
@@ -27,6 +30,7 @@ public class MainMenuController {
         VIEW_ALBUMS_BY_ARTIST(2, "View Albums by Artist"),
         VIEW_ALBUM(3, "View Album Details"),
         LOGIN_OR_LOGOUT(4, "Log In"),
+        ADD_REVIEW(5, "Add Review to Album"),
         QUIT(5, "Quit");
 
         private int value;
@@ -63,6 +67,7 @@ public class MainMenuController {
         this.albums = config.getAlbums();
         this.artists = config.getArtists();
         this.users = config.getUsers();
+        this.reviews = config.getReviews();
         this.io = config.getIo();
     }
 
@@ -97,6 +102,9 @@ public class MainMenuController {
                     break;
                 case LOGIN_OR_LOGOUT:
                     loginOrLogout();
+                    break;
+                case ADD_REVIEW:
+                    addReview();
                     break;
                 case QUIT:
                     io.writeMessage("Goodbye!");
@@ -150,6 +158,8 @@ public class MainMenuController {
         for (Song song : album.getSongs()) {
             io.writeMessage(song.getId() + ": " + song.getTitle());
         }
+
+        printAlbumReviews(album);
 
         io.writeMessage("");
     }
@@ -213,6 +223,11 @@ public class MainMenuController {
                 displayText = getLoginMenuText();
             }
 
+            // Reviews require a logged-in user, so the menu gives a hint when logged out.
+            if (choice == MenuChoice.ADD_REVIEW && currentUser == null) {
+                displayText = "Add Review to Album (Log in required)";
+            }
+
             io.writeMessage(choice.getValue() + "  -  " + displayText);
         }
     }
@@ -225,5 +240,64 @@ public class MainMenuController {
         }
 
         return "Log Out";
+    }
+
+    private void addReview() {
+        // Reviews can only be added by a logged-in user.
+        if (currentUser == null) {
+            io.writeMessage("Please log in before adding a review.");
+            return;
+        }
+
+        Album album = selectAlbum();
+
+        if (album == null) {
+            return;
+        }
+
+        String reviewText = io.getNonNullNonEmptyString("Enter your review: ");
+
+        Review review = new Review();
+        review.setAlbum(album);
+        review.setAuthor(currentUser);
+        review.setText(reviewText);
+
+        reviews.addReview(review);
+
+        io.writeMessage("Review added for: " + album.getTitle());
+    }
+
+    private Album selectAlbum() {
+        io.writeMessage(">>> Albums <<<");
+
+        for (Album album : albums.getAllAlbums()) {
+            io.writeMessage(album.getId() + "  -  " + album.getTitle() + "  -  " + album.getArtist().getName());
+        }
+
+        int albumId = io.getInteger("Select an album id: ");
+        Album album = albums.getAlbum(albumId);
+
+        if (album == null) {
+            io.writeMessage("Invalid album selected.");
+            return null;
+        }
+
+        return album;
+    }
+
+    private void printAlbumReviews(Album album) {
+        io.writeMessage("");
+        io.writeMessage(">>>> Reviews >>>>");
+
+        Review[] albumReviews = reviews.getReviewsByAlbum(album);
+
+        if (albumReviews.length == 0) {
+            io.writeMessage("No reviews have been submitted for this album yet");
+            return;
+        }
+
+        for (Review review : albumReviews) {
+            io.writeMessage(review.getText() + " - " + review.getAuthor().getName());
+        }
     }
 }

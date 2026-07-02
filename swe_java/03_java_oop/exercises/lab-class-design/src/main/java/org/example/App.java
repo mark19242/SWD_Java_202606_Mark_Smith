@@ -9,6 +9,8 @@ import org.example.repo.ArtistRepo;
 import org.example.repo.factory.AlbumRepoFactory;
 import org.example.repo.factory.ArtistRepoFactory;
 import org.example.view.ConsoleIO;
+import org.example.repo.ReviewRepo;
+import org.example.repo.factory.ReviewRepoFactory;
 
 /**
  * Hello world!
@@ -22,9 +24,10 @@ public class App
         AlbumRepo albums = AlbumRepoFactory.instance();
         ArtistRepo artists = ArtistRepoFactory.instance();
         UserRepo users = UserRepoFactory.instance();
+        ReviewRepo reviews = ReviewRepoFactory.instance();
 
         // Create a config object to group everything the main menu needs.
-        MainMenuConfig config = new MainMenuConfig(io, albums, artists, users);
+        MainMenuConfig config = new MainMenuConfig(io, albums, artists, users, reviews);
 
         // Pass the config object into the controller instead of passing each dependency separately.
         MainMenuController mainMenu = new MainMenuController(config);
