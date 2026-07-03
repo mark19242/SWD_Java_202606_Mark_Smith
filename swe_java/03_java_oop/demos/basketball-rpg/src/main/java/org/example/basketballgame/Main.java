@@ -37,7 +37,8 @@ public class Main {
             System.out.println("1. View Player Info");
             System.out.println("2. View / Equip Locker Item");
             System.out.println("3. Enter Tournament");
-            System.out.println("4. Exit Game");
+            System.out.println("4. Rest and Recover Stamina");
+            System.out.println("5. Exit Game");
             System.out.print("Choose an option: ");
 
             String choice = inputScanner.nextLine();
@@ -62,6 +63,10 @@ public class Main {
                     break;
 
                 case "4":
+                    restPlayer(player);
+                    break;
+
+                case "5":
                     keepPlaying = false;
                     System.out.println("\nThanks for playing!");
                     break;
@@ -279,6 +284,22 @@ public class Main {
         } else {
             System.out.println(selectedItem.getName() + " will stay in your locker.");
         }
+    }
+
+    /**
+     * Lets the player recover stamina between tournaments.
+     * This gives the player a way to prepare before tougher matchups.
+     *
+     * @param player the user-controlled player
+     */
+    private static void restPlayer(Player player) {
+
+        System.out.println("\nYou took time to rest and recover.");
+
+        player.restoreStamina(25);
+
+        System.out.println("Your stamina increased by 25.");
+        System.out.println("Current stamina: " + player.getStamina());
     }
 
     /**
