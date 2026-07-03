@@ -221,6 +221,7 @@ public class Main {
 
         if (playerWon) {
             System.out.println("\nYou won the tournament!");
+            player.addWin();
 
             player.earnMoney(tournament.getRewardMoney());
 
@@ -236,6 +237,8 @@ public class Main {
             return tournament.getName().equals("National 1-on-1 Tournament");
 
         } else {
+            player.addLoss();
+
             System.out.println("\nYou lost the tournament.");
             System.out.println("You lost your entry fee, but you can try again later.");
         }

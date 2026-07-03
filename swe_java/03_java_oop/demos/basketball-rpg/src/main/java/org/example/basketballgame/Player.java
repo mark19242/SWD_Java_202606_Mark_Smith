@@ -9,11 +9,12 @@ public class Player {
     private String name;
     private int money;
     private int stamina;
-
     private int shootingBoost;
     private int speedBoost;
     private int jumpBoost;
     private int defenseBoost;
+    private int wins;
+    private int losses;
 
     /**
      * Creates a new player with starting money and default stamina.
@@ -24,11 +25,12 @@ public class Player {
         this.name = name;
         this.money = 100;
         this.stamina = 100;
-
         this.shootingBoost = 0;
         this.speedBoost = 0;
         this.jumpBoost = 0;
         this.defenseBoost = 0;
+        this.wins = 0;
+        this.losses = 0;
     }
 
     public String getName() {
@@ -57,6 +59,14 @@ public class Player {
 
     public int getDefenseBoost() {
         return defenseBoost;
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public int getLosses() {
+        return losses;
     }
 
     /**
@@ -148,6 +158,20 @@ public class Player {
     }
 
     /**
+     * Adds one win to the player's record after winning a tournament.
+     */
+    public void addWin() {
+        wins++;
+    }
+
+    /**
+     * Adds one loss to the player's record after losing a tournament.
+     */
+    public void addLoss() {
+        losses++;
+    }
+
+    /**
      * Displays the player's current stats.
      */
     public void displayPlayerInfo() {
@@ -155,6 +179,8 @@ public class Player {
         System.out.println("Name: " + name);
         System.out.println("Money: $" + money);
         System.out.println("Stamina: " + stamina);
+        System.out.println("Wins: " + wins);
+        System.out.println("Losses: " + losses);
         System.out.println("Shooting Boost: " + shootingBoost);
         System.out.println("Speed Boost: " + speedBoost);
         System.out.println("Jump Boost: " + jumpBoost);
