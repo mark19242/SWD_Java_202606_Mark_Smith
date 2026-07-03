@@ -1,10 +1,11 @@
 package org.example.basketballgame;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Main starts the basketball game and connects the main classes together.
- * This version tests one tournament before I build the full tournament menu.
+ * Main starts the basketball game and controls the main menu.
+ * The player can view stats, check the locker, and enter tournaments.
  */
 public class Main {
 
@@ -15,7 +16,6 @@ public class Main {
         System.out.println("Welcome to 1-on-1 Basketball Hustle!");
         System.out.println("====================================");
 
-        // Get the player's name before creating the Player object.
         System.out.print("\nEnter your player's name: ");
         String playerName = inputScanner.nextLine();
 
@@ -27,100 +27,223 @@ public class Main {
         Locker locker = new Locker();
         Game game = new Game(inputScanner);
 
-        // Create a starter prize item that can be won from the first tournament.
-        Item prizeItem = new Item(
+        ArrayList<Tournament> tournaments = createTournaments();
+
+        boolean keepPlaying = true;
+
+        while (keepPlaying) {
+
+            System.out.println("\n--- Main Menu ---");
+            System.out.println("1. View Player Info");
+            System.out.println("2. View Locker");
+            System.out.println("3. Enter Tournament");
+            System.out.println("4. Exit Game");
+            System.out.print("Choose an option: ");
+
+            String choice = inputScanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    player.displayPlayerInfo();
+                    break;
+
+                case "2":
+                    locker.displayLockerItems();
+                    break;
+
+                case "3":
+                    boolean beatFinalBoss = chooseTournament(inputScanner, player, locker, game, tournaments);
+
+                    if (beatFinalBoss) {
+                        System.out.println("\nYou defeated the best 1-on-1 player in the nation!");
+                        System.out.println("You are now the king of 1-on-1 basketball!");
+                        keepPlaying = false;
+                    }
+                    break;
+
+                case "4":
+                    keepPlaying = false;
+                    System.out.println("\nThanks for playing!");
+                    break;
+
+                default:
+                    System.out.println("Please choose a valid menu option.");
+            }
+        }
+
+        inputScanner.close();
+    }
+
+    /**
+     * Creates the tournament list for the game.
+     *
+     * @return a list of tournaments the player can enter
+     */
+    private static ArrayList<Tournament> createTournaments() {
+
+        ArrayList<Tournament> tournaments = new ArrayList<>();
+
+        Item defensiveHeadband = new Item(
                 "Defensive Headband",
                 "Defense Gear",
                 "Improves focus and gives a small defense boost.",
-                0,
-                0,
-                0,
-                5,
-                0,
-                50
+                0, 0, 0, 5, 0, 50
         );
 
-        // Create the first opponent for the player to face.
-        Opponent opponent = new Opponent(
-                "Quick Jay",
-                "Fast driver",
-                1,
-                75
+        Item shootingSleeve = new Item(
+                "Shooting Sleeve",
+                "Sleeve",
+                "Improves shooting accuracy on jumpers and threes.",
+                8, 0, 0, 0, 0, 75
         );
 
-        // Create the first tournament using the opponent and prize item.
-        Tournament streetTournament = new Tournament(
-                "Street Tournament",
-                25,
-                75,
-                1,
-                opponent,
-                prizeItem
+        Item speedSneakers = new Item(
+                "Speed Sneakers",
+                "Sneakers",
+                "Helps the player attack the basket faster.",
+                0, 8, 0, 0, 0, 100
         );
 
-        System.out.println("\nYour player has been created.");
-        player.displayPlayerInfo();
+        Item ankleBraces = new Item(
+                "Ankle Braces",
+                "Defense Gear",
+                "Helps the player stay in front on defense.",
+                0, 0, 0, 8, 0, 125
+        );
 
-        streetTournament.displayTournamentInfo();
+        Item lockdownBadge = new Item(
+                "Lockdown Badge",
+                "Rare Defense Gear",
+                "Gives a major defensive boost.",
+                0, 0, 0, 15, 0, 300
+        );
 
-        System.out.print("\nDo you want to enter this tournament? (yes/no): ");
-        String choice = inputScanner.nextLine();
+        Opponent quickJay = new Opponent("Quick Jay", "Fast driver", 1, 75);
+        Opponent shooterSam = new Opponent("Shooter Sam", "Three-point shooter", 2, 100);
+        Opponent bigMike = new Opponent("Big Mike", "Strong inside scorer", 3, 150);
+        Opponent handlesDre = new Opponent("Handles Dre", "Elite ball handler", 5, 300);
+        Opponent clutchCarter = new Opponent("Clutch Carter", "Sub-boss all-around scorer", 8, 1000);
+        Opponent kingSupreme = new Opponent("King Supreme", "Best 1-on-1 player in the nation", 10, 0);
 
-        if (choice.equalsIgnoreCase("yes") || choice.equalsIgnoreCase("y")) {
+        tournaments.add(new Tournament("Street Tournament", 25, 75, 1, quickJay, defensiveHeadband));
+        tournaments.add(new Tournament("Local Gym Tournament", 75, 150, 2, shooterSam, shootingSleeve));
+        tournaments.add(new Tournament("City Tournament", 200, 300, 4, bigMike, speedSneakers));
+        tournaments.add(new Tournament("Elite Guard Tournament", 350, 600, 6, handlesDre, ankleBraces));
+        tournaments.add(new Tournament("State Tournament", 500, 1000, 8, clutchCarter, lockdownBadge));
+        tournaments.add(new Tournament("National 1-on-1 Tournament", 2000, 0, 10, kingSupreme, null));
 
-            if (streetTournament.canEnter(player)) {
+        return tournaments;
+    }
 
-                // Player pays the entry fee before the game starts.
-                player.spendMoney(streetTournament.getEntryFee());
-                System.out.println("\nEntry fee paid. Good luck!");
+    /**
+     * Lets the player choose a tournament from the list.
+     *
+     * @param inputScanner the Scanner used for user input
+     * @param player the user-controlled player
+     * @param locker the player's locker
+     * @param game the game object that runs the 1-on-1 matchup
+     * @param tournaments the list of available tournaments
+     * @return true if the player beats the final boss, false otherwise
+     */
+    private static boolean chooseTournament(Scanner inputScanner, Player player, Locker locker,
+                                            Game game, ArrayList<Tournament> tournaments) {
 
-                boolean playerWon = game.playOneOnOne(player, streetTournament.getOpponent());
+        System.out.println("\n--- Available Tournaments ---");
 
-                if (playerWon) {
-                    System.out.println("\nYou won the tournament!");
+        for (int i = 0; i < tournaments.size(); i++) {
+            Tournament tournament = tournaments.get(i);
 
-                    player.earnMoney(streetTournament.getRewardMoney());
-
-                    Item wonItem = streetTournament.getPrizeItem();
-                    locker.addItem(wonItem);
-
-                    System.out.println("You earned $" + streetTournament.getRewardMoney() + ".");
-                    System.out.println("Prize item added to your locker.");
-
-                    // Let the player decide if they want to use the prize item right away.
-                    System.out.print("\nDo you want to equip " + wonItem.getName() + "? (yes/no): ");
-                    String equipChoice = inputScanner.nextLine();
-
-                    if (equipChoice.equalsIgnoreCase("yes") || equipChoice.equalsIgnoreCase("y")) {
-
-                        player.equipItem(wonItem);
-
-                        // Remove the item from the locker because it is now being used by the player.
-                        locker.removeItem(locker.getItems().size() - 1);
-
-                    } else {
-                        System.out.println(wonItem.getName() + " will stay in your locker.");
-                    }
-
-                } else {
-                    System.out.println("\nYou lost the tournament.");
-                    System.out.println("You lost your entry fee, but you can try again later.");
-                }
-
-            } else {
-                System.out.println("\nYou do not have enough money to enter this tournament.");
-            }
-
-        } else {
-            System.out.println("\nYou skipped the tournament.");
+            System.out.println((i + 1) + ". " + tournament.getName()
+                    + " | Entry Fee: $" + tournament.getEntryFee()
+                    + " | Reward: $" + tournament.getRewardMoney()
+                    + " | Opponent: " + tournament.getOpponent().getName());
         }
 
-        // Show the player's updated money, stamina, boosts, and locker items.
-        player.displayPlayerInfo();
-        locker.displayLockerItems();
+        System.out.print("Choose a tournament number or 0 to cancel: ");
 
-        System.out.println("\nThanks for playing!");
+        int tournamentChoice = getNumberInput(inputScanner);
 
-        inputScanner.close();
+        if (tournamentChoice == 0) {
+            System.out.println("Tournament selection canceled.");
+            return false;
+        }
+
+        if (tournamentChoice < 1 || tournamentChoice > tournaments.size()) {
+            System.out.println("Invalid tournament choice.");
+            return false;
+        }
+
+        Tournament selectedTournament = tournaments.get(tournamentChoice - 1);
+
+        selectedTournament.displayTournamentInfo();
+
+        System.out.print("\nDo you want to enter this tournament? (yes/no): ");
+        String confirmChoice = inputScanner.nextLine();
+
+        if (!confirmChoice.equalsIgnoreCase("yes") && !confirmChoice.equalsIgnoreCase("y")) {
+            System.out.println("You skipped the tournament.");
+            return false;
+        }
+
+        return playTournament(player, locker, game, selectedTournament);
+    }
+
+    /**
+     * Runs the selected tournament and handles entry fee, rewards, and prize items.
+     *
+     * @param player the user-controlled player
+     * @param locker the player's locker
+     * @param game the game object that runs the 1-on-1 matchup
+     * @param tournament the tournament being played
+     * @return true if the player wins the final tournament, false otherwise
+     */
+    private static boolean playTournament(Player player, Locker locker, Game game, Tournament tournament) {
+
+        if (!tournament.canEnter(player)) {
+            System.out.println("\nYou do not have enough money to enter this tournament.");
+            return false;
+        }
+
+        player.spendMoney(tournament.getEntryFee());
+        System.out.println("\nEntry fee paid. Good luck!");
+
+        boolean playerWon = game.playOneOnOne(player, tournament.getOpponent());
+
+        if (playerWon) {
+            System.out.println("\nYou won the tournament!");
+
+            player.earnMoney(tournament.getRewardMoney());
+
+            if (tournament.getRewardMoney() > 0) {
+                System.out.println("You earned $" + tournament.getRewardMoney() + ".");
+            }
+
+            if (tournament.getPrizeItem() != null) {
+                locker.addItem(tournament.getPrizeItem());
+                System.out.println("Prize item added to your locker.");
+            }
+
+            return tournament.getName().equals("National 1-on-1 Tournament");
+
+        } else {
+            System.out.println("\nYou lost the tournament.");
+            System.out.println("You lost your entry fee, but you can try again later.");
+        }
+
+        return false;
+    }
+
+    /**
+     * Gets a number from the user without crashing if they type letters.
+     *
+     * @param inputScanner the Scanner used for user input
+     * @return the number the user entered
+     */
+    private static int getNumberInput(Scanner inputScanner) {
+        try {
+            return Integer.parseInt(inputScanner.nextLine());
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 }
