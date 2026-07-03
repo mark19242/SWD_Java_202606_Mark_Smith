@@ -126,6 +126,28 @@ public class Player {
     }
 
     /**
+     * Applies an item's boosts to the player.
+     * This is used when the player equips power-up merchandise from the locker.
+     *
+     * @param item the item being equipped
+     */
+    public void equipItem(Item item) {
+        if (item == null) {
+            System.out.println("No item was equipped.");
+            return;
+        }
+
+        shootingBoost += item.getShootingBoost();
+        speedBoost += item.getSpeedBoost();
+        jumpBoost += item.getJumpBoost();
+        defenseBoost += item.getDefenseBoost();
+
+        restoreStamina(item.getStaminaBoost());
+
+        System.out.println(item.getName() + " has been equipped.");
+    }
+
+    /**
      * Displays the player's current stats.
      */
     public void displayPlayerInfo() {
