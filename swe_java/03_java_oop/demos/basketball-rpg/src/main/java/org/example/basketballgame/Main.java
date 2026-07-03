@@ -80,10 +80,27 @@ public class Main {
                     System.out.println("\nYou won the tournament!");
 
                     player.earnMoney(streetTournament.getRewardMoney());
-                    locker.addItem(streetTournament.getPrizeItem());
+
+                    Item wonItem = streetTournament.getPrizeItem();
+                    locker.addItem(wonItem);
 
                     System.out.println("You earned $" + streetTournament.getRewardMoney() + ".");
                     System.out.println("Prize item added to your locker.");
+
+                    // Let the player decide if they want to use the prize item right away.
+                    System.out.print("\nDo you want to equip " + wonItem.getName() + "? (yes/no): ");
+                    String equipChoice = inputScanner.nextLine();
+
+                    if (equipChoice.equalsIgnoreCase("yes") || equipChoice.equalsIgnoreCase("y")) {
+
+                        player.equipItem(wonItem);
+
+                        // Remove the item from the locker because it is now being used by the player.
+                        locker.removeItem(locker.getItems().size() - 1);
+
+                    } else {
+                        System.out.println(wonItem.getName() + " will stay in your locker.");
+                    }
 
                 } else {
                     System.out.println("\nYou lost the tournament.");
