@@ -37,8 +37,9 @@ public class Main {
             System.out.println("1. View Player Info");
             System.out.println("2. View / Equip Locker Item");
             System.out.println("3. Enter Tournament");
-            System.out.println("4. Rest and Recover Stamina");
-            System.out.println("5. Exit Game");
+            System.out.println("4. Sell Locker Item");
+            System.out.println("5. Rest and Recover Stamina");
+            System.out.println("6. Exit Game");
             System.out.print("Choose an option: ");
 
             String choice = inputScanner.nextLine();
@@ -63,10 +64,14 @@ public class Main {
                     break;
 
                 case "4":
-                    restPlayer(player);
+                    sellLockerItem(inputScanner, player, locker);
                     break;
 
                 case "5":
+                    restPlayer(player);
+                    break;
+
+                case "6":
                     keepPlaying = false;
                     System.out.println("\nThanks for playing!");
                     break;
@@ -300,6 +305,57 @@ public class Main {
 
         System.out.println("Your stamina increased by 25.");
         System.out.println("Current stamina: " + player.getStamina());
+    }
+
+    /**
+     * Lets the player sell an item from the locker for money.
+     * This gives the player another way to earn money after winning merchandise.
+     *
+     * @param inputScanner the Scanner used for user input
+     * @param player the user-controlled player
+     * @param locker the player's locker
+     */
+    private static void sellLockerItem(Scanner inputScanner, Player player, Locker locker) {
+
+        locker.displayLockerItems();
+
+        if (locker.getItems().isEmpty()) {
+            return;
+        }
+
+        System.out.print("\nChoose an item number to sell, or 0 to cancel: ");
+        int itemChoice = getNumberInput(inputScanner);
+
+        if (itemChoice == 0) {
+            System.out.println("Sell item canceled.");
+            return;
+        }
+
+        if (itemChoice < 1 || itemChoice > locker.getItems().size()) {
+            System.out.println("Invalid item choice.");
+            return;
+        }
+
+        Item selectedItem = locker.getItems().get(itemChoice - 1);
+
+        selectedItem.displayItemInfo();
+
+        System.out.print("\nDo you want to sell this item for $" + selectedItem.getValue() + "? (yes/no): ");
+        String sellChoice = inputScanner.nextLine();
+
+        if (sellChoice.equalsIgnoreCase("yes") || sellChoice.equalsIgnoreCase("y")) {
+
+            Item soldItem = locker.removeItem(itemChoice - 1);
+
+            if (soldItem != null) {
+                player.earnMoney(soldItem.getValue());
+                System.out.println("You sold " + soldItem.getName() + " for $" + soldItem.getValue() + ".");
+                System.out.println("Current money: $" + player.getMoney());
+            }
+
+        } else {
+            System.out.println(selectedItem.getName() + " will stay in your locker.");
+        }
     }
 
     /**
