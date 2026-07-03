@@ -35,7 +35,7 @@ public class Main {
 
             System.out.println("\n--- Main Menu ---");
             System.out.println("1. View Player Info");
-            System.out.println("2. View Locker");
+            System.out.println("2. View / Equip Locker Item");
             System.out.println("3. Enter Tournament");
             System.out.println("4. Exit Game");
             System.out.print("Choose an option: ");
@@ -48,7 +48,7 @@ public class Main {
                     break;
 
                 case "2":
-                    locker.displayLockerItems();
+                    manageLocker(inputScanner, player, locker);
                     break;
 
                 case "3":
@@ -231,6 +231,54 @@ public class Main {
         }
 
         return false;
+    }
+
+    /**
+     * Lets the player view locker items and equip one if they choose.
+     *
+     * @param inputScanner the Scanner used for user input
+     * @param player the user-controlled player
+     * @param locker the player's locker
+     */
+    private static void manageLocker(Scanner inputScanner, Player player, Locker locker) {
+
+        locker.displayLockerItems();
+
+        if (locker.getItems().isEmpty()) {
+            return;
+        }
+
+        System.out.print("\nChoose an item number to view, or 0 to cancel: ");
+        int itemChoice = getNumberInput(inputScanner);
+
+        if (itemChoice == 0) {
+            System.out.println("Locker menu canceled.");
+            return;
+        }
+
+        if (itemChoice < 1 || itemChoice > locker.getItems().size()) {
+            System.out.println("Invalid item choice.");
+            return;
+        }
+
+        Item selectedItem = locker.getItems().get(itemChoice - 1);
+
+        selectedItem.displayItemInfo();
+
+        System.out.print("\nDo you want to equip this item? (yes/no): ");
+        String equipChoice = inputScanner.nextLine();
+
+        if (equipChoice.equalsIgnoreCase("yes") || equipChoice.equalsIgnoreCase("y")) {
+
+            // Equipping the item applies its boosts to the player.
+            player.equipItem(selectedItem);
+
+            // Remove the item from the locker since it is now being used.
+            locker.removeItem(itemChoice - 1);
+
+        } else {
+            System.out.println(selectedItem.getName() + " will stay in your locker.");
+        }
     }
 
     /**
