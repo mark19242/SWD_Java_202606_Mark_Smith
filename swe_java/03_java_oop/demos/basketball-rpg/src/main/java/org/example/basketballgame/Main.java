@@ -39,7 +39,8 @@ public class Main {
             System.out.println("3. Enter Tournament");
             System.out.println("4. Sell Locker Item");
             System.out.println("5. Rest and Recover Stamina");
-            System.out.println("6. Exit Game");
+            System.out.println("6. View Final Boss Goal");
+            System.out.println("7. Exit Game");
             System.out.print("Choose an option: ");
 
             String choice = inputScanner.nextLine();
@@ -72,6 +73,10 @@ public class Main {
                     break;
 
                 case "6":
+                    displayFinalBossGoal(player);
+                    break;
+
+                case "7":
                     keepPlaying = false;
                     System.out.println("\nThanks for playing!");
                     break;
@@ -358,6 +363,30 @@ public class Main {
 
         } else {
             System.out.println(selectedItem.getName() + " will stay in your locker.");
+        }
+    }
+
+    /**
+     * Displays the player's progress toward entering the final boss tournament.
+     *
+     * @param player the user-controlled player
+     */
+    private static void displayFinalBossGoal(Player player) {
+
+        int finalBossEntryFee = 2000;
+        int moneyNeeded = finalBossEntryFee - player.getMoney();
+
+        System.out.println("\n--- Final Boss Goal ---");
+        System.out.println("Final Tournament: National 1-on-1 Tournament");
+        System.out.println("Final Boss: King Supreme");
+        System.out.println("Entry Fee Needed: $" + finalBossEntryFee);
+        System.out.println("Current Money: $" + player.getMoney());
+
+        if (moneyNeeded <= 0) {
+            System.out.println("You have enough money to enter the final boss tournament!");
+        } else {
+            System.out.println("Money Still Needed: $" + moneyNeeded);
+            System.out.println("Keep winning tournaments or selling locker items to reach the goal.");
         }
     }
 
