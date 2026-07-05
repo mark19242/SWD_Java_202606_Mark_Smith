@@ -40,7 +40,8 @@ public class Main {
             System.out.println("4. Sell Locker Item");
             System.out.println("5. Rest and Recover Stamina");
             System.out.println("6. View Final Boss Goal");
-            System.out.println("7. Exit Game");
+            System.out.println("7. Play Pickup Game");
+            System.out.println("8. Exit Game");
             System.out.print("Choose an option: ");
 
             String choice = inputScanner.nextLine();
@@ -77,6 +78,10 @@ public class Main {
                     break;
 
                 case "7":
+                    playPickupGame(player, game);
+                    break;
+
+                case "8":
                     keepPlaying = false;
                     System.out.println("\nThanks for playing!");
                     break;
@@ -425,6 +430,45 @@ public class Main {
         } else {
             System.out.println("Money Still Needed: $" + moneyNeeded);
             System.out.println("Keep winning tournaments or selling locker items to reach the goal.");
+        }
+    }
+
+    /**
+     * Lets the player play a free pickup game for a small money reward.
+     * This helps the player recover if they do not have enough money for tournaments.
+     *
+     * @param player the user-controlled player
+     * @param game the game object that runs the 1-on-1 matchup
+     */
+    private static void playPickupGame(Player player, Game game) {
+
+        Opponent pickupOpponent = new Opponent(
+                "Neighborhood Nick",
+                "Casual park player",
+                1,
+                25
+        );
+
+        System.out.println("\n--- Pickup Game ---");
+        System.out.println("No entry fee.");
+        System.out.println("Reward: $25");
+        System.out.println("Opponent: " + pickupOpponent.getName());
+
+        boolean playerWon = game.playOneOnOne(player, pickupOpponent);
+
+        if (playerWon) {
+            player.addWin();
+            player.earnMoney(pickupOpponent.getRewardMoney());
+
+            System.out.println("\nYou won the pickup game!");
+            System.out.println("You earned $" + pickupOpponent.getRewardMoney() + ".");
+            System.out.println("Current money: $" + player.getMoney());
+
+        } else {
+            player.addLoss();
+
+            System.out.println("\nYou lost the pickup game.");
+            System.out.println("No money lost. Run it back when you're ready.");
         }
     }
 
