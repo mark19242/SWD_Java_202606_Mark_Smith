@@ -91,12 +91,21 @@ public class Main {
 
     /**
      * Creates the tournament list for the game.
+     * The tournaments get harder as the rewards and opponents improve.
      *
      * @return a list of tournaments the player can enter
      */
     private static ArrayList<Tournament> createTournaments() {
 
         ArrayList<Tournament> tournaments = new ArrayList<>();
+
+        // Starter and low-level prize items
+        Item gatorade = new Item(
+                "Gatorade",
+                "Drink",
+                "Restores stamina after a tough matchup.",
+                0, 0, 0, 0, 20, 25
+        );
 
         Item defensiveHeadband = new Item(
                 "Defensive Headband",
@@ -110,6 +119,13 @@ public class Main {
                 "Sleeve",
                 "Improves shooting accuracy on jumpers and threes.",
                 8, 0, 0, 0, 0, 75
+        );
+
+        Item jumpSneakers = new Item(
+                "Jump Sneakers",
+                "Sneakers",
+                "Helps the player finish stronger at the rim.",
+                0, 0, 8, 0, 0, 100
         );
 
         Item speedSneakers = new Item(
@@ -126,6 +142,13 @@ public class Main {
                 0, 0, 0, 8, 0, 125
         );
 
+        Item filmStudyNotebook = new Item(
+                "Film Study Notebook",
+                "Training Item",
+                "Helps the player read opponents better on defense.",
+                0, 0, 0, 10, 0, 175
+        );
+
         Item lockdownBadge = new Item(
                 "Lockdown Badge",
                 "Rare Defense Gear",
@@ -133,18 +156,33 @@ public class Main {
                 0, 0, 0, 15, 0, 300
         );
 
+        Item proSneakers = new Item(
+                "Pro Level Sneakers",
+                "Rare Sneakers",
+                "Improves speed and jumping for tougher tournaments.",
+                0, 10, 10, 0, 0, 400
+        );
+
+        // Opponents get harder as the player moves up the tournament ladder.
         Opponent quickJay = new Opponent("Quick Jay", "Fast driver", 1, 75);
         Opponent shooterSam = new Opponent("Shooter Sam", "Three-point shooter", 2, 100);
         Opponent bigMike = new Opponent("Big Mike", "Strong inside scorer", 3, 150);
+        Opponent leftyLou = new Opponent("Lefty Lou", "Tricky left-handed scorer", 4, 200);
         Opponent handlesDre = new Opponent("Handles Dre", "Elite ball handler", 5, 300);
+        Opponent lockdownLeo = new Opponent("Lockdown Leo", "Defensive specialist", 6, 400);
+        Opponent bounceKing = new Opponent("Bounce King", "Athletic finisher and shot blocker", 7, 600);
         Opponent clutchCarter = new Opponent("Clutch Carter", "Sub-boss all-around scorer", 8, 1000);
         Opponent kingSupreme = new Opponent("King Supreme", "Best 1-on-1 player in the nation", 10, 0);
 
-        tournaments.add(new Tournament("Street Tournament", 25, 75, 1, quickJay, defensiveHeadband));
-        tournaments.add(new Tournament("Local Gym Tournament", 75, 150, 2, shooterSam, shootingSleeve));
-        tournaments.add(new Tournament("City Tournament", 200, 300, 4, bigMike, speedSneakers));
-        tournaments.add(new Tournament("Elite Guard Tournament", 350, 600, 6, handlesDre, ankleBraces));
+        tournaments.add(new Tournament("Park Run Tournament", 25, 75, 1, quickJay, gatorade));
+        tournaments.add(new Tournament("Street Tournament", 50, 100, 2, shooterSam, defensiveHeadband));
+        tournaments.add(new Tournament("Local Gym Tournament", 75, 150, 3, bigMike, shootingSleeve));
+        tournaments.add(new Tournament("Southside Classic", 125, 225, 4, leftyLou, jumpSneakers));
+        tournaments.add(new Tournament("City Tournament", 200, 350, 5, handlesDre, speedSneakers));
+        tournaments.add(new Tournament("Lockdown Challenge", 300, 500, 6, lockdownLeo, ankleBraces));
+        tournaments.add(new Tournament("Above The Rim Tournament", 400, 700, 7, bounceKing, filmStudyNotebook));
         tournaments.add(new Tournament("State Tournament", 500, 1000, 8, clutchCarter, lockdownBadge));
+        tournaments.add(new Tournament("Pro-Am Invitational", 750, 1400, 9, clutchCarter, proSneakers));
         tournaments.add(new Tournament("National 1-on-1 Tournament", 2000, 0, 10, kingSupreme, null));
 
         return tournaments;
