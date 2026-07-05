@@ -332,10 +332,12 @@ public class Main {
         if (equipChoice.equalsIgnoreCase("yes") || equipChoice.equalsIgnoreCase("y")) {
 
             // Equipping the item applies its boosts to the player.
-            player.equipItem(selectedItem);
+            boolean itemWasUsed = player.equipItem(selectedItem);
 
-            // Remove the item from the locker since it is now being used.
-            locker.removeItem(itemChoice - 1);
+            if (itemWasUsed) {
+                // Remove the item only if it was successfully equipped or consumed.
+                locker.removeItem(itemChoice - 1);
+            }
 
         } else {
             System.out.println(selectedItem.getName() + " will stay in your locker.");

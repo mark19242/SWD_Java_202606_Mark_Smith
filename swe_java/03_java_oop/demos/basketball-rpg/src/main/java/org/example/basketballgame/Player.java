@@ -15,6 +15,10 @@ public class Player {
     private int defenseBoost;
     private int wins;
     private int losses;
+    private String equippedSneakers;
+    private String equippedSleeve;
+    private String equippedDefenseItem;
+    private String equippedTrainingItem;
 
     /**
      * Creates a new player with starting money and default stamina.
@@ -31,6 +35,10 @@ public class Player {
         this.defenseBoost = 0;
         this.wins = 0;
         this.losses = 0;
+        this.equippedSneakers = "None";
+        this.equippedSleeve = "None";
+        this.equippedDefenseItem = "None";
+        this.equippedTrainingItem = "None";
     }
 
     public String getName() {
@@ -136,25 +144,71 @@ public class Player {
     }
 
     /**
-     * Applies an item's boosts to the player.
-     * This is used when the player equips power-up merchandise from the locker.
+     * Equips or uses an item from the player's locker.
+     * Gear items are equipped into slots, while drinks are consumed right away.
      *
-     * @param item the item being equipped
+     * @param item the item being equipped or used
+     * @return true if the item was equipped or used, false if it could not be used
      */
-    public void equipItem(Item item) {
+    public boolean equipItem(Item item) {
         if (item == null) {
-            System.out.println("No item was equipped.");
-            return;
+            System.out.println("No item was selected.");
+            return false;
+        }
+
+        String itemType = item.getItemType();
+
+        if (itemType.equalsIgnoreCase("Drink")) {
+            restoreStamina(item.getStaminaBoost());
+            System.out.println(item.getName() + " was used.");
+            return true;
+        }
+
+        if (itemType.contains("Sneakers")) {
+            if (!equippedSneakers.equals("None")) {
+                System.out.println("You already have sneakers equipped.");
+                return false;
+            }
+
+            equippedSneakers = item.getName();
+
+        } else if (itemType.equalsIgnoreCase("Sleeve")) {
+            if (!equippedSleeve.equals("None")) {
+                System.out.println("You already have a sleeve equipped.");
+                return false;
+            }
+
+            equippedSleeve = item.getName();
+
+        } else if (itemType.contains("Defense Gear")) {
+            if (!equippedDefenseItem.equals("None")) {
+                System.out.println("You already have a defensive item equipped.");
+                return false;
+            }
+
+            equippedDefenseItem = item.getName();
+
+        } else if (itemType.equalsIgnoreCase("Training Item")) {
+            if (!equippedTrainingItem.equals("None")) {
+                System.out.println("You already have a training item equipped.");
+                return false;
+            }
+
+            equippedTrainingItem = item.getName();
+
+        } else {
+            System.out.println("This item cannot be equipped right now.");
+            return false;
         }
 
         shootingBoost += item.getShootingBoost();
         speedBoost += item.getSpeedBoost();
         jumpBoost += item.getJumpBoost();
         defenseBoost += item.getDefenseBoost();
-
         restoreStamina(item.getStaminaBoost());
 
         System.out.println(item.getName() + " has been equipped.");
+        return true;
     }
 
     /**
@@ -185,5 +239,9 @@ public class Player {
         System.out.println("Speed Boost: " + speedBoost);
         System.out.println("Jump Boost: " + jumpBoost);
         System.out.println("Defense Boost: " + defenseBoost);
+        System.out.println("Equipped Sneakers: " + equippedSneakers);
+        System.out.println("Equipped Sleeve: " + equippedSleeve);
+        System.out.println("Equipped Defense Item: " + equippedDefenseItem);
+        System.out.println("Equipped Training Item: " + equippedTrainingItem);
     }
 }
