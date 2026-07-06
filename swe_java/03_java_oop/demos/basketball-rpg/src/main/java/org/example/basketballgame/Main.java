@@ -14,8 +14,7 @@ public class Main {
 
         Scanner inputScanner = new Scanner(System.in);
 
-        System.out.println("Welcome to 1-on-1 Basketball Hustle!");
-        System.out.println("====================================");
+        displayTitleScreen();
 
         System.out.print("\nEnter your player's name: ");
         String playerName = inputScanner.nextLine();
@@ -809,6 +808,34 @@ public class Main {
             System.out.println("Low stamina lowers your scoring chance.");
             System.out.println("Consider resting before tougher games.");
         }
+    }
+
+    /**
+     * Displays the opening title screen for the basketball game.
+     * This gives the console game a more polished intro.
+     */
+    private static void displayTitleScreen() {
+
+        System.out.println("=================================================");
+        System.out.println("              1-ON-1 BASKETBALL HUSTLE");
+        System.out.println("=================================================");
+        System.out.println();
+        System.out.println("                 _________");
+        System.out.println("                /         \\");
+        System.out.println("               /  O     O  \\");
+        System.out.println("              |     ___     |");
+        System.out.println("              |    /___\\    |");
+        System.out.println("               \\           /");
+        System.out.println("                \\_________/");
+        System.out.println();
+        System.out.println("                   🏀  VS  🏀");
+        System.out.println();
+        System.out.println("          Win tournaments. Earn money.");
+        System.out.println("          Collect gear. Beat King Supreme.");
+        System.out.println("=================================================");
+        System.out.println();
+
+        ConsoleEffects.pause(1000);
     }
 
     /**
