@@ -1,6 +1,7 @@
 package org.example.basketballgame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -28,6 +29,7 @@ public class Main {
         Game game = new Game(inputScanner);
 
         ArrayList<Tournament> tournaments = createTournaments();
+        HashMap<String, String> scoutingReports = createScoutingReports();
 
         boolean keepPlaying = true;
 
@@ -42,7 +44,8 @@ public class Main {
             System.out.println("6. View Final Boss Goal");
             System.out.println("7. Play Pickup Game");
             System.out.println("8. View Trophy Case");
-            System.out.println("9. Exit Game");
+            System.out.println("9. View Scouting Reports");
+            System.out.println("10. Exit Game");
             System.out.print("Choose an option: ");
 
             String choice = inputScanner.nextLine();
@@ -87,6 +90,10 @@ public class Main {
                     break;
 
                 case "9":
+                    displayScoutingReports(scoutingReports);
+                    break;
+
+                case "10":
                     keepPlaying = false;
                     System.out.println("\nThanks for playing!");
                     break;
@@ -478,6 +485,43 @@ public class Main {
 
             System.out.println("\nYou lost the pickup game.");
             System.out.println("No money lost. Run it back when you're ready.");
+        }
+    }
+
+    /**
+     * Creates scouting reports for the opponents.
+     * A HashMap connects each opponent's name to a helpful gameplay tip.
+     *
+     * @return a HashMap of opponent names and scouting tips
+     */
+    private static HashMap<String, String> createScoutingReports() {
+
+        HashMap<String, String> scoutingReports = new HashMap<>();
+
+        scoutingReports.put("Quick Jay", "He likes to drive. Sag off to protect the basket.");
+        scoutingReports.put("Shooter Sam", "He looks for threes. Play tight defense.");
+        scoutingReports.put("Big Mike", "He attacks inside. Sag off and make him shoot.");
+        scoutingReports.put("Lefty Lou", "He is tricky with pull-up jumpers. Stay balanced on defense.");
+        scoutingReports.put("Handles Dre", "He has strong handles. Going for steals is risky.");
+        scoutingReports.put("Lockdown Leo", "He is tough on defense. Use your best power-ups before playing him.");
+        scoutingReports.put("Bounce King", "He is athletic at the rim. Defensive gear helps against him.");
+        scoutingReports.put("Clutch Carter", "He is the sub-boss. He does a little bit of everything well.");
+        scoutingReports.put("King Supreme", "Final boss. Rest, equip your best gear, and bring enough money.");
+
+        return scoutingReports;
+    }
+
+    /**
+     * Displays all scouting reports to help the player prepare for matchups.
+     *
+     * @param scoutingReports the HashMap containing opponent names and tips
+     */
+    private static void displayScoutingReports(HashMap<String, String> scoutingReports) {
+
+        System.out.println("\n--- Scouting Reports ---");
+
+        for (String opponentName : scoutingReports.keySet()) {
+            System.out.println(opponentName + ": " + scoutingReports.get(opponentName));
         }
     }
 
