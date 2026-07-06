@@ -57,6 +57,22 @@ public class Player {
         return stamina;
     }
 
+    public int getShootingBoost() {
+        return shootingBoost;
+    }
+
+    public int getSpeedBoost() {
+        return speedBoost;
+    }
+
+    public int getJumpBoost() {
+        return jumpBoost;
+    }
+
+    public int getDefenseBoost() {
+        return defenseBoost;
+    }
+
     public int getMaxBoost() {
         return maxBoost;
     }
