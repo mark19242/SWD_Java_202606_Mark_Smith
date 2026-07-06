@@ -1,4 +1,5 @@
 package org.example.basketballgame;
+import java.util.HashSet;
 
 /**
  * The Player class represents the user-controlled basketball player.
@@ -19,6 +20,7 @@ public class Player {
     private String equippedSleeve;
     private String equippedDefenseItem;
     private String equippedTrainingItem;
+    private HashSet<String> completedTournaments;
 
     /**
      * Creates a new player with starting money and default stamina.
@@ -39,6 +41,7 @@ public class Player {
         this.equippedSleeve = "None";
         this.equippedDefenseItem = "None";
         this.equippedTrainingItem = "None";
+        this.completedTournaments = new HashSet<>();
     }
 
     public String getName() {
@@ -223,6 +226,36 @@ public class Player {
      */
     public void addLoss() {
         losses++;
+    }
+
+    /**
+     * Adds a tournament win to the player's trophy case.
+     * A HashSet keeps the same tournament from being listed more than once.
+     *
+     * @param tournamentName the name of the tournament the player won
+     */
+    public void addCompletedTournament(String tournamentName) {
+        if (completedTournaments.add(tournamentName)) {
+            System.out.println(tournamentName + " was added to your trophy case.");
+        } else {
+            System.out.println("You have already won " + tournamentName + " before.");
+        }
+    }
+
+    /**
+     * Displays the tournaments the player has won.
+     */
+    public void displayTrophyCase() {
+        System.out.println("\n--- Trophy Case ---");
+
+        if (completedTournaments.isEmpty()) {
+            System.out.println("You have not won any tournaments yet.");
+            return;
+        }
+
+        for (String tournamentName : completedTournaments) {
+            System.out.println("- " + tournamentName);
+        }
     }
 
     /**

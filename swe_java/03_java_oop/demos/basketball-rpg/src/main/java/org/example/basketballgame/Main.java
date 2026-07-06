@@ -41,7 +41,8 @@ public class Main {
             System.out.println("5. Rest and Recover Stamina");
             System.out.println("6. View Final Boss Goal");
             System.out.println("7. Play Pickup Game");
-            System.out.println("8. Exit Game");
+            System.out.println("8. View Trophy Case");
+            System.out.println("9. Exit Game");
             System.out.print("Choose an option: ");
 
             String choice = inputScanner.nextLine();
@@ -82,6 +83,10 @@ public class Main {
                     break;
 
                 case "8":
+                    player.displayTrophyCase();
+                    break;
+
+                case "9":
                     keepPlaying = false;
                     System.out.println("\nThanks for playing!");
                     break;
@@ -269,7 +274,9 @@ public class Main {
 
         if (playerWon) {
             System.out.println("\nYou won the tournament!");
+
             player.addWin();
+            player.addCompletedTournament(tournament.getName());
 
             player.earnMoney(tournament.getRewardMoney());
 
