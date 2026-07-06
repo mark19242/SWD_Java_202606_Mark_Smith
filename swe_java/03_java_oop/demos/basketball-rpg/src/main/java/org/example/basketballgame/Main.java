@@ -47,7 +47,8 @@ public class Main {
             System.out.println("8. View Trophy Case");
             System.out.println("9. View Scouting Reports");
             System.out.println("10. Visit Item Shop");
-            System.out.println("11. Exit Game");
+            System.out.println("11. Practice Facility");
+            System.out.println("12. Exit Game");
             System.out.print("Choose an option: ");
 
             String choice = inputScanner.nextLine();
@@ -99,6 +100,10 @@ public class Main {
                     break;
 
                 case "11":
+                    visitPracticeFacility(inputScanner, player);
+                    break;
+
+                case "12":
                     keepPlaying = false;
                     System.out.println("\nThanks for playing!");
                     break;
@@ -501,6 +506,74 @@ public class Main {
         } else {
             System.out.println("Sub-Boss Requirement: Win the Pro-Am Invitational");
         }
+    }
+
+    /**
+     * Lets the player pay for a workout to improve one skill area.
+     * This gives the player another way to prepare for harder tournaments.
+     *
+     * @param inputScanner the Scanner used for user input
+     * @param player the user-controlled player
+     */
+    private static void visitPracticeFacility(Scanner inputScanner, Player player) {
+
+        int workoutCost = 50;
+        int boostAmount = 3;
+
+        System.out.println("\n--- Practice Facility ---");
+        System.out.println("Current Money: $" + player.getMoney());
+        System.out.println("Each workout costs $" + workoutCost + ".");
+        System.out.println("1. Shooting Workout");
+        System.out.println("2. Speed Workout");
+        System.out.println("3. Jump Training");
+        System.out.println("4. Defensive Slides");
+        System.out.println("0. Cancel");
+        System.out.print("Choose a workout: ");
+
+        int workoutChoice = getNumberInput(inputScanner);
+
+        if (workoutChoice == 0) {
+            System.out.println("Practice canceled.");
+            return;
+        }
+
+        if (workoutChoice < 1 || workoutChoice > 4) {
+            System.out.println("Invalid workout choice.");
+            return;
+        }
+
+        if (!player.spendMoney(workoutCost)) {
+            System.out.println("You do not have enough money for this workout.");
+            return;
+        }
+
+        switch (workoutChoice) {
+            case 1:
+                player.addShootingBoost(boostAmount);
+                System.out.println("You completed a shooting workout.");
+                System.out.println("Shooting Boost increased by " + boostAmount + ".");
+                break;
+
+            case 2:
+                player.addSpeedBoost(boostAmount);
+                System.out.println("You completed a speed workout.");
+                System.out.println("Speed Boost increased by " + boostAmount + ".");
+                break;
+
+            case 3:
+                player.addJumpBoost(boostAmount);
+                System.out.println("You completed jump training.");
+                System.out.println("Jump Boost increased by " + boostAmount + ".");
+                break;
+
+            case 4:
+                player.addDefenseBoost(boostAmount);
+                System.out.println("You completed defensive slides.");
+                System.out.println("Defense Boost increased by " + boostAmount + ".");
+                break;
+        }
+
+        System.out.println("Current Money: $" + player.getMoney());
     }
 
     /**
