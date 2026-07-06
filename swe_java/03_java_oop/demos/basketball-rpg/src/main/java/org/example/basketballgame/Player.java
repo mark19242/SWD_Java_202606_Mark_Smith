@@ -259,6 +259,16 @@ public class Player {
     }
 
     /**
+     * Checks if the player has already won a specific tournament.
+     *
+     * @param tournamentName the name of the tournament being checked
+     * @return true if the tournament is in the trophy case, false otherwise
+     */
+    public boolean hasCompletedTournament(String tournamentName) {
+        return completedTournaments.contains(tournamentName);
+    }
+
+    /**
      * Displays the player's current stats.
      */
     public void displayPlayerInfo() {

@@ -276,6 +276,15 @@ public class Main {
      */
     private static boolean playTournament(Player player, Locker locker, Game game, Tournament tournament) {
 
+        // The final boss tournament is locked until the player beats the sub-boss tournament.
+        if (tournament.getName().equals("National 1-on-1 Tournament")
+                && !player.hasCompletedTournament("Pro-Am Invitational")) {
+
+            System.out.println("\nThe National 1-on-1 Tournament is still locked.");
+            System.out.println("You must win the Pro-Am Invitational before challenging King Supreme.");
+            return false;
+        }
+
         if (!tournament.canEnter(player)) {
             System.out.println("\nYou do not have enough money to enter this tournament.");
             return false;
@@ -453,6 +462,12 @@ public class Main {
         } else {
             System.out.println("Money Still Needed: $" + moneyNeeded);
             System.out.println("Keep winning tournaments or selling locker items to reach the goal.");
+        }
+
+        if (player.hasCompletedTournament("Pro-Am Invitational")) {
+            System.out.println("Sub-Boss Requirement: Complete");
+        } else {
+            System.out.println("Sub-Boss Requirement: Win the Pro-Am Invitational");
         }
     }
 
