@@ -247,6 +247,11 @@ public class Main {
 
         selectedTournament.displayTournamentInfo();
 
+        if (player.hasCompletedTournament(selectedTournament.getName())) {
+            System.out.println("\nYou have already won this tournament.");
+            System.out.println("Repeat wins give half money and no extra prize item.");
+        }
+
         String opponentName = selectedTournament.getOpponent().getName();
 
         if (scoutingReports.containsKey(opponentName)) {
@@ -285,6 +290,9 @@ public class Main {
             return false;
         }
 
+        // Check this before the game so we know if this is a repeat tournament win.
+        boolean alreadyWonTournament = player.hasCompletedTournament(tournament.getName());
+
         if (!tournament.canEnter(player)) {
             System.out.println("\nYou do not have enough money to enter this tournament.");
             return false;
@@ -299,17 +307,35 @@ public class Main {
             System.out.println("\nYou won the tournament!");
 
             player.addWin();
-            player.addCompletedTournament(tournament.getName());
 
-            player.earnMoney(tournament.getRewardMoney());
+            if (!alreadyWonTournament) {
 
-            if (tournament.getRewardMoney() > 0) {
-                System.out.println("You earned $" + tournament.getRewardMoney() + ".");
-            }
+                // First-time tournament wins give full rewards and a possible prize item.
+                player.addCompletedTournament(tournament.getName());
+                player.earnMoney(tournament.getRewardMoney());
 
-            if (tournament.getPrizeItem() != null) {
-                locker.addItem(tournament.getPrizeItem());
-                System.out.println("Prize item added to your locker.");
+                if (tournament.getRewardMoney() > 0) {
+                    System.out.println("You earned $" + tournament.getRewardMoney() + ".");
+                }
+
+                if (tournament.getPrizeItem() != null) {
+                    locker.addItem(tournament.getPrizeItem());
+                    System.out.println("Prize item added to your locker.");
+                }
+
+            } else {
+
+                // Repeat wins still pay money, but only half the original reward.
+                int repeatReward = tournament.getRewardMoney() / 2;
+                player.earnMoney(repeatReward);
+
+                System.out.println("You already had this tournament in your trophy case.");
+
+                if (repeatReward > 0) {
+                    System.out.println("Repeat win reward: $" + repeatReward + ".");
+                }
+
+                System.out.println("No duplicate prize item was awarded.");
             }
 
             return tournament.getName().equals("National 1-on-1 Tournament");
