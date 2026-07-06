@@ -20,6 +20,7 @@ public class Player {
     private String equippedSleeve;
     private String equippedDefenseItem;
     private String equippedTrainingItem;
+    private final int maxBoost = 30;
     private HashSet<String> completedTournaments;
 
     /**
@@ -56,20 +57,56 @@ public class Player {
         return stamina;
     }
 
-    public int getShootingBoost() {
-        return shootingBoost;
+    /**
+     * Adds to the player's shooting boost without going over the max boost.
+     *
+     * @param amount the boost amount being added
+     */
+    public void addShootingBoost(int amount) {
+        shootingBoost += amount;
+
+        if (shootingBoost > maxBoost) {
+            shootingBoost = maxBoost;
+        }
     }
 
-    public int getSpeedBoost() {
-        return speedBoost;
+    /**
+     * Adds to the player's speed boost without going over the max boost.
+     *
+     * @param amount the boost amount being added
+     */
+    public void addSpeedBoost(int amount) {
+        speedBoost += amount;
+
+        if (speedBoost > maxBoost) {
+            speedBoost = maxBoost;
+        }
     }
 
-    public int getJumpBoost() {
-        return jumpBoost;
+    /**
+     * Adds to the player's jump boost without going over the max boost.
+     *
+     * @param amount the boost amount being added
+     */
+    public void addJumpBoost(int amount) {
+        jumpBoost += amount;
+
+        if (jumpBoost > maxBoost) {
+            jumpBoost = maxBoost;
+        }
     }
 
-    public int getDefenseBoost() {
-        return defenseBoost;
+    /**
+     * Adds to the player's defense boost without going over the max boost.
+     *
+     * @param amount the boost amount being added
+     */
+    public void addDefenseBoost(int amount) {
+        defenseBoost += amount;
+
+        if (defenseBoost > maxBoost) {
+            defenseBoost = maxBoost;
+        }
     }
 
     public int getWins() {
@@ -204,10 +241,10 @@ public class Player {
             return false;
         }
 
-        shootingBoost += item.getShootingBoost();
-        speedBoost += item.getSpeedBoost();
-        jumpBoost += item.getJumpBoost();
-        defenseBoost += item.getDefenseBoost();
+        addShootingBoost(item.getShootingBoost());
+        addSpeedBoost(item.getSpeedBoost());
+        addJumpBoost(item.getJumpBoost());
+        addDefenseBoost(item.getDefenseBoost());
         restoreStamina(item.getStaminaBoost());
 
         System.out.println(item.getName() + " has been equipped.");
@@ -282,6 +319,7 @@ public class Player {
         System.out.println("Speed Boost: " + speedBoost);
         System.out.println("Jump Boost: " + jumpBoost);
         System.out.println("Defense Boost: " + defenseBoost);
+        System.out.println("Max Boost Per Skill: " + maxBoost);
         System.out.println("Equipped Sneakers: " + equippedSneakers);
         System.out.println("Equipped Sleeve: " + equippedSleeve);
         System.out.println("Equipped Defense Item: " + equippedDefenseItem);
