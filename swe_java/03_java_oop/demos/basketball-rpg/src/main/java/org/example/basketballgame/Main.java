@@ -312,6 +312,8 @@ public class Main {
         player.spendMoney(tournament.getEntryFee());
         System.out.println("\nEntry fee paid. Good luck!");
 
+        showStaminaWarning(player);
+
         boolean playerWon = game.playOneOnOne(player, tournament.getOpponent());
 
         if (playerWon) {
@@ -603,6 +605,8 @@ public class Main {
         System.out.println("Reward: $25");
         System.out.println("Opponent: " + pickupOpponent.getName());
 
+
+        showStaminaWarning(player);
         boolean playerWon = game.playOneOnOne(player, pickupOpponent);
 
         if (playerWon) {
@@ -790,6 +794,20 @@ public class Main {
 
             default:
                 return false;
+        }
+    }
+
+    /**
+     * Warns the player if their stamina is low before starting a game.
+     *
+     * @param player the user-controlled player
+     */
+    private static void showStaminaWarning(Player player) {
+
+        if (player.getStamina() < 30) {
+            System.out.println("\nWarning: Your stamina is low.");
+            System.out.println("Low stamina lowers your scoring chance.");
+            System.out.println("Consider resting before tougher games.");
         }
     }
 
