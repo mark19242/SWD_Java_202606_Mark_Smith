@@ -60,8 +60,7 @@ public class Main {
                     break;
 
                 case "3":
-                    boolean beatFinalBoss = chooseTournament(inputScanner, player, locker, game, tournaments);
-
+                    boolean beatFinalBoss = chooseTournament(inputScanner, player, locker, game, tournaments, scoutingReports);
                     if (beatFinalBoss) {
                         System.out.println("\nYou defeated the best 1-on-1 player in the nation!");
                         System.out.println("You are now the king of 1-on-1 basketball!");
@@ -216,7 +215,8 @@ public class Main {
      * @return true if the player beats the final boss, false otherwise
      */
     private static boolean chooseTournament(Scanner inputScanner, Player player, Locker locker,
-                                            Game game, ArrayList<Tournament> tournaments) {
+                                            Game game, ArrayList<Tournament> tournaments,
+                                            HashMap<String, String> scoutingReports) {
 
         System.out.println("\n--- Available Tournaments ---");
 
@@ -246,6 +246,13 @@ public class Main {
         Tournament selectedTournament = tournaments.get(tournamentChoice - 1);
 
         selectedTournament.displayTournamentInfo();
+
+        String opponentName = selectedTournament.getOpponent().getName();
+
+        if (scoutingReports.containsKey(opponentName)) {
+            System.out.println("\n--- Scouting Report ---");
+            System.out.println(scoutingReports.get(opponentName));
+        }
 
         System.out.print("\nDo you want to enter this tournament? (yes/no): ");
         String confirmChoice = inputScanner.nextLine();
