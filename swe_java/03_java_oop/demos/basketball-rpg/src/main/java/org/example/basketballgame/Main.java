@@ -542,6 +542,12 @@ public class Main {
             return;
         }
 
+        // Do not charge the player if the selected skill is already maxed out.
+        if (isSelectedWorkoutMaxed(player, workoutChoice)) {
+            System.out.println("That skill is already maxed out. Choose another workout.");
+            return;
+        }
+
         if (!player.spendMoney(workoutCost)) {
             System.out.println("You do not have enough money for this workout.");
             return;
@@ -757,6 +763,33 @@ public class Main {
 
         } else {
             System.out.println("You did not buy anything.");
+        }
+    }
+
+    /**
+     * Checks if the selected workout skill is already at the max boost.
+     *
+     * @param player the user-controlled player
+     * @param workoutChoice the workout option selected by the player
+     * @return true if the selected skill is maxed out, false otherwise
+     */
+    private static boolean isSelectedWorkoutMaxed(Player player, int workoutChoice) {
+
+        switch (workoutChoice) {
+            case 1:
+                return player.getShootingBoost() >= player.getMaxBoost();
+
+            case 2:
+                return player.getSpeedBoost() >= player.getMaxBoost();
+
+            case 3:
+                return player.getJumpBoost() >= player.getMaxBoost();
+
+            case 4:
+                return player.getDefenseBoost() >= player.getMaxBoost();
+
+            default:
+                return false;
         }
     }
 

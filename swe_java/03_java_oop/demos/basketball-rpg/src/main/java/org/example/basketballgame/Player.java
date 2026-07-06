@@ -57,6 +57,10 @@ public class Player {
         return stamina;
     }
 
+    public int getMaxBoost() {
+        return maxBoost;
+    }
+
     /**
      * Adds to the player's shooting boost without going over the max boost.
      *
@@ -165,22 +169,6 @@ public class Player {
         if (stamina > 100) {
             stamina = 100;
         }
-    }
-
-    public void addShootingBoost(int amount) {
-        shootingBoost += amount;
-    }
-
-    public void addSpeedBoost(int amount) {
-        speedBoost += amount;
-    }
-
-    public void addJumpBoost(int amount) {
-        jumpBoost += amount;
-    }
-
-    public void addDefenseBoost(int amount) {
-        defenseBoost += amount;
     }
 
     /**
