@@ -30,6 +30,7 @@ public class Main {
 
         ArrayList<Tournament> tournaments = createTournaments();
         HashMap<String, String> scoutingReports = createScoutingReports();
+        ArrayList<Item> shopItems = createShopItems();
 
         boolean keepPlaying = true;
 
@@ -45,7 +46,8 @@ public class Main {
             System.out.println("7. Play Pickup Game");
             System.out.println("8. View Trophy Case");
             System.out.println("9. View Scouting Reports");
-            System.out.println("10. Exit Game");
+            System.out.println("10. Visit Item Shop");
+            System.out.println("11. Exit Game");
             System.out.print("Choose an option: ");
 
             String choice = inputScanner.nextLine();
@@ -93,6 +95,10 @@ public class Main {
                     break;
 
                 case "10":
+                    visitItemShop(inputScanner, player, locker, shopItems);
+                    break;
+
+                case "11":
                     keepPlaying = false;
                     System.out.println("\nThanks for playing!");
                     break;
@@ -560,6 +566,53 @@ public class Main {
     }
 
     /**
+     * Creates the items that are available in the shop.
+     *
+     * @return a list of items the player can buy
+     */
+    private static ArrayList<Item> createShopItems() {
+
+        ArrayList<Item> shopItems = new ArrayList<>();
+
+        shopItems.add(new Item(
+                "Gatorade",
+                "Drink",
+                "Restores stamina after a tough matchup.",
+                0, 0, 0, 0, 20, 25
+        ));
+
+        shopItems.add(new Item(
+                "Defensive Headband",
+                "Defense Gear",
+                "Improves focus and gives a small defense boost.",
+                0, 0, 0, 5, 0, 50
+        ));
+
+        shopItems.add(new Item(
+                "Shooting Sleeve",
+                "Sleeve",
+                "Improves shooting accuracy on jumpers and threes.",
+                8, 0, 0, 0, 0, 75
+        ));
+
+        shopItems.add(new Item(
+                "Speed Sneakers",
+                "Sneakers",
+                "Helps the player attack the basket faster.",
+                0, 8, 0, 0, 0, 100
+        ));
+
+        shopItems.add(new Item(
+                "Ankle Braces",
+                "Defense Gear",
+                "Helps the player stay in front on defense.",
+                0, 0, 0, 8, 0, 125
+        ));
+
+        return shopItems;
+    }
+
+    /**
      * Displays all scouting reports to help the player prepare for matchups.
      *
      * @param scoutingReports the HashMap containing opponent names and tips
@@ -570,6 +623,67 @@ public class Main {
 
         for (String opponentName : scoutingReports.keySet()) {
             System.out.println(opponentName + ": " + scoutingReports.get(opponentName));
+        }
+    }
+
+    /**
+     * Lets the player buy an item from the shop.
+     * Bought items are stored in the player's locker.
+     *
+     * @param inputScanner the Scanner used for user input
+     * @param player the user-controlled player
+     * @param locker the player's locker
+     * @param shopItems the list of items available to buy
+     */
+    private static void visitItemShop(Scanner inputScanner, Player player, Locker locker,
+                                      ArrayList<Item> shopItems) {
+
+        System.out.println("\n--- Item Shop ---");
+        System.out.println("Current Money: $" + player.getMoney());
+
+        for (int i = 0; i < shopItems.size(); i++) {
+            Item item = shopItems.get(i);
+
+            System.out.println((i + 1) + ". " + item.getName()
+                    + " | Price: $" + item.getValue()
+                    + " | " + item.getDescription());
+        }
+
+        System.out.print("Choose an item number to buy, or 0 to cancel: ");
+        int itemChoice = getNumberInput(inputScanner);
+
+        if (itemChoice == 0) {
+            System.out.println("Shop menu canceled.");
+            return;
+        }
+
+        if (itemChoice < 1 || itemChoice > shopItems.size()) {
+            System.out.println("Invalid shop item choice.");
+            return;
+        }
+
+        Item selectedItem = shopItems.get(itemChoice - 1);
+
+        selectedItem.displayItemInfo();
+
+        System.out.print("\nDo you want to buy this item for $" + selectedItem.getValue() + "? (yes/no): ");
+        String buyChoice = inputScanner.nextLine();
+
+        if (buyChoice.equalsIgnoreCase("yes") || buyChoice.equalsIgnoreCase("y")) {
+
+            if (player.spendMoney(selectedItem.getValue())) {
+                locker.addItem(selectedItem);
+
+                System.out.println("You bought " + selectedItem.getName() + ".");
+                System.out.println("It was added to your locker.");
+                System.out.println("Current money: $" + player.getMoney());
+
+            } else {
+                System.out.println("You do not have enough money to buy this item.");
+            }
+
+        } else {
+            System.out.println("You did not buy anything.");
         }
     }
 
