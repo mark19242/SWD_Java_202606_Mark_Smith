@@ -35,8 +35,9 @@ public class Game {
         int opponentScore = 0;
         boolean playerHasBall = true;
 
-        System.out.println("\n" + player.getName() + " vs " + opponent.getName());
-        System.out.println("First to 15 wins!\n");
+        ConsoleEffects.slowPrint("\n" + player.getName() + " vs " + opponent.getName());
+        ConsoleEffects.slowPrint("First to 15 wins!");
+        ConsoleEffects.pause(700);
 
         while (playerScore < 15 && opponentScore < 15) {
 
@@ -50,25 +51,39 @@ public class Game {
                 int scoringChance = calculatePlayerScoringChance(player, opponent, moveChoice);
 
                 System.out.println("Scoring Chance: " + scoringChance + "%");
+                int staminaCost = getOffensiveStaminaCost(moveChoice);
 
                 if (actionSucceeded(scoringChance)) {
                     playerScore += points;
-                    player.reduceStamina(5);
-                    System.out.println("Bucket! You scored " + points + " points.");
+                    player.reduceStamina(staminaCost);
+
+                    ConsoleEffects.slowPrint("Bucket! You scored " + points + " points.");
+                    ConsoleEffects.pause(500);
+                    System.out.println("Stamina used: " + staminaCost);
+
                 } else {
-                    player.reduceStamina(3);
+                    player.reduceStamina(staminaCost);
                     playerHasBall = false;
-                    System.out.println("Missed shot. " + opponent.getName() + " gets the ball.");
+
+                    ConsoleEffects.slowPrint("Missed shot. " + opponent.getName() + " gets the ball.");
+                    ConsoleEffects.pause(500);
+                    System.out.println("Stamina used: " + staminaCost);
                 }
 
             } else {
                 int defenseChoice = getDefensiveChoice();
+                int defenseStaminaCost = getDefensiveStaminaCost(defenseChoice);
+
+                player.reduceStamina(defenseStaminaCost);
+
                 int opponentMove = chooseOpponentMove(opponent);
                 int points = getPointsForMove(opponentMove);
                 int opponentChance = calculateOpponentScoringChance(player, opponent, opponentMove, defenseChoice);
 
-                System.out.println(opponent.getName() + " attacks with: " + getMoveName(opponentMove));
+                ConsoleEffects.slowPrint(opponent.getName() + " attacks with: " + getMoveName(opponentMove));
+                ConsoleEffects.pause(500);
                 System.out.println("Opponent Scoring Chance: " + opponentChance + "%");
+                System.out.println("Stamina used on defense: " + defenseStaminaCost);
 
                 if (actionSucceeded(opponentChance)) {
                     opponentScore += points;
@@ -311,6 +326,44 @@ public class Game {
                 return "Step-back three";
             default:
                 return "Unknown move";
+        }
+    }
+
+    /**
+     * Gets the stamina cost for the player's offensive move.
+     *
+     * @param moveChoice the offensive move selected
+     * @return the stamina cost for that move
+     */
+    private int getOffensiveStaminaCost(int moveChoice) {
+        switch (moveChoice) {
+            case 1:
+                return 7;
+            case 2:
+                return 5;
+            case 3:
+                return 4;
+            default:
+                return 5;
+        }
+    }
+
+    /**
+     * Gets the stamina cost for the player's defensive choice.
+     *
+     * @param defenseChoice the defensive choice selected
+     * @return the stamina cost for that defensive choice
+     */
+    private int getDefensiveStaminaCost(int defenseChoice) {
+        switch (defenseChoice) {
+            case 1:
+                return 5;
+            case 2:
+                return 3;
+            case 3:
+                return 6;
+            default:
+                return 4;
         }
     }
 
