@@ -63,11 +63,11 @@ public class Game {
 
             } else {
                 int defenseChoice = getDefensiveChoice();
-                int opponentMove = random.nextInt(3) + 1;
+                int opponentMove = chooseOpponentMove(opponent);
                 int points = getPointsForMove(opponentMove);
                 int opponentChance = calculateOpponentScoringChance(player, opponent, opponentMove, defenseChoice);
 
-                System.out.println(opponent.getName() + " makes a move...");
+                System.out.println(opponent.getName() + " attacks with: " + getMoveName(opponentMove));
                 System.out.println("Opponent Scoring Chance: " + opponentChance + "%");
 
                 if (actionSucceeded(opponentChance)) {
@@ -227,6 +227,91 @@ public class Game {
         int finalChance = baseChance - defenseBonus;
 
         return keepChanceInRange(finalChance);
+    }
+
+    /**
+     * Chooses the opponent's move based on their playing style.
+     * This makes scouting reports more useful during games.
+     *
+     * @param opponent the opponent with the ball
+     * @return the opponent's move choice
+     */
+    private int chooseOpponentMove(Opponent opponent) {
+        String style = opponent.getStyle().toLowerCase();
+        int roll = random.nextInt(100) + 1;
+
+        if (style.contains("driver") || style.contains("inside")
+                || style.contains("athletic") || style.contains("finisher")) {
+
+            if (roll <= 65) {
+                return 1; // Drive
+            } else if (roll <= 85) {
+                return 2; // Pull-up jumper
+            } else {
+                return 3; // Step-back three
+            }
+
+        } else if (style.contains("three") || style.contains("shooter")) {
+
+            if (roll <= 60) {
+                return 3; // Step-back three
+            } else if (roll <= 85) {
+                return 2; // Pull-up jumper
+            } else {
+                return 1; // Drive
+            }
+
+        } else if (style.contains("left") || style.contains("tricky")) {
+
+            if (roll <= 60) {
+                return 2; // Pull-up jumper
+            } else if (roll <= 80) {
+                return 1; // Drive
+            } else {
+                return 3; // Step-back three
+            }
+
+        } else if (style.contains("ball handler")) {
+
+            if (roll <= 45) {
+                return 1; // Drive
+            } else if (roll <= 75) {
+                return 2; // Pull-up jumper
+            } else {
+                return 3; // Step-back three
+            }
+
+        } else if (style.contains("all-around") || style.contains("best")) {
+
+            if (roll <= 34) {
+                return 1; // Drive
+            } else if (roll <= 67) {
+                return 2; // Pull-up jumper
+            } else {
+                return 3; // Step-back three
+            }
+        }
+
+        return random.nextInt(3) + 1;
+    }
+
+    /**
+     * Converts a move number into a readable move name.
+     *
+     * @param moveChoice the move number
+     * @return the move name
+     */
+    private String getMoveName(int moveChoice) {
+        switch (moveChoice) {
+            case 1:
+                return "Drive to the basket";
+            case 2:
+                return "Pull-up jumper";
+            case 3:
+                return "Step-back three";
+            default:
+                return "Unknown move";
+        }
     }
 
     /**
