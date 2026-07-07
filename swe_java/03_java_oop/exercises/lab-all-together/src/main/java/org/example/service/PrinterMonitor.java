@@ -64,4 +64,12 @@ public class PrinterMonitor extends TimerTask {
     private void handleComplete() {
         cycle = 0;
     }
+
+    /**
+     * Stops this monitor and its timer.
+     */
+    public void halt() {
+        cancel();
+        timer.cancel();
+    }
 }

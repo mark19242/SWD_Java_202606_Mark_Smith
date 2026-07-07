@@ -47,7 +47,7 @@ public class PrinterManager {
      */
     public void haltMonitors() {
         for (PrinterMonitor monitor : monitors) {
-            monitor.cancel();
+            monitor.halt();
         }
     }
 }
