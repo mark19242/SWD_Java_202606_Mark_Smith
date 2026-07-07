@@ -1,6 +1,7 @@
 package org.example.model;
 
 public class Printer {
+
     public enum PrinterStatus {
         READY,
         WARMING_UP,
@@ -8,16 +9,28 @@ public class Printer {
         COMPLETE
     }
 
+    private String id;
     private String name;
     private PrinterStatus status;
     private String printModelName;
+
     public static final int cyclesPerWarmup = 1;
     public static final int cyclesPerPrint = 2;
 
-    public Printer(String name) {
+    public Printer(String id, String name) {
+        setId(id);
         setName(name);
         setStatus(PrinterStatus.READY);
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public PrinterStatus getStatus() {
         return status;
     }
@@ -49,7 +62,8 @@ public class Printer {
         this.name = name;
     }
 
+    @Override
     public String toString() {
-        return name + ": " + status;
+        return id + " - " + name + ": " + status;
     }
 }

@@ -17,7 +17,7 @@ public class App {
         PrinterManager printerManager = new PrinterManager();
 
         // Starter printer so the app has one printer when it begins.
-        printerManager.addPrinter("P1", new Printer("My Cool 3D Printer"));
+        printerManager.addPrinter("P1", new Printer("P1", "My Cool 3D Printer"));
 
         MenuController menuController = new MenuController(printerManager, io);
 

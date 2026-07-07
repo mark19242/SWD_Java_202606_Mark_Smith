@@ -96,7 +96,7 @@ public class MenuController {
 
         String name = io.getStringRequired("Printer name");
 
-        Printer printer = new Printer(name);
+        Printer printer = new Printer(id, name);
         printerManager.addPrinter(id, printer);
 
         io.displayMessage("Printer added: " + id + " - " + name);
