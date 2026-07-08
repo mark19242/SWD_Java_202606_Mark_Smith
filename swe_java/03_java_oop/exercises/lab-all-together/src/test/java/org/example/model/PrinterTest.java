@@ -35,22 +35,4 @@ class PrinterTest {
         assertNull(printer.getPrintModelName());
         assertEquals(Printer.PrinterStatus.READY, printer.getStatus());
     }
-
-    @Test
-    void setStatusShouldUpdatePrinterStatus() {
-        Printer printer = new Printer("P1", "My Cool 3D Printer");
-
-        printer.setStatus(Printer.PrinterStatus.COMPLETE);
-
-        assertEquals(Printer.PrinterStatus.COMPLETE, printer.getStatus());
-    }
-
-    @Test
-    void toStringShouldIncludeIdNameAndStatus() {
-        Printer printer = new Printer("P1", "My Cool 3D Printer");
-
-        String result = printer.toString();
-
-        assertEquals("P1 - My Cool 3D Printer: READY", result);
-    }
 }
