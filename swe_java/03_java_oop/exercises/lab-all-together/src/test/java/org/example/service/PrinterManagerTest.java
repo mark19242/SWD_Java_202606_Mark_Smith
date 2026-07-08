@@ -20,7 +20,7 @@ class PrinterManagerTest {
 
     @AfterEach
     void tearDown() {
-        // Each added printer creates a monitor, so we stop them after each test.
+        // Each added printer creates a monitor, so I stop them after each test.
         printerManager.haltMonitors();
     }
 

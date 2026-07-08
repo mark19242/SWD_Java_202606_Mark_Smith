@@ -12,10 +12,10 @@ import java.util.Map;
  */
 public class PrinterManager {
 
-    // Map lets us find a printer by its unique ID.
+    // Map lets me find a printer by its unique ID.
     private Map<String, Printer> printers = new HashMap<>();
 
-    // List keeps track of every monitor so we can stop them before exiting.
+    // List keeps track of every monitor so I can stop them before exiting.
     private List<PrinterMonitor> monitors = new ArrayList<>();
 
     /**
