@@ -106,21 +106,44 @@ Now that you've gone through a refactor, did your understanding of SRP or DRY ch
 ---
 
 ## 4. Unit Testing — Strategy, Implementation, and Challenges
-
 *Goal: Be able to explain your testing approach, not just that tests exist.*
 
 ### 4.1 Testing Strategy
 - What did you decide to test, and what did you intentionally leave untested (e.g., I/O, console prompts)? Why?
 - Did you test the service/business logic layer directly, separate from the controller? How did your class design (or SRP decisions above) make that easier or harder?
+  
+I decided to test the ShoppingCartService class because that is where my main business logic is located. 
+This class handles the rules for adding items, removing items, calculating the cart total, checking if the cart is empty, and checking out.
+I did not focus on testing the App class, ShoppingCartController, or ConsoleIO right now because those classes mostly deal with starting the program, menu flow, and user input. 
+I wanted my unit tests to focus on the cart rules instead of testing console prompts.
+Separating my cart logic into a service class made testing easier, because I could test the cart behavior directly without having to run the full application.
+
 
 ### 4.2 Implementation Notes
 - What framework/tools did you use (JUnit version, Mockito, etc.)?
 - List a few representative test cases and what each one verifies.
 - How did you handle edge cases (e.g., removing more items than exist in the cart, adding a quantity of zero)?
 
+I used JUnit 5 for my unit tests. I created a ShoppingCartServiceTest class inside the test service package.
+Some of my test cases check that an item can be added to the cart and that adding the same item again increases the quantity instead of creating a duplicate item. 
+I also tested invalid situations, such as entering a product id that does not exist or trying to add a zero or negative amount. 
+For removing items, I tested that removing part of an item decreases the quantity and removing the full quantity takes the item out of the cart. 
+I also tested that the cart total is calculated correctly and that checkout returns the total amount due while emptying the cart.
+I also used @BeforeEach so every test starts with a fresh ShoppingCartService and an empty cart. This helps keep the tests isolated from each other.
+
 ### 4.3 Challenges
 - Did any part of your design make something hard to test? Did that reveal a design problem (a smell, an SRP violation) you hadn't noticed before?
 - Did any tests fail and reveal an actual bug? What was it?
+One challenge was deciding what should be tested, I took some advice from my pears. 
+And, I decided not to test every console message because that would make the tests harder to write and less focused. 
+Instead, I tested the service layer because that is where the important cart behavior happens.
+The tests also helped confirm that my design was working well. Since the business logic was not trapped inside the controller, 
+I was able to test adding, removing, totals, and checkout directly.
+A specific issue I had to think through was the remove item logic. I had to make sure the program did not remove the whole cart item too early. 
+If the cashier removes only part of the quantity, the item should stay in the cart with the updated quantity. 
+The item should only be removed from the List when its quantity reaches zero. 
+I added tests for both situations, and that helped confirm that the remove logic was working correctly.
+
 
 ---
 
