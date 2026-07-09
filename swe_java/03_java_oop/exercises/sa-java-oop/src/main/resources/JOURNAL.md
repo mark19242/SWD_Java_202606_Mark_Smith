@@ -47,15 +47,32 @@ Briefly explain, in your own words, and note where each shows up in your code:
 - What is it storing, and why is a List the right structure for that data (as opposed to a Map, Set, or array)?
 - Any notable methods or operations you relied on (sorting, searching, removal by index vs. by value, etc.)?
 
+I used a List called cartItems in the ShoppingCartService class, and this List stores the items that the cashier adds to the shopping cart. 
+It made sense for me to use a List because the cart can have multiple items, and I need to be able to loop through them, display them, add to them, and remove from them. 
+I also used a List because the cart items can be shown in order, which makes it easier for the cashier to understand what is currently in the cart. 
+I used methods like add(), remove(), clear(), isEmpty(), and a for loop to search through the cart items.
+
+
 ### 2.2 Use of Map / HashMap
 - Where in the application is a `Map` (or `HashMap`) used?
 - What are the keys and values, and why did a Map fit better than a List here?
 - Did you run into anything related to key uniqueness, `equals()`/`hashCode()`, or iteration order worth noting?
 
+I used a Map called inventory in the ShoppingCartService class. The key is the product id as a String, and the value is the Product object.
+So, a Map made sense for inventory because each product needs a unique id. This lets the program quickly find a product when the cashier enters the product id. 
+Instead of looping through every product in a List, the program can use the product id to look up the product directly.
+One thing I had to keep in mind is that Map keys must be unique. If I used the same product id twice, the newer product would replace the old one.
+
 ### 2.3 Use of Interfaces
 - What interface(s) did you define or implement?
 - What contract does the interface establish, and what classes implement it?
 - Why did an interface make sense here rather than a concrete class or inheritance?
+
+I created a CartService interface and implemented it with the ShoppingCartService class.
+The interface sets up a contract for what the cart service should be able to do. 
+For example, it includes methods for adding an item, removing an item, getting the cart total, checking out, and checking if the cart is empty.
+The interface is like a plan for the cart service. It says what actions the cart service must have, like adding items, removing items, and checking out. 
+I feel like this helps keep the code organized and easier to test.
 
 ---
 
