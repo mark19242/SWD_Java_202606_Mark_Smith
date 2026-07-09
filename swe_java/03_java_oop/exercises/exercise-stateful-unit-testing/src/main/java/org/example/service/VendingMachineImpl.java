@@ -50,7 +50,7 @@ public class VendingMachineImpl implements VendingMachine {
             return result;
         }
 
-        Product product = bin.get(1);
+        Product product = bin.get(0);
 
         if (product.getPrice() > customerMoney) {
             result.setErrorMessage("Insufficient funds.  Please insert " + (product.getPrice() - customerMoney));
@@ -58,7 +58,7 @@ public class VendingMachineImpl implements VendingMachine {
             return result;
         }
 
-        bin.remove(1);
+        bin.remove(0);
         customerMoney -= product.getPrice();
 
         result.setPayload(product);
