@@ -19,9 +19,14 @@ Walk through the application's main features (menu options, cart operations, che
 
 | Feature | Responsible Class(es) | Notes |
 |---|---|---|
-| | | |
-| | | |
-| | | |
+| Display Cart | ShoppingCartController, ShoppingCartService, CartItem | The controller handles the menu option. The service gets the cart items and total. CartItem helps show each product, quantity, and line total. |
+| Remove an Item | ShoppingCartController, ShoppingCartService | The controller asks the user which item and quantity to remove. The service checks if the item exists and only removes a valid quantity. |
+| Add an Item | ShoppingCartController, ShoppingCartService, Product | The controller shows the available products and asks for a product id and quantity. The service adds the item to the cart or increases the quantity if it is already there. |
+| Checkout | ShoppingCartController, ShoppingCartService | The controller displays the checkout summary. The service calculates the total, clears the cart, and returns the amount due. |
+| Exit | ShoppingCartController | The controller stops the menu loop and exits the program cleanly. |
+
+So far, the ShoppingCartController is responsible for the menu flow, but it does not handle the main cart rules by itself. When the user chooses an option, the controller sends the work to ShoppingCartService. 
+This keeps the menu code separate from the cart logic and makes the project easier to test and explain.
 
 ### 1.3 Class Design Decisions
 Describe your major classes and why you divided responsibilities the way you did. Include or reference any flow charts / class diagrams you created.
