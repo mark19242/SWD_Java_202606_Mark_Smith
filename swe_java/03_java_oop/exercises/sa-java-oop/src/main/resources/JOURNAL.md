@@ -90,9 +90,9 @@ For each smell you noticed in your own code, log it here — even ones you chose
 
 | Smell | Where Found | Fixed? | Justification (if not fixed) |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+| Controller doing too much | ShoppingCartController | Yes | I kept the controller focused on menu flow and moved the cart rules into ShoppingCartService. |
+| Repeated cart search logic | ShoppingCartService | Yes | Adding and removing items both needed to find a cart item, so I used a helper method called findCartItemByProductId. |
+| Long menu method | ShoppingCartController | Yes | I separated each menu feature into its own method, like displayCart, addItem, removeItem, and checkout. |
 
 ### 3.2 Refactoring Log
 Describe at least one refactor in detail:
@@ -100,10 +100,18 @@ Describe at least one refactor in detail:
 - **After:** What did you change?
 - **Why:** What principle or smell drove the change (SRP violation, duplication, long method, large class, etc.)?
 
+One refactor I made was moving repeated cart search logic into a helper method. Before this, adding an item and removing an item both needed to search through the cart to find a product by its id. 
+If I wrote that loop in multiple places, the code would be repetitive. After thinking through it, I created a private helper method called findCartItemByProductId. 
+This method loops through the cart items and returns the matching CartItem if it exists. Then addItem and removeItem can both use that same method. 
+I made this change to keep my code DRY . Instead of repeating the same search logic in multiple methods, I put it in one place. This makes the code easier to read and also easier to update later.
+
 ### 3.3 Revisiting SRP and DRY
 Now that you've gone through a refactor, did your understanding of SRP or DRY change from what you wrote in Section 1.4? Note anything you'd do differently if starting over.
-
 ---
+After building and testing the project, I understand SRP and DRY better. SRP helped me decide that the controller should not manage all of the shopping cart rules. 
+The controller should guide the menu, while ShoppingCartService should handle the actual cart behavior.
+Honestly, as a new software developer, I am learning that keeping code DRY is an everyday process. I may not notice repetition right away, but as I build and test my code, I start seeing places where the same logic is being written more than once. 
+When that happens, I try to move that repeated logic into one method so the code is cleaner, easier to read, and easier to update later. I understand that writing DRY code is not something I will master overnight, but it is something I am practicing as I continue to grow. 
 
 ## 4. Unit Testing — Strategy, Implementation, and Challenges
 *Goal: Be able to explain your testing approach, not just that tests exist.*
