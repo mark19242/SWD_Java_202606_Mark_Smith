@@ -38,8 +38,16 @@ This should make the project easier to build, easier to test, and easier to expl
 Briefly explain, in your own words, and note where each shows up in your code:
 
 - **Single Responsibility Principle (SRP):** How did you decide what belonged in the controller/app class vs. a service class vs. a model class?
+I used SRP by trying to give each class one main job. The App class starts the program, the ShoppingCartController handles the menu flow, ConsoleIO handles input and output, 
+the model classes store data, and ShoppingCartService handles the cart rules. This helped keep one class from doing too much.
+
 - **DRY (Don't Repeat Yourself):** Where did you notice repetition, and what did you do about it (or decide not to)?
+In this project, I keep my code DRY by moving repeated cart search logic into one helper method called findCartItemByProductId. Both addItem and removeItem need to check if a product is already in the cart, 
+so putting that search logic in one method keeps the code cleaner and easier to update.
+
 - **YAGNI (You Aren't Gonna Need It):** Was there a feature, abstraction, or generalization you considered building but deliberately left out? Why?
+I used YAGNI by not adding extra features that were not required for the assessment. For example, I did not add customer accounts, or saving receipts to a file, or an extensive. 
+I focused on the required shopping cart features first so the project would stay simple and meet the requirements.
 
 ---
 
