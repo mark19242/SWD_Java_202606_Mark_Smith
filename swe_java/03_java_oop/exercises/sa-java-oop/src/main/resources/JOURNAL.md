@@ -13,6 +13,7 @@
 
 ### 1.1 Problem Summary
 What problem does this application solve? Describe it in a few sentences, as if explaining it to someone who has never seen the requirements.
+This application is a simple shopping cart system for a cashier. The cashier can add items to a customer's cart, remove items from the cart, display the cart, checkout, and exit the program. When the customer checks out, the app shows the total amount due and clears the cart.
 
 ### 1.2 Functional Walkthrough
 Walk through the application's main features (menu options, cart operations, checkout, etc.). For each feature, briefly note what it does and which class(es) are responsible for it.
@@ -169,12 +170,21 @@ I added tests for both situations, and that helped confirm that the remove logic
 
 ### 5.1 What Went Well
 What part of this project are you most satisfied with, technically?
+The part I am most satisfied with is separating the business logic into the ShoppingCartService class. This made the project easier to organize and easier to test. 
+I was able to write unit tests for the cart rules without needing to run the full console menu every time. 😀
 
 ### 5.2 What You'd Do Differently
 Knowing what you know now, what would you change about your approach — architecture, class design, testing, or otherwise?
+If I started over, I would probably plan the class structure and method names EVEN MORE before writing the code. 
+I think the package setup helped, but I am learning that a little more planning at the beginning can make the coding process a lot smoother later.
 
 ### 5.3 Future Enhancements
 If you had another week, what would you add or improve? (New feature, persistence, better error handling, more Map/List/Interface usage, etc.)
+If I had another week, I would add a receipt feature that prints a cleaner checkout summary. I might also add the ability to save receipts to a file, 
+add more products, or create a better inventory system. Another future improvement would be making the product inventory easier to update instead of hardcoding it inside the service class.
 
 ### 5.4 Open Questions
 Is there anything about SRP, DRY, YAGNI, code smells, refactoring, or unit testing that you're still unsure about? Note it here — this is a good thing to raise before your defense, not during it.
+
+One thing I am still learning is how to know when code is separated enough without overcomplicating the design. I understand SRP, DRY, and YAGNI better now, but I know I will keep improving as I build more projects. 
+I would also like to get a little faster at recognizing the best approach, writing the code, and knowing when something needs to be refactored.
