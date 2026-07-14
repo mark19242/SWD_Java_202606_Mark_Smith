@@ -1,0 +1,5 @@
+target/
+*.class
+
+# Your working data file(s) — do not commit runtime data.
+data/*.txt
