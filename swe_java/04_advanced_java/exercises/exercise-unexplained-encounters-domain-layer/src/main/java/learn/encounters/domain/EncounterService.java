@@ -70,8 +70,18 @@ public class EncounterService {
     }
 
     public EncounterResult deleteById(int encounterId) throws DataException {
-        // TODO: delete via the repository; if it returns false, add a not-found error.
-        throw new UnsupportedOperationException("TODO: implement deleteById");
+
+        EncounterResult result = new EncounterResult();
+
+        boolean success = repository.deleteById(encounterId);
+
+        if (!success) {
+            result.addErrorMessage(
+                    "Encounter id " + encounterId + " was not found."
+            );
+        }
+
+        return result;
     }
 
     private EncounterResult validate(Encounter encounter) {
