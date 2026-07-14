@@ -16,6 +16,15 @@ public class View {
     private final Scanner console = new Scanner(System.in);
 
     public void displayWelcome() {
+        System.out.println("""
+          __________
+         /         /|
+        /_________/ |
+        |         | |
+        | LIBRARY | /
+        |_________|/
+        """);
+
         System.out.println("Welcome to the Library Management System");
         System.out.println("========================================");
     }
