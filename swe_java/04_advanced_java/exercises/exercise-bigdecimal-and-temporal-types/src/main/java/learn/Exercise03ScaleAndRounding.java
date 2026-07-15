@@ -29,8 +29,7 @@ public class Exercise03ScaleAndRounding {
 
     /** 1. Return the scale (number of digits after the decimal point) of value. */
     static int scaleOf(BigDecimal value) {
-        // TODO: return value's scale.
-        return -1; // placeholder so the project compiles
+        return value.scale();
     }
 
     /**
@@ -39,8 +38,7 @@ public class Exercise03ScaleAndRounding {
      *    ArithmeticException — which is the point of this method.
      */
     static BigDecimal trimTrailingZerosToScale(BigDecimal value, int scale) {
-        // TODO: return value.setScale(scale) — the single-argument form.
-        return value; // placeholder so the project compiles
+        return value.setScale(scale);
     }
 
     /**
@@ -49,7 +47,6 @@ public class Exercise03ScaleAndRounding {
      *    from zero).
      */
     static BigDecimal roundToScale(BigDecimal value, int scale) {
-        // TODO: return value.setScale(scale, RoundingMode.HALF_UP).
-        return value; // placeholder so the project compiles
+        return value.setScale(scale, RoundingMode.HALF_UP);
     }
 }
