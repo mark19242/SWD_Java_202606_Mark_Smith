@@ -2,6 +2,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
+import java.time.format.FormatStyle;
 
 /**
  * TimeTravelActivity (STARTER)
@@ -42,14 +43,33 @@ public class TimeTravelActivity {
         // ---------------------------------------------------------------
         // Part 2: Format the Date
         // ---------------------------------------------------------------
-        // TODO: Format the current date three ways:
-        //         - MM-dd-yyyy      (e.g., 06-27-2025)
-        //         - MM/dd/yy        (e.g., 06/27/25)
-        //         - Full month name with day and year (e.g., June 27, 2025)
-        //       Then format the current date for two other cultures:
-        //         - French  (fr-FR)
-        //         - Japanese (ja-JP)
-        //       Print each formatted value.
+        // Format today's date using three custom display patterns.
+        DateTimeFormatter dashFormatter =
+                DateTimeFormatter.ofPattern("MM-dd-yyyy");
+
+        DateTimeFormatter slashFormatter =
+                DateTimeFormatter.ofPattern("MM/dd/yy");
+
+        DateTimeFormatter fullMonthFormatter =
+                DateTimeFormatter.ofPattern("MMMM d, yyyy");
+
+        // Format today's date using French and Japanese cultural conventions.
+        DateTimeFormatter frenchFormatter =
+                DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
+                        .withLocale(Locale.FRANCE);
+
+        DateTimeFormatter japaneseFormatter =
+                DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
+                        .withLocale(Locale.JAPAN);
+
+        System.out.println("Part 2: Formatted Dates");
+        System.out.println("--------------------------------");
+        System.out.println("Dash format: " + today.format(dashFormatter));
+        System.out.println("Slash format: " + today.format(slashFormatter));
+        System.out.println("Full month format: " + today.format(fullMonthFormatter));
+        System.out.println("French format: " + today.format(frenchFormatter));
+        System.out.println("Japanese format: " + today.format(japaneseFormatter));
+        System.out.println();
 
 
         // ---------------------------------------------------------------
