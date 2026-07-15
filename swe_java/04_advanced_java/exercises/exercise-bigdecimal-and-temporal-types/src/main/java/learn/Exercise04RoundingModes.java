@@ -26,21 +26,37 @@ public class Exercise04RoundingModes {
      * 1. Round value to one decimal place using the given rounding mode.
      */
     static BigDecimal roundOneDecimal(BigDecimal value, RoundingMode mode) {
-        // TODO: return value.setScale(1, mode).
-        return value; // placeholder so the project compiles
+        return value.setScale(1, mode);
     }
 
     /**
      * 2. Walk value from `start` up to (and including) `end`, stepping by
-     *    `step`, and print each value rounded to one decimal under all seven
-     *    rounding modes. Use compareTo(...) to test the loop bound (never == on
-     *    BigDecimal). Use roundOneDecimal(...) for each column.
+     * `step`, and print each value rounded to one decimal under all seven
+     * rounding modes. Use compareTo(...) to test the loop bound (never == on
+     * BigDecimal). Use roundOneDecimal(...) for each column.
      */
-    static void printRoundingTable(BigDecimal start, BigDecimal end, BigDecimal step) {
-        // TODO: for (BigDecimal v = start; v.compareTo(end) <= 0; v = v.add(step)) {
-        //           print v with the seven columns:
-        //           UP, DOWN, CEILING, FLOOR, HALF_UP, HALF_DOWN, HALF_EVEN
-        //       }
-        System.out.println("[printRoundingTable] TODO: print the rounding-mode table");
+    static void printRoundingTable(
+            BigDecimal start,
+            BigDecimal end,
+            BigDecimal step) {
+
+        for (BigDecimal value = start;
+             value.compareTo(end) <= 0;
+             value = value.add(step)) {
+
+            System.out.printf(
+                    "%s | %s | %s | %s | %s | %s | %s | %s%n",
+                    value,
+                    roundOneDecimal(value, RoundingMode.UP),
+                    roundOneDecimal(value, RoundingMode.DOWN),
+                    roundOneDecimal(value, RoundingMode.CEILING),
+                    roundOneDecimal(value, RoundingMode.FLOOR),
+                    roundOneDecimal(value, RoundingMode.HALF_UP),
+                    roundOneDecimal(value, RoundingMode.HALF_DOWN),
+                    roundOneDecimal(value, RoundingMode.HALF_EVEN)
+            );
+        }
     }
+
 }
+
