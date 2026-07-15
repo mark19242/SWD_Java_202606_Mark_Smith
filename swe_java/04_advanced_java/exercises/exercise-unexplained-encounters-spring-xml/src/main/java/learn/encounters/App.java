@@ -1,6 +1,5 @@
 package learn.encounters;
 
-;
 import learn.encounters.ui.Controller;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
