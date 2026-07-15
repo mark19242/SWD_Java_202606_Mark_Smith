@@ -115,12 +115,20 @@ public class TimeTravelActivity {
         System.out.println();
 
 
-        // ---------------------------------------------------------------
-        // Part 5: Build a Date from Parts
-        // ---------------------------------------------------------------
-        // TODO: Using the current year, build and print dates for:
-        //         - New Year's Day (January 1)
-        //         - Independence Day (July 4)
-        //         - Your birthday
+// ---------------------------------------------------------------
+// Part 5: Build a Date from Parts
+// ---------------------------------------------------------------
+
+// Build important dates using the current year.
+        LocalDate newYearsDay = LocalDate.of(currentYear, Month.JANUARY, 1);
+        LocalDate independenceDay = LocalDate.of(currentYear, Month.JULY, 4);
+        LocalDate birthday = LocalDate.of(currentYear, Month.JANUARY, 5);
+
+        System.out.println("Part 5: Dates Built from Parts");
+        System.out.println("--------------------------------");
+        System.out.println("New Year's Day: " + newYearsDay);
+        System.out.println("Independence Day: " + independenceDay);
+        System.out.println("Birthday: " + birthday);
+        System.out.println();
     }
 }
