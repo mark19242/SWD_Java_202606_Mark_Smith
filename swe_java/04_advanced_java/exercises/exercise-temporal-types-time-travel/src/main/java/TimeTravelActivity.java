@@ -94,13 +94,25 @@ public class TimeTravelActivity {
         // ---------------------------------------------------------------
         // Part 4: Date Calculations
         // ---------------------------------------------------------------
-        // TODO: Create the two project dates below, then calculate and print:
-        //         - total days between projectStart and projectEnd
-        //         - weeks between them (hint: days / 7)
-        //         - days remaining from TODAY until projectStart
-        //
-        //   LocalDate projectStart = LocalDate.of(2025, 9, 1);
-        //   LocalDate projectEnd   = LocalDate.of(2025, 12, 15);
+// Create the project start and end dates.
+        LocalDate projectStart = LocalDate.of(2025, 9, 1);
+        LocalDate projectEnd = LocalDate.of(2025, 12, 15);
+
+// Calculate the total number of days and complete weeks in the project.
+        long totalDays = ChronoUnit.DAYS.between(projectStart, projectEnd);
+        long totalWeeks = totalDays / 7;
+
+// Calculate the number of days from today until the project starts.
+        long daysUntilProjectStart = ChronoUnit.DAYS.between(today, projectStart);
+
+        System.out.println("Part 4: Date Calculations");
+        System.out.println("--------------------------------");
+        System.out.println("Project start: " + projectStart);
+        System.out.println("Project end: " + projectEnd);
+        System.out.println("Total days between project dates: " + totalDays);
+        System.out.println("Total weeks between project dates: " + totalWeeks);
+        System.out.println("Days from today until project start: " + daysUntilProjectStart);
+        System.out.println();
 
 
         // ---------------------------------------------------------------
