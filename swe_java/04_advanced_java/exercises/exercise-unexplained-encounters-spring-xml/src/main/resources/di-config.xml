@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Repository bean: receives the CSV file path. -->
+    <bean id="repository"
+          class="learn.encounters.data.EncounterFileRepository">
+        <constructor-arg value="./data/encounters.csv"/>
+    </bean>
+
+    <!-- Service bean: receives the repository dependency. -->
+    <bean id="service"
+          class="learn.encounters.domain.EncounterService">
+        <constructor-arg ref="repository"/>
+    </bean>
+
+    <!-- View has no constructor dependencies. -->
+    <bean id="view"
+          class="learn.encounters.ui.View"/>
+
+    <!-- Constructor order must be View first, then EncounterService. -->
+    <bean class="learn.encounters.ui.Controller">
+        <constructor-arg ref="view"/>
+        <constructor-arg ref="service"/>
+    </bean>
+
+</beans>
