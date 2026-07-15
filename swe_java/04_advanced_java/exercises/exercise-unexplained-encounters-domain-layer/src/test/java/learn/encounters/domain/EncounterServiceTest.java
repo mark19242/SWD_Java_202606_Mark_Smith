@@ -5,11 +5,12 @@ import learn.encounters.models.Encounter;
 import learn.encounters.models.EncounterType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EncounterServiceTest {
 
@@ -22,7 +23,7 @@ class EncounterServiceTest {
         service = new EncounterService(new EncounterRepositoryDouble());
     }
 
-    // TODO: Test add() with a valid encounter -> result is success and has an id.
+
     @Test
     void shouldFindOnlyUfoEncounters() throws DataException {
 
@@ -37,7 +38,7 @@ class EncounterServiceTest {
             assertEquals(EncounterType.UFO, encounter.getType());
         }
     }
-    // TODO: Test add() with a blank description -> result fails with the right message.
+
     @Test
     void shouldAddEncounter() throws DataException {
 
@@ -57,7 +58,7 @@ class EncounterServiceTest {
         assertTrue(result.getEncounter().getEncounterId() > 0);
     }
 
-    // TODO: Test add() when the id is already set -> result fails.
+
     @Test
     void shouldNotAddBlankDescription() throws DataException {
 
@@ -76,7 +77,7 @@ class EncounterServiceTest {
         assertEquals(1, result.getErrorMessages().size());
         assertTrue(result.getErrorMessages().get(0).contains("`description`"));
     }
-    // TODO: Test update() for an existing encounter (success) and a missing one (failure).
+
     @Test
     void shouldNotAddEncounterWithExistingId() throws DataException {
 
@@ -97,9 +98,74 @@ class EncounterServiceTest {
         assertEquals(1, result.getErrorMessages().size());
         assertTrue(result.getErrorMessages().get(0).contains("`id`"));
     }
-    // TODO: Test findByType() returns only the matching encounters.
-    // TODO: Test deleteById() for an existing id (success) and a missing id (failure).
 
+    @Test
+    void shouldUpdateEncounter() throws DataException {
+
+        // Arrange
+        Encounter encounter = service.findAll().get(0);
+        encounter.setDescription("Updated encounter description");
+
+        // Act
+        EncounterResult result = service.update(encounter);
+
+        // Assert
+        assertTrue(result.isSuccess());
+        assertEquals("Updated encounter description",
+                result.getEncounter().getDescription());
+    }
+
+    @Test
+    void shouldNotUpdateMissingEncounter() throws DataException {
+
+        // Arrange
+        Encounter missingEncounter = new Encounter(
+                999,
+                EncounterType.VISION,
+                LocalDate.of(2026, 7, 14),
+                "This encounter does not exist",
+                1
+        );
+
+        // Act
+        EncounterResult result = service.update(missingEncounter);
+
+        // Assert
+        assertFalse(result.isSuccess());
+        assertEquals(1, result.getErrorMessages().size());
+        assertTrue(result.getErrorMessages().get(0)
+                .contains("Encounter id 999 was not found."));
+    }
+
+    @Test
+    void shouldDeleteExistingEncounter() throws DataException {
+
+        // Arrange
+        int encounterId = 1;
+
+        // Act
+        EncounterResult result = service.deleteById(encounterId);
+
+        // Assert
+        assertTrue(result.isSuccess());
+    }
+
+    @Test
+    void shouldNotDeleteMissingEncounter() throws DataException {
+
+        // Arrange
+        int missingEncounterId = 999;
+
+        // Act
+        EncounterResult result = service.deleteById(missingEncounterId);
+
+        // Assert
+        assertFalse(result.isSuccess());
+        assertEquals(1, result.getErrorMessages().size());
+        assertTrue(result.getErrorMessages().get(0)
+                .contains("Encounter id 999 was not found."));
+    }
+    
     @Test
     void serviceIsConstructedWithInjectedRepository() {
         assertNotNull(service);
