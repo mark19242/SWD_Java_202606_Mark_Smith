@@ -75,8 +75,20 @@ public class TimeTravelActivity {
         // ---------------------------------------------------------------
         // Part 3: Extract Date Parts
         // ---------------------------------------------------------------
-        // TODO: From today's date, extract and print the year, month, day,
-        //       and day of the week (e.g., Monday).
+
+        // Extract individual pieces of information from today's date.
+        int currentYear = today.getYear();
+        int currentMonth = today.getMonthValue();
+        int currentDay = today.getDayOfMonth();
+        DayOfWeek currentDayOfWeek = today.getDayOfWeek();
+
+        System.out.println("Part 3: Date Parts");
+        System.out.println("--------------------------------");
+        System.out.println("Year: " + currentYear);
+        System.out.println("Month: " + currentMonth);
+        System.out.println("Day: " + currentDay);
+        System.out.println("Day of the week: " + currentDayOfWeek);
+        System.out.println();
 
 
         // ---------------------------------------------------------------
