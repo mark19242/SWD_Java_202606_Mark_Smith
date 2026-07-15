@@ -40,20 +40,17 @@ public class Exercise02BigDecimalArithmetic {
 
     /** 1. Return the sum of a and b. */
     static BigDecimal add(BigDecimal a, BigDecimal b) {
-        // TODO: return a + b using the add method.
-        return BigDecimal.ZERO; // placeholder so the project compiles
+        return a.add(b);
     }
 
     /** 2. Return a minus b. */
     static BigDecimal subtract(BigDecimal a, BigDecimal b) {
-        // TODO: return a - b using the subtract method.
-        return BigDecimal.ZERO; // placeholder so the project compiles
+        return a.subtract(b);
     }
 
     /** 3. Return a times b. */
     static BigDecimal multiply(BigDecimal a, BigDecimal b) {
-        // TODO: return a * b using the multiply method.
-        return BigDecimal.ZERO; // placeholder so the project compiles
+        return a.multiply(b);
     }
 
     /**
@@ -62,7 +59,6 @@ public class Exercise02BigDecimalArithmetic {
      *    division does not terminate.)
      */
     static BigDecimal divide(BigDecimal a, BigDecimal b) {
-        // TODO: return a / b using the divide method.
-        return BigDecimal.ZERO; // placeholder so the project compiles
+        return a.divide(b);
     }
 }
