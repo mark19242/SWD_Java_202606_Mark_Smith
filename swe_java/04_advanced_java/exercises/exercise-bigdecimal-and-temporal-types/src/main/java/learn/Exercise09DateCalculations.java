@@ -44,31 +44,26 @@ public class Exercise09DateCalculations {
 
     /** 1. Return whichever date is earlier. Use isBefore(...). */
     static LocalDate earlier(LocalDate a, LocalDate b) {
-        // TODO: return a.isBefore(b) ? a : b.
-        return a; // placeholder so the project compiles
+        return a.isBefore(b) ? a : b;
     }
 
     /** 2. Return whichever date is later. Use isAfter(...). */
     static LocalDate later(LocalDate a, LocalDate b) {
-        // TODO: return a.isAfter(b) ? a : b.
-        return b; // placeholder so the project compiles
+        return a.isAfter(b) ? a : b;
     }
 
     /** 3. Return the whole number of days from start to end (ChronoUnit.DAYS). */
     static long daysBetween(LocalDate start, LocalDate end) {
-        // TODO: return ChronoUnit.DAYS.between(start, end).
-        return 0L; // placeholder so the project compiles
+        return ChronoUnit.DAYS.between(start, end);
     }
 
     /** 4. Return the day component of the Period between start and end. */
     static int periodDays(LocalDate start, LocalDate end) {
-        // TODO: return Period.between(start, end).getDays().
-        return 0; // placeholder so the project compiles
+        return Period.between(start, end).getDays();
     }
 
     /** 5. Return the number of whole minutes between two date-times (Duration). */
     static long shiftMinutes(LocalDateTime start, LocalDateTime end) {
-        // TODO: return Duration.between(start, end).toMinutes().
-        return 0L; // placeholder so the project compiles
+        return Duration.between(start, end).toMinutes();
     }
 }
