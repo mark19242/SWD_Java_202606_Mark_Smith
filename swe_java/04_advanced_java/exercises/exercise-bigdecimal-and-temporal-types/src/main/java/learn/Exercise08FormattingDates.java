@@ -33,9 +33,10 @@ public class Exercise08FormattingDates {
      * 1. Format a LocalDateTime using the given pattern string.
      */
     static String format(LocalDateTime value, String pattern) {
-        // TODO: build a DateTimeFormatter from `pattern` and return
-        //       value.format(formatter).
-        return ""; // placeholder so the project compiles
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern(pattern);
+
+        return value.format(formatter);
     }
 
     /**
@@ -43,7 +44,6 @@ public class Exercise08FormattingDates {
      *    already produces ISO-8601 — return it.
      */
     static String toIso(LocalDate date) {
-        // TODO: return date.toString() (ISO-8601), or format with "yyyy-MM-dd".
-        return ""; // placeholder so the project compiles
+        return date.toString();
     }
 }
