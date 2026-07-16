@@ -29,22 +29,29 @@ public class Exercise05ScalingDuringDivision {
 
     /**
      * 1. Divide a by b, keeping `scale` digits after the decimal point and
-     *    rounding the last kept digit with `mode`.
+     * rounding the last kept digit with `mode`.
      */
-    static BigDecimal divideWithScale(BigDecimal a, BigDecimal b, int scale, RoundingMode mode) {
-        // TODO: return a.divide(b, scale, mode).
-        return BigDecimal.ZERO; // placeholder so the project compiles
+    static BigDecimal divideWithScale(
+            BigDecimal a,
+            BigDecimal b,
+            int scale,
+            RoundingMode mode) {
+
+        return a.divide(b, scale, mode);
     }
 
     /**
      * 2. Try the exact (two-argument) division a.divide(b). If it succeeds,
-     *    return the result's toString(). If it throws ArithmeticException
-     *    because the expansion does not terminate, catch it and return the
-     *    exception's message instead.
+     * return the result's toString(). If it throws ArithmeticException
+     * because the expansion does not terminate, catch it and return the
+     * exception's message instead.
      */
     static String safeDivide(BigDecimal a, BigDecimal b) {
-        // TODO: try { return a.divide(b).toString(); }
-        //       catch (ArithmeticException ex) { return ex.getMessage(); }
-        return ""; // placeholder so the project compiles
+        try {
+            return a.divide(b).toString();
+        } catch (ArithmeticException ex) {
+            return ex.getMessage();
+        }
     }
+
 }
