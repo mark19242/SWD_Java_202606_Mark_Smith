@@ -40,49 +40,55 @@ public class Exercise07TemporalBasics {
 
     /** 1. Build a LocalDate from year, month, day. */
     static LocalDate makeDate(int year, int month, int day) {
-        // TODO: return LocalDate.of(year, month, day).
-        return LocalDate.EPOCH; // placeholder so the project compiles
+        return LocalDate.of(year, month, day);
     }
 
     /** 2. Return the year component of date. */
     static int yearOf(LocalDate date) {
-        // TODO: return date.getYear().
-        return 0; // placeholder so the project compiles
+        return date.getYear();
     }
 
     /** 3. Return the month component (1-12) of date. */
     static int monthOf(LocalDate date) {
-        // TODO: return date.getMonthValue().
-        return 0; // placeholder so the project compiles
+        return date.getMonthValue();
     }
 
     /** 4. Return the day-of-month component of date. */
     static int dayOf(LocalDate date) {
-        // TODO: return date.getDayOfMonth().
-        return 0; // placeholder so the project compiles
+        return date.getDayOfMonth();
     }
 
     /** 5. Return the day of the week (e.g. MONDAY) of date. */
     static DayOfWeek weekdayOf(LocalDate date) {
-        // TODO: return date.getDayOfWeek().
-        return DayOfWeek.MONDAY; // placeholder so the project compiles
+        return date.getDayOfWeek();
     }
 
     /** 6. Return January 1 of the given year. */
     static LocalDate firstOfYear(int year) {
-        // TODO: return LocalDate.of(year, 1, 1).
-        return LocalDate.EPOCH; // placeholder so the project compiles
+        return LocalDate.of(year, 1, 1);
     }
 
     /** 7. Build a LocalTime from hour, minute, second. */
     static LocalTime makeTime(int hour, int minute, int second) {
-        // TODO: return LocalTime.of(hour, minute, second).
-        return LocalTime.MIDNIGHT; // placeholder so the project compiles
+        return LocalTime.of(hour, minute, second);
     }
 
     /** 8. Build a LocalDateTime from the given date and time parts. */
-    static LocalDateTime makeDateTime(int year, int month, int day, int hour, int minute, int second) {
-        // TODO: return LocalDateTime.of(year, month, day, hour, minute, second).
-        return LocalDateTime.of(makeDate(year, month, day), makeTime(hour, minute, second)); // placeholder
+    static LocalDateTime makeDateTime(
+            int year,
+            int month,
+            int day,
+            int hour,
+            int minute,
+            int second) {
+
+        return LocalDateTime.of(
+                year,
+                month,
+                day,
+                hour,
+                minute,
+                second
+        );
     }
 }
