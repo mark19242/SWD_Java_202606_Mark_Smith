@@ -39,9 +39,14 @@ public class Exercise06MakingChange {
      *    returning the exact total. (A double loop here would accumulate error.)
      */
     static BigDecimal accumulatePennies(BigDecimal start, int count) {
-        // TODO: loop `count` times, each time adding new BigDecimal("0.01"),
-        //       and return the running total.
-        return start; // placeholder so the project compiles
+        BigDecimal penny = new BigDecimal("0.01");
+        BigDecimal total = start;
+
+        for (int i = 0; i < count; i++) {
+            total = total.add(penny);
+        }
+
+        return total;
     }
 
     /**
@@ -55,8 +60,44 @@ public class Exercise06MakingChange {
      *    number.
      */
     static int[] makeChange(BigDecimal amount) {
-        // TODO: use divideAndRemainder against DOLLAR, QUARTER, DIME, NICKEL,
-        //       then convert the final remainder to whole pennies.
-        return new int[]{0, 0, 0, 0, 0}; // placeholder so the project compiles
+        int[] change = new int[5];
+        BigDecimal remaining = amount;
+
+        // Calculate whole dollars and carry the remainder forward.
+        BigDecimal[] result = remaining.divideAndRemainder(DOLLAR);
+        change[0] = result[0]
+                .setScale(0, RoundingMode.UNNECESSARY)
+                .intValueExact();
+        remaining = result[1];
+
+        // Calculate whole quarters.
+        result = remaining.divideAndRemainder(QUARTER);
+        change[1] = result[0]
+                .setScale(0, RoundingMode.UNNECESSARY)
+                .intValueExact();
+        remaining = result[1];
+
+        // Calculate whole dimes.
+        result = remaining.divideAndRemainder(DIME);
+        change[2] = result[0]
+                .setScale(0, RoundingMode.UNNECESSARY)
+                .intValueExact();
+        remaining = result[1];
+
+        // Calculate whole nickels.
+        result = remaining.divideAndRemainder(NICKEL);
+        change[3] = result[0]
+                .setScale(0, RoundingMode.UNNECESSARY)
+                .intValueExact();
+        remaining = result[1];
+
+        // Convert the final remainder into whole pennies.
+        BigDecimal pennies = remaining
+                .multiply(new BigDecimal("100"))
+                .setScale(0, RoundingMode.HALF_EVEN);
+
+        change[4] = pennies.intValueExact();
+
+        return change;
     }
 }
