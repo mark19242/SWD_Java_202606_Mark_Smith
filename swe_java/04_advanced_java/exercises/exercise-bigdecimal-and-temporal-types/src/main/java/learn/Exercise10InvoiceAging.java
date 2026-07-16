@@ -3,6 +3,7 @@ package learn;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Exercise 10 — Invoice aging (stub for the markdown exercise).
@@ -33,25 +34,49 @@ public class Exercise10InvoiceAging {
      *    invoice is not yet due, return 0.
      */
     static long daysOverdue(LocalDate dueDate, LocalDate asOf) {
-        // TODO: use ChronoUnit.DAYS.between(dueDate, asOf), clamped at 0 with Math.max.
-        return 0L; // placeholder so the project compiles
+        long days = ChronoUnit.DAYS.between(dueDate, asOf);
+
+        return Math.max(0, days);
     }
 
     /**
      * 2. Return amount * dailyRate * daysOverdue, scaled to 2 decimals HALF_UP.
      */
-    static BigDecimal lateFee(BigDecimal amount, BigDecimal dailyRate, long daysOverdue) {
-        // TODO: multiply amount by dailyRate by BigDecimal.valueOf(daysOverdue),
-        //       then setScale(2, RoundingMode.HALF_UP).
-        return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP); // placeholder so the project compiles
+    /**
+     * 2. Return amount * dailyRate * daysOverdue,
+     *    scaled to 2 decimal places using HALF_UP rounding.
+     */
+    static BigDecimal lateFee(
+            BigDecimal amount,
+            BigDecimal dailyRate,
+            long daysOverdue) {
+
+        BigDecimal overdueDays = BigDecimal.valueOf(daysOverdue);
+
+        return amount
+                .multiply(dailyRate)
+                .multiply(overdueDays)
+                .setScale(2, RoundingMode.HALF_UP);
     }
 
     /**
      * 3. Return amount + lateFee(...), scaled to 2 decimals HALF_UP.
      */
-    static BigDecimal balanceDue(BigDecimal amount, BigDecimal dailyRate, LocalDate dueDate, LocalDate asOf) {
-        // TODO: compute daysOverdue, then lateFee, then return amount plus the
-        //       fee, scaled to 2 decimals.
-        return amount.setScale(2, RoundingMode.HALF_UP); // placeholder so the project compiles
+    /**
+     * 3. Return the original amount plus the late fee,
+     *    scaled to 2 decimal places.
+     */
+    static BigDecimal balanceDue(
+            BigDecimal amount,
+            BigDecimal dailyRate,
+            LocalDate dueDate,
+            LocalDate asOf) {
+
+        long overdueDays = daysOverdue(dueDate, asOf);
+        BigDecimal fee = lateFee(amount, dailyRate, overdueDays);
+
+        return amount
+                .add(fee)
+                .setScale(2, RoundingMode.HALF_UP);
     }
 }
