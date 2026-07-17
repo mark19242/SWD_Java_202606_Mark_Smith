@@ -62,8 +62,15 @@ public class Main {
     // ------------------------------------------------------------------
     static void task02(List<Student> students) {
         System.out.println("\nTask 2 — Students with no registrations:");
-        // TODO: filter to students whose registration list is empty,
-        //       collect them into a List, then report the count and names.
+        List<Student> studentsWithNoRegistrations = students.stream()
+                .filter(student -> student.getRegistrations().isEmpty())
+                .toList();
+
+        System.out.println("Count: " + studentsWithNoRegistrations.size());
+
+        studentsWithNoRegistrations.forEach(
+                student -> System.out.println(student.getFullName())
+        );
     }
 
     // ------------------------------------------------------------------
