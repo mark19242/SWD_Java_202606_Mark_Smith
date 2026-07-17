@@ -5,9 +5,11 @@ import learn.encounters.domain.EncounterResult;
 import learn.encounters.domain.EncounterService;
 import learn.encounters.models.Encounter;
 import learn.encounters.models.EncounterType;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class Controller {
 
     private final View view;
