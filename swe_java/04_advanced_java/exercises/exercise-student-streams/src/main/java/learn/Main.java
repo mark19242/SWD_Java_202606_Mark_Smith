@@ -1,6 +1,9 @@
 package learn;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Student Streams exercise.
@@ -79,10 +82,30 @@ public class Main {
     // ------------------------------------------------------------------
     static void task03(List<Student> students) {
         System.out.println("\nTask 3 — Students by last name, then first name:");
-        // TODO (stream): sort with a Comparator on last name, then first name,
-        //                and print each student's full name.
-        // TODO (loop):   produce the same ordering with a copied list and
-        //                Collections.sort / a manual comparator. Compare them.
+
+        System.out.println("Stream version:");
+
+        students.stream()
+                .sorted(
+                        Comparator.comparing(Student::getLastName)
+                                .thenComparing(Student::getFirstName)
+                )
+                .map(Student::getFullName)
+                .forEach(System.out::println);
+
+        System.out.println("\nLoop version:");
+
+        // Copy the list so the original student list is not rearranged.
+        List<Student> sortedStudents = new ArrayList<>(students);
+
+        sortedStudents.sort(
+                Comparator.comparing(Student::getLastName)
+                        .thenComparing(Student::getFirstName)
+        );
+
+        for (Student student : sortedStudents) {
+            System.out.println(student.getFullName());
+        }
     }
 
     // ------------------------------------------------------------------
