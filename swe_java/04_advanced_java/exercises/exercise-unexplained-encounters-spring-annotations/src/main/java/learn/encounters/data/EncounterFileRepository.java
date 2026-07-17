@@ -11,14 +11,18 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class EncounterFileRepository implements EncounterRepository {
 
     private final String filePath;
     private static final String DELIMITER = ",";
     private static final int FIELD_COUNT = 5;
 
-    public EncounterFileRepository(String filePath) {
+    public EncounterFileRepository(
+            @Value("${dataFilePath}") String filePath) {
         this.filePath = filePath;
     }
 

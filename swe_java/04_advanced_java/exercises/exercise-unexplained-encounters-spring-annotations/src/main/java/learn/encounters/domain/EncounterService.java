@@ -4,9 +4,11 @@ import learn.encounters.data.DataException;
 import learn.encounters.data.EncounterRepository;
 import learn.encounters.models.Encounter;
 import learn.encounters.models.EncounterType;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service 
 public class EncounterService {
 
     private final EncounterRepository repository;
