@@ -2,12 +2,14 @@ package learn.encounters.ui;
 
 import learn.encounters.models.Encounter;
 import learn.encounters.models.EncounterType;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class View {
 
     private final Scanner console = new Scanner(System.in);
