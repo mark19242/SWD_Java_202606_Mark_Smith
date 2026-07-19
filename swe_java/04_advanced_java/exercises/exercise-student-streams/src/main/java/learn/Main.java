@@ -128,8 +128,13 @@ public class Main {
     // ------------------------------------------------------------------
     static void task05(List<Student> students) {
         System.out.println("\nTask 5 — Total registrations across all students:");
-        // TODO: flatMap each student's registrations into one stream,
-        //       then count() them.
+        System.out.println("\nTask 5 — Total registrations across all students:");
+
+        long totalRegistrations = students.stream()
+                .flatMap(student -> student.getRegistrations().stream())
+                .count();
+
+        System.out.println("Total registrations: " + totalRegistrations);
     }
 
     // ------------------------------------------------------------------
