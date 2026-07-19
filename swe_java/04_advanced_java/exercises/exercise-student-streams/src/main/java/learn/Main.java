@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Student Streams exercise.
@@ -213,10 +216,62 @@ public class Main {
     // ------------------------------------------------------------------
     static void task09(List<Student> students) {
         System.out.println("\nTask 9 — Average grade points per major:");
-        // TODO (stream): pair each registration with its student's major, then
-        //                groupingBy(major, averagingDouble(grade points)).
-        // TODO (loop):   accumulate a running sum and count per major, then
-        //                divide. Compare them.
+            System.out.println("Stream version:");
+
+            Map<String, Double> averageGradePointsByMajor = students.stream()
+                    .flatMap(student -> student.getRegistrations().stream()
+                            // Temporarily pair each registration with the student's major.
+                            .map(registration ->
+                                    Map.entry(student.getMajor(), registration)))
+                    .collect(Collectors.groupingBy(
+                            Map.Entry::getKey,
+                            Collectors.averagingDouble(entry ->
+                                    entry.getValue()
+                                            .getGrade()
+                                            .getGradePoints())
+                    ));
+
+            averageGradePointsByMajor.forEach((major, average) ->
+                    System.out.printf("%s: %.2f%n", major, average)
+            );
+
+            System.out.println("\nLoop version:");
+
+            Map<String, Double> gradePointTotals = new HashMap<>();
+            Map<String, Integer> registrationCounts = new HashMap<>();
+
+            for (Student student : students) {
+                for (Registration registration : student.getRegistrations()) {
+                    String major = student.getMajor();
+                    double gradePoints =
+                            registration.getGrade().getGradePoints();
+
+                    gradePointTotals.merge(
+                            major,
+                            gradePoints,
+                            Double::sum
+                    );
+
+                    registrationCounts.merge(
+                            major,
+                            1,
+                            Integer::sum
+                    );
+                }
+            }
+
+            Map<String, Double> loopAverages = new HashMap<>();
+
+            for (String major : gradePointTotals.keySet()) {
+                double average = gradePointTotals.get(major)
+                        / registrationCounts.get(major);
+
+                loopAverages.put(major, average);
+            }
+
+            loopAverages.forEach((major, average) ->
+                    System.out.printf("%s: %.2f%n", major, average)
+            );
     }
 
     // ------------------------------------------------------------------
