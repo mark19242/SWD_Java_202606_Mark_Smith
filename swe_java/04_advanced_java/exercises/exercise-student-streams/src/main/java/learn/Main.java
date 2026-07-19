@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.IntSummaryStatistics;
+import java.util.EnumMap;
 
 /**
  * Student Streams exercise.
@@ -187,14 +188,14 @@ public class Main {
     // ------------------------------------------------------------------
     static void task07(List<Student> students) {
         System.out.println("\nTask 7 — Students with at least one A:");
-            students.stream()
-                    .filter(student ->
-                            student.getRegistrations().stream()
-                                    .anyMatch(registration ->
-                                            registration.getGrade() == GradeType.A)
-                    )
-                    .map(Student::getFullName)
-                    .forEach(System.out::println);
+        students.stream()
+                .filter(student ->
+                        student.getRegistrations().stream()
+                                .anyMatch(registration ->
+                                        registration.getGrade() == GradeType.A)
+                )
+                .map(Student::getFullName)
+                .forEach(System.out::println);
     }
 
     // ------------------------------------------------------------------
@@ -204,13 +205,13 @@ public class Main {
     // ------------------------------------------------------------------
     static void task08(List<Student> students) {
         System.out.println("\nTask 8 — Total passing credits:");
-            int totalPassingCredits = students.stream()
-                    .flatMap(student -> student.getRegistrations().stream())
-                    .filter(registration -> registration.getGrade().isPassing())
-                    .mapToInt(registration -> registration.getCredits())
-                    .sum();
+        int totalPassingCredits = students.stream()
+                .flatMap(student -> student.getRegistrations().stream())
+                .filter(registration -> registration.getGrade().isPassing())
+                .mapToInt(registration -> registration.getCredits())
+                .sum();
 
-            System.out.println("Total passing credits: " + totalPassingCredits);
+        System.out.println("Total passing credits: " + totalPassingCredits);
     }
 
     // ------------------------------------------------------------------
@@ -220,62 +221,62 @@ public class Main {
     // ------------------------------------------------------------------
     static void task09(List<Student> students) {
         System.out.println("\nTask 9 — Average grade points per major:");
-            System.out.println("Stream version:");
+        System.out.println("Stream version:");
 
-            Map<String, Double> averageGradePointsByMajor = students.stream()
-                    .flatMap(student -> student.getRegistrations().stream()
-                            // Temporarily pair each registration with the student's major.
-                            .map(registration ->
-                                    Map.entry(student.getMajor(), registration)))
-                    .collect(Collectors.groupingBy(
-                            Map.Entry::getKey,
-                            Collectors.averagingDouble(entry ->
-                                    entry.getValue()
-                                            .getGrade()
-                                            .getGradePoints())
-                    ));
+        Map<String, Double> averageGradePointsByMajor = students.stream()
+                .flatMap(student -> student.getRegistrations().stream()
+                        // Temporarily pair each registration with the student's major.
+                        .map(registration ->
+                                Map.entry(student.getMajor(), registration)))
+                .collect(Collectors.groupingBy(
+                        Map.Entry::getKey,
+                        Collectors.averagingDouble(entry ->
+                                entry.getValue()
+                                        .getGrade()
+                                        .getGradePoints())
+                ));
 
-            averageGradePointsByMajor.forEach((major, average) ->
-                    System.out.printf("%s: %.2f%n", major, average)
-            );
+        averageGradePointsByMajor.forEach((major, average) ->
+                System.out.printf("%s: %.2f%n", major, average)
+        );
 
-            System.out.println("\nLoop version:");
+        System.out.println("\nLoop version:");
 
-            Map<String, Double> gradePointTotals = new HashMap<>();
-            Map<String, Integer> registrationCounts = new HashMap<>();
+        Map<String, Double> gradePointTotals = new HashMap<>();
+        Map<String, Integer> registrationCounts = new HashMap<>();
 
-            for (Student student : students) {
-                for (Registration registration : student.getRegistrations()) {
-                    String major = student.getMajor();
-                    double gradePoints =
-                            registration.getGrade().getGradePoints();
+        for (Student student : students) {
+            for (Registration registration : student.getRegistrations()) {
+                String major = student.getMajor();
+                double gradePoints =
+                        registration.getGrade().getGradePoints();
 
-                    gradePointTotals.merge(
-                            major,
-                            gradePoints,
-                            Double::sum
-                    );
+                gradePointTotals.merge(
+                        major,
+                        gradePoints,
+                        Double::sum
+                );
 
-                    registrationCounts.merge(
-                            major,
-                            1,
-                            Integer::sum
-                    );
-                }
+                registrationCounts.merge(
+                        major,
+                        1,
+                        Integer::sum
+                );
             }
+        }
 
-            Map<String, Double> loopAverages = new HashMap<>();
+        Map<String, Double> loopAverages = new HashMap<>();
 
-            for (String major : gradePointTotals.keySet()) {
-                double average = gradePointTotals.get(major)
-                        / registrationCounts.get(major);
+        for (String major : gradePointTotals.keySet()) {
+            double average = gradePointTotals.get(major)
+                    / registrationCounts.get(major);
 
-                loopAverages.put(major, average);
-            }
+            loopAverages.put(major, average);
+        }
 
-            loopAverages.forEach((major, average) ->
-                    System.out.printf("%s: %.2f%n", major, average)
-            );
+        loopAverages.forEach((major, average) ->
+                System.out.printf("%s: %.2f%n", major, average)
+        );
     }
 
     // ------------------------------------------------------------------
@@ -285,26 +286,26 @@ public class Main {
     // ------------------------------------------------------------------
     static void task10(List<Student> students) {
         System.out.println("\nTask 10 — Top 3 students by quality points:");
-            students.stream()
-                    .sorted(
-                            Comparator.comparingDouble(Main::calculateQualityPoints)
-                                    .reversed()
-                    )
-                    .limit(3)
-                    .forEach(student ->
-                            System.out.printf(
-                                    "%s: %.2f%n",
-                                    student.getFullName(),
-                                    calculateQualityPoints(student)
-                            )
-                    );
+        students.stream()
+                .sorted(
+                        Comparator.comparingDouble(Main::calculateQualityPoints)
+                                .reversed()
+                )
+                .limit(3)
+                .forEach(student ->
+                        System.out.printf(
+                                "%s: %.2f%n",
+                                student.getFullName(),
+                                calculateQualityPoints(student)
+                        )
+                );
     }
 
-        private static double calculateQualityPoints(Student student) {
-            return student.getRegistrations().stream()
-                    .mapToDouble(Registration::getQualityPoints)
-                    .sum();
-        }
+    private static double calculateQualityPoints(Student student) {
+        return student.getRegistrations().stream()
+                .mapToDouble(Registration::getQualityPoints)
+                .sum();
+    }
 
     // ------------------------------------------------------------------
     // Task 11 — Aggregate statistics
@@ -333,8 +334,38 @@ public class Main {
     // ------------------------------------------------------------------
     static void task12(List<Student> students) {
         System.out.println("\nTask 12 — Registration count per grade:");
-        // TODO (stream): flatMap to registrations, then
-        //                groupingBy(getGrade, counting()).
-        // TODO (loop):   tally into a Map (or EnumMap) with merge. Compare them.
+
+        System.out.println("Stream version:");
+
+        Map<GradeType, Long> gradeCounts = students.stream()
+                .flatMap(student -> student.getRegistrations().stream())
+                .collect(Collectors.groupingBy(
+                        Registration::getGrade,
+                        Collectors.counting()
+                ));
+
+        gradeCounts.forEach((grade, count) ->
+                System.out.println(grade + ": " + count)
+        );
+
+        System.out.println("\nLoop version:");
+
+        Map<GradeType, Long> gradeCountsLoop =
+                new EnumMap<>(GradeType.class);
+
+        for (Student student : students) {
+            for (Registration registration : student.getRegistrations()) {
+                gradeCountsLoop.merge(
+                        registration.getGrade(),
+                        1L,
+                        Long::sum
+                );
+            }
+        }
+
+        gradeCountsLoop.forEach((grade, count) ->
+                System.out.println(grade + ": " + count)
+        );
     }
+
 }
