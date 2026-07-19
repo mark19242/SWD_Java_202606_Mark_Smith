@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.IntSummaryStatistics;
 
 /**
  * Student Streams exercise.
@@ -61,7 +62,7 @@ public class Main {
         students.stream()
                 .filter(student -> student.getMajor().equals("Computer Science"))
                 .map(student -> student.getFullName())
-                .forEach(name -> System.out.println(name));.
+                .forEach(name -> System.out.println(name));
     }
 
     // ------------------------------------------------------------------
@@ -133,7 +134,6 @@ public class Main {
     // Count the total number of registrations across ALL students and print it.
     // ------------------------------------------------------------------
     static void task05(List<Student> students) {
-        System.out.println("\nTask 5 — Total registrations across all students:");
         System.out.println("\nTask 5 — Total registrations across all students:");
 
         long totalRegistrations = students.stream()
@@ -313,8 +313,17 @@ public class Main {
     // ------------------------------------------------------------------
     static void task11(List<Student> students) {
         System.out.println("\nTask 11 — Registrations-per-student statistics:");
-        // TODO: mapToInt each student's registration count, call
-        //       summaryStatistics(), and print getMin/getMax/getAverage.
+
+        IntSummaryStatistics statistics = students.stream()
+                .mapToInt(student -> student.getRegistrations().size())
+                .summaryStatistics();
+
+        System.out.println("Minimum registrations: " + statistics.getMin());
+        System.out.println("Maximum registrations: " + statistics.getMax());
+        System.out.printf(
+                "Average registrations: %.2f%n",
+                statistics.getAverage()
+        );
     }
 
     // ------------------------------------------------------------------
