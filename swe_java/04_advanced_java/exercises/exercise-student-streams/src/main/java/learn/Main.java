@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Student Streams exercise.
@@ -144,9 +147,30 @@ public class Main {
     // ------------------------------------------------------------------
     static void task06(List<Student> students) {
         System.out.println("\nTask 6 — Student count per major:");
-        // TODO (stream): collect with Collectors.groupingBy(major, counting()).
-        // TODO (loop):   build the same Map by iterating and using
-        //                map.merge(major, 1L, Long::sum). Compare them.
+        System.out.println("\nTask 6 — Student count per major:");
+
+        System.out.println("Stream version:");
+
+        Map<String, Long> studentCountByMajor = students.stream()
+                .collect(Collectors.groupingBy(
+                        student -> student.getMajor(),
+                        Collectors.counting()
+                ));
+
+        studentCountByMajor.forEach((major, count) ->
+                System.out.println(major + ": " + count)
+        );
+
+        System.out.println("\nLoop version:");
+
+        Map<String, Long> studentCountByMajorLoop = new HashMap<>();
+
+        for (Student student : students) {
+            studentCountByMajorLoop.merge(
+                    student.getMajor(),
+                    1L,
+                    Long::sum
+            );
     }
 
     // ------------------------------------------------------------------
@@ -156,8 +180,14 @@ public class Main {
     // ------------------------------------------------------------------
     static void task07(List<Student> students) {
         System.out.println("\nTask 7 — Students with at least one A:");
-        // TODO: filter students whose registrations anyMatch grade == GradeType.A,
-        //       then print each full name.
+            students.stream()
+                    .filter(student ->
+                            student.getRegistrations().stream()
+                                    .anyMatch(registration ->
+                                            registration.getGrade() == GradeType.A)
+                    )
+                    .map(Student::getFullName)
+                    .forEach(System.out::println);
     }
 
     // ------------------------------------------------------------------
@@ -167,8 +197,13 @@ public class Main {
     // ------------------------------------------------------------------
     static void task08(List<Student> students) {
         System.out.println("\nTask 8 — Total passing credits:");
-        // TODO: flatMap to registrations, filter to passing grades,
-        //       mapToInt(getCredits), and sum().
+            int totalPassingCredits = students.stream()
+                    .flatMap(student -> student.getRegistrations().stream())
+                    .filter(registration -> registration.getGrade().isPassing())
+                    .mapToInt(registration -> registration.getCredits())
+                    .sum();
+
+            System.out.println("Total passing credits: " + totalPassingCredits);
     }
 
     // ------------------------------------------------------------------
