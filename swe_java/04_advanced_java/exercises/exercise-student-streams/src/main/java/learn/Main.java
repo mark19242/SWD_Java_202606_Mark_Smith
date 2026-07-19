@@ -150,7 +150,6 @@ public class Main {
     // ------------------------------------------------------------------
     static void task06(List<Student> students) {
         System.out.println("\nTask 6 — Student count per major:");
-        System.out.println("\nTask 6 — Student count per major:");
 
         System.out.println("Stream version:");
 
@@ -174,6 +173,11 @@ public class Main {
                     1L,
                     Long::sum
             );
+        }
+
+        studentCountByMajorLoop.forEach((major, count) ->
+                System.out.println(major + ": " + count)
+        );
     }
 
     // ------------------------------------------------------------------
@@ -281,9 +285,26 @@ public class Main {
     // ------------------------------------------------------------------
     static void task10(List<Student> students) {
         System.out.println("\nTask 10 — Top 3 students by quality points:");
-        // TODO: sort students by total quality points descending, limit(3),
-        //       and print each name with its total.
+            students.stream()
+                    .sorted(
+                            Comparator.comparingDouble(Main::calculateQualityPoints)
+                                    .reversed()
+                    )
+                    .limit(3)
+                    .forEach(student ->
+                            System.out.printf(
+                                    "%s: %.2f%n",
+                                    student.getFullName(),
+                                    calculateQualityPoints(student)
+                            )
+                    );
     }
+
+        private static double calculateQualityPoints(Student student) {
+            return student.getRegistrations().stream()
+                    .mapToDouble(Registration::getQualityPoints)
+                    .sum();
+        }
 
     // ------------------------------------------------------------------
     // Task 11 — Aggregate statistics
