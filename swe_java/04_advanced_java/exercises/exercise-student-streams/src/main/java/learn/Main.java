@@ -114,8 +114,12 @@ public class Main {
     // ------------------------------------------------------------------
     static void task04(List<Student> students) {
         System.out.println("\nTask 4 — \"Full Name — Major\" for every student:");
-        // TODO: map each student to the string "<full name> — <major>",
-        //       collect to a List, and print the list (or each line).
+        List<String> studentInfo = students.stream()
+                .map(student ->
+                        student.getFullName() + " — " + student.getMajor())
+                .toList();
+
+        studentInfo.forEach(System.out::println);
     }
 
     // ------------------------------------------------------------------
