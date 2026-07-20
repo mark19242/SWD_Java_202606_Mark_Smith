@@ -14,7 +14,7 @@ public class CSVUtil {
     public static void saveReservationsToCSV(String filename,
                                              ReservationSystem reservationSystem) {
 
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filename, true))) {
 
             for (Map.Entry<String, List<Passenger>> entry :
                     reservationSystem.getReservations().entrySet()) {

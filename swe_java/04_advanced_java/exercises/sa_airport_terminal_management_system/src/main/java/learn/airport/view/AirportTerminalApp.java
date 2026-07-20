@@ -5,6 +5,7 @@ import learn.airport.model.Aircraft;
 import learn.airport.model.CommercialAircraft;
 import learn.airport.model.Flight;
 import learn.airport.model.Passenger;
+import learn.airport.model.PrivateJet;
 import learn.airport.reservation.ReservationSystem;
 
 import java.math.BigDecimal;
@@ -16,56 +17,82 @@ public class AirportTerminalApp {
 
         String filename = "data/reservations.csv";
 
-        // Create a commercial aircraft.
-        Aircraft aircraft = new CommercialAircraft(
+        // Create two different aircraft types.
+        Aircraft commercialAircraft = new CommercialAircraft(
                 "Boeing 737",
                 180,
                 26000.0,
                 "American Airlines"
         );
 
-        // Create a flight associated with the aircraft.
-        Flight flight = new Flight(
+        Aircraft privateJet = new PrivateJet(
+                "Gulfstream G650",
+                18,
+                18000.0,
+                true,
+                956
+        );
+
+        // Associate each aircraft with a flight.
+        Flight commercialFlight = new Flight(
                 "AA101",
                 LocalDate.of(2026, 7, 20),
                 new BigDecimal("299.99"),
-                aircraft
+                commercialAircraft
         );
 
-        // Create a passenger.
-        Passenger passenger = new Passenger(
+        Flight privateFlight = new Flight(
+                "PJ001",
+                LocalDate.of(2026, 7, 21),
+                new BigDecimal("5000.00"),
+                privateJet
+        );
+
+        Passenger alice = new Passenger(
                 "Alice Smith",
                 "P12345"
         );
 
-        ReservationSystem reservationSystem = new ReservationSystem();
-
-        // The flight must be added before its reservations are saved.
-        reservationSystem.addFlight(flight);
-        reservationSystem.addReservation(
-                flight.getFlightNumber(),
-                passenger
+        Passenger john = new Passenger(
+                "John Doe",
+                "P67890"
         );
 
-        // Save the current reservation data.
+        ReservationSystem reservationSystem = new ReservationSystem();
+
+        reservationSystem.addFlight(commercialFlight);
+        reservationSystem.addFlight(privateFlight);
+
+        reservationSystem.addReservation(
+                commercialFlight.getFlightNumber(),
+                alice
+        );
+
+        reservationSystem.addReservation(
+                privateFlight.getFlightNumber(),
+                john
+        );
+
+        // Save all current reservations.
         CSVUtil.saveReservationsToCSV(
                 filename,
                 reservationSystem
         );
 
-        System.out.println("Reservations saved to CSV.");
+        System.out.println("Reservations saved successfully.");
 
-        // Reconstruct a new reservation system from the CSV file.
+        // Load the reservations into a new system.
         ReservationSystem loadedReservationSystem =
                 CSVUtil.loadReservationsFromCSV(filename);
 
-        System.out.println("Loaded passengers for "
-                + flight.getFlightNumber() + ":");
-
+        System.out.println("\nPassengers on AA101:");
         System.out.println(
-                loadedReservationSystem.getPassengersForFlight(
-                        flight.getFlightNumber()
-                )
+                loadedReservationSystem.getPassengersForFlight("AA101")
+        );
+
+        System.out.println("\nPassengers on PJ001:");
+        System.out.println(
+                loadedReservationSystem.getPassengersForFlight("PJ001")
         );
     }
 }
