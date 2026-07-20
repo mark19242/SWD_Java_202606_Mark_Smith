@@ -59,6 +59,7 @@ public class AirportTerminalApp {
 
         while (running) {
 
+            displayWelcomeBanner();
             displayMenu();
 
             System.out.print("Select an option: ");
@@ -106,12 +107,19 @@ public class AirportTerminalApp {
 
     }
 
+    private static void displayWelcomeBanner() {
+
+        System.out.println("""
+                      __|__
+              ---o--o--(_)--o--o---
+
+          AIRPORT TERMINAL MANAGEMENT SYSTEM
+          ==================================
+          """);
+    }
+
     private static void displayMenu() {
 
-        System.out.println();
-        System.out.println("============================================");
-        System.out.println("   AIRPORT TERMINAL MANAGEMENT SYSTEM");
-        System.out.println("============================================");
         System.out.println("1. View available flights");
         System.out.println("2. Add passenger reservation");
         System.out.println("3. View passengers for a flight");
