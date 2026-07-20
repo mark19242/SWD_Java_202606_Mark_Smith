@@ -11,12 +11,14 @@ import learn.airport.reservation.ReservationSystem;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.List;
 
 public class AirportTerminalApp {
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
+        String filename = "data/reservations.csv";
         boolean running = true;
 
         // Create aircraft for the available flights.
@@ -73,15 +75,18 @@ public class AirportTerminalApp {
                     break;
 
                 case "3":
-                    System.out.println("\nViewing passengers for a flight...");
+                    viewPassengersForFlight(scanner, reservationSystem);
                     break;
 
                 case "4":
-                    System.out.println("\nSaving reservations...");
+                    saveReservations(reservationSystem, filename);
                     break;
 
                 case "5":
-                    System.out.println("\nLoading reservations...");
+                    reservationSystem = loadReservations(
+                            filename,
+                            reservationSystem
+                    );
                     break;
 
                 case "6":
@@ -183,5 +188,101 @@ public class AirportTerminalApp {
         System.out.println("Reservation added successfully.");
         System.out.println(passengerName + " is booked on flight "
                 + flightNumber + ".");
+    }
+
+    private static void viewPassengersForFlight(
+            Scanner scanner,
+            ReservationSystem reservationSystem) {
+
+        System.out.println();
+        System.out.println("VIEW PASSENGERS FOR A FLIGHT");
+        System.out.println("============================");
+
+        System.out.print("Enter flight number: ");
+        String flightNumber = scanner.nextLine().trim().toUpperCase();
+
+        Flight flight = reservationSystem.getFlight(flightNumber);
+
+        if (flight == null) {
+            System.out.println("Flight " + flightNumber + " was not found.");
+            return;
+        }
+
+        List<Passenger> passengers =
+                reservationSystem.getPassengersForFlight(flightNumber);
+
+        if (passengers.isEmpty()) {
+            System.out.println("No passengers are booked on flight "
+                    + flightNumber + ".");
+            return;
+        }
+
+        System.out.println();
+        System.out.println("Passengers booked on flight " + flightNumber + ":");
+        System.out.println("--------------------------------------------");
+
+        for (int i = 0; i < passengers.size(); i++) {
+
+            Passenger passenger = passengers.get(i);
+
+            System.out.println((i + 1) + ". "
+                    + passenger.getName()
+                    + " | Passport: "
+                    + passenger.getPassportNumber());
+        }
+    }
+
+    private static void saveReservations(
+            ReservationSystem reservationSystem,
+            String filename) {
+
+        System.out.println();
+        System.out.println("SAVE RESERVATIONS");
+        System.out.println("=================");
+
+        if (reservationSystem.getReservations().isEmpty()) {
+            System.out.println("There are no reservations to save.");
+            return;
+        }
+
+        CSVUtil.saveReservationsToCSV(
+                filename,
+                reservationSystem
+        );
+
+        System.out.println("Reservations saved to " + filename + ".");
+    }
+
+    private static ReservationSystem loadReservations(
+            String filename,
+            ReservationSystem currentReservationSystem) {
+
+        System.out.println();
+        System.out.println("LOAD RESERVATIONS");
+        System.out.println("=================");
+
+        ReservationSystem loadedReservationSystem =
+                CSVUtil.loadReservationsFromCSV(filename);
+
+        if (loadedReservationSystem.getReservations().isEmpty()) {
+            System.out.println("No saved reservations were found.");
+
+            // Keep the current system so unsaved information is not lost.
+            return currentReservationSystem;
+        }
+
+        int passengerCount = 0;
+
+        for (List<Passenger> passengers :
+                loadedReservationSystem.getReservations().values()) {
+
+            passengerCount += passengers.size();
+        }
+
+        System.out.println(
+                passengerCount + " reservation(s) loaded successfully."
+        );
+
+        return loadedReservationSystem;
     }
 }
