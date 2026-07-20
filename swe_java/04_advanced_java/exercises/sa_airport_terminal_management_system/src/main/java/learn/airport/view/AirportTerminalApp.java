@@ -37,7 +37,7 @@ public class AirportTerminalApp {
                 956
         );
 
-// Create flights associated with the aircraft.
+        // Create flights associated with the aircraft.
         Flight commercialFlight = new Flight(
                 "AA101",
                 LocalDate.of(2026, 7, 20),
@@ -87,6 +87,9 @@ public class AirportTerminalApp {
                             filename,
                             reservationSystem
                     );
+
+                    reservationSystem.addFlight(commercialFlight);
+                    reservationSystem.addFlight(privateFlight);
                     break;
 
                 case "6":
