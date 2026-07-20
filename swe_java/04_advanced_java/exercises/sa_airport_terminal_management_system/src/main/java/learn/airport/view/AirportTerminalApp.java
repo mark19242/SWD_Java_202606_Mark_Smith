@@ -10,14 +10,16 @@ import learn.airport.reservation.ReservationSystem;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class AirportTerminalApp {
 
     public static void main(String[] args) {
 
-        String filename = "data/reservations.csv";
+        Scanner scanner = new Scanner(System.in);
+        boolean running = true;
 
-        // Create two different aircraft types.
+        // Create aircraft for the available flights.
         Aircraft commercialAircraft = new CommercialAircraft(
                 "Boeing 737",
                 180,
@@ -33,7 +35,7 @@ public class AirportTerminalApp {
                 956
         );
 
-        // Associate each aircraft with a flight.
+// Create flights associated with the aircraft.
         Flight commercialFlight = new Flight(
                 "AA101",
                 LocalDate.of(2026, 7, 20),
@@ -48,51 +50,138 @@ public class AirportTerminalApp {
                 privateJet
         );
 
-        Passenger alice = new Passenger(
-                "Alice Smith",
-                "P12345"
-        );
-
-        Passenger john = new Passenger(
-                "John Doe",
-                "P67890"
-        );
-
         ReservationSystem reservationSystem = new ReservationSystem();
 
         reservationSystem.addFlight(commercialFlight);
         reservationSystem.addFlight(privateFlight);
 
-        reservationSystem.addReservation(
-                commercialFlight.getFlightNumber(),
-                alice
+        while (running) {
+
+            displayMenu();
+
+            System.out.print("Select an option: ");
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+
+                case "1":
+                    displayAvailableFlights(reservationSystem);
+                    break;
+
+                case "2":
+                    addPassengerReservation(scanner, reservationSystem);
+                    break;
+
+                case "3":
+                    System.out.println("\nViewing passengers for a flight...");
+                    break;
+
+                case "4":
+                    System.out.println("\nSaving reservations...");
+                    break;
+
+                case "5":
+                    System.out.println("\nLoading reservations...");
+                    break;
+
+                case "6":
+                    System.out.println("\nThank you for using the Airport Terminal Management System.");
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("\nInvalid selection. Please choose options 1 through 6.");
+            }
+        }
+
+
+
+    }
+
+    private static void displayMenu() {
+
+        System.out.println();
+        System.out.println("============================================");
+        System.out.println("   AIRPORT TERMINAL MANAGEMENT SYSTEM");
+        System.out.println("============================================");
+        System.out.println("1. View available flights");
+        System.out.println("2. Add passenger reservation");
+        System.out.println("3. View passengers for a flight");
+        System.out.println("4. Save reservations");
+        System.out.println("5. Load reservations");
+        System.out.println("6. Exit");
+        System.out.println("============================================");
+    }
+
+    private static void displayAvailableFlights(
+            ReservationSystem reservationSystem) {
+
+        System.out.println();
+        System.out.println("AVAILABLE FLIGHTS");
+        System.out.println("=================");
+
+        if (reservationSystem.getFlights().isEmpty()) {
+            System.out.println("No flights are currently available.");
+            return;
+        }
+
+        for (Flight flight : reservationSystem.getFlights().values()) {
+
+            System.out.println();
+            System.out.println("Flight Number: " + flight.getFlightNumber());
+            System.out.println("Departure Date: " + flight.getDepartureDate());
+            System.out.println("Ticket Price: $" + flight.getTicketPrice());
+            System.out.println("Aircraft Model: "
+                    + flight.getAircraft().getModel());
+            System.out.println("Aircraft Type: "
+                    + flight.getAircraft().getClass().getSimpleName());
+            System.out.println("--------------------------------------------");
+        }
+    }
+
+    private static void addPassengerReservation(
+            Scanner scanner,
+            ReservationSystem reservationSystem) {
+
+        System.out.println();
+        System.out.println("ADD PASSENGER RESERVATION");
+        System.out.println("=========================");
+
+        System.out.print("Enter flight number: ");
+        String flightNumber = scanner.nextLine().trim().toUpperCase();
+
+        Flight flight = reservationSystem.getFlight(flightNumber);
+
+        // A reservation cannot be added if the flight does not exist.
+        if (flight == null) {
+            System.out.println("Flight " + flightNumber + " was not found.");
+            return;
+        }
+
+        System.out.print("Enter passenger name: ");
+        String passengerName = scanner.nextLine().trim();
+
+        System.out.print("Enter passport number: ");
+        String passportNumber = scanner.nextLine().trim();
+
+        if (passengerName.isBlank() || passportNumber.isBlank()) {
+            System.out.println("Passenger name and passport number are required.");
+            return;
+        }
+
+        Passenger passenger = new Passenger(
+                passengerName,
+                passportNumber
         );
 
         reservationSystem.addReservation(
-                privateFlight.getFlightNumber(),
-                john
+                flightNumber,
+                passenger
         );
 
-        // Save all current reservations.
-        CSVUtil.saveReservationsToCSV(
-                filename,
-                reservationSystem
-        );
-
-        System.out.println("Reservations saved successfully.");
-
-        // Load the reservations into a new system.
-        ReservationSystem loadedReservationSystem =
-                CSVUtil.loadReservationsFromCSV(filename);
-
-        System.out.println("\nPassengers on AA101:");
-        System.out.println(
-                loadedReservationSystem.getPassengersForFlight("AA101")
-        );
-
-        System.out.println("\nPassengers on PJ001:");
-        System.out.println(
-                loadedReservationSystem.getPassengersForFlight("PJ001")
-        );
+        System.out.println();
+        System.out.println("Reservation added successfully.");
+        System.out.println(passengerName + " is booked on flight "
+                + flightNumber + ".");
     }
 }
