@@ -2,6 +2,7 @@ package learn.inventory.ui;
 import learn.inventory.service.InventoryService;
 import learn.inventory.model.Product;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MainMenu {
@@ -24,7 +25,7 @@ public class MainMenu {
 
             switch (choice) {
                 case "1" -> addProduct();
-                case "2" -> System.out.println("\nView Products selected.");
+                case "2" -> viewProducts();
                 case "3" -> System.out.println("\nSearch Product selected.");
                 case "4" -> System.out.println("\nUpdate Product selected.");
                 case "5" -> System.out.println("\nDelete Product selected.");
@@ -77,6 +78,38 @@ public class MainMenu {
             System.out.println("\nProduct added successfully!");
         } else {
             System.out.println("\nUnable to add product.");
+        }
+    }
+
+    private void viewProducts() {
+
+        System.out.println("\n===== Inventory List =====");
+
+        List<Product> products = inventoryService.getAllProducts();
+
+        if (products.isEmpty()) {
+            System.out.println("No products are currently in the inventory.");
+            return;
+        }
+
+        System.out.printf(
+                "%-12s %-25s %-12s %-12s%n",
+                "Product ID",
+                "Product Name",
+                "Quantity",
+                "Price"
+        );
+
+        System.out.println("---------------------------------------------------------------");
+
+        for (Product product : products) {
+            System.out.printf(
+                    "%-12s %-25s %-12d $%-11.2f%n",
+                    product.getProductID(),
+                    product.getProductName(),
+                    product.getQuantity(),
+                    product.getPrice()
+            );
         }
     }
 
