@@ -28,7 +28,7 @@ public class MainMenu {
                 case "2" -> viewProducts();
                 case "3" -> searchProduct();
                 case "4" -> updateProduct();
-                case "5" -> System.out.println("\nDelete Product selected.");
+                case "5" -> deleteProduct();
                 case "6" -> System.out.println("\nSave Inventory selected.");
                 case "7" -> System.out.println("\nLoad Inventory selected.");
                 case "8" -> running = confirmExit();
@@ -201,6 +201,61 @@ public class MainMenu {
         }
     }
 
+    private void deleteProduct() {
+
+        System.out.println("\n===== Delete Product =====");
+
+        String productID =
+                promptForRequiredText("Enter Product ID: ");
+
+        Product product =
+                inventoryService.findProductById(productID);
+
+        if (product == null) {
+            System.out.println("\nProduct not found!");
+            return;
+        }
+
+        System.out.println("\nProduct to Delete:");
+        System.out.println(product.displayProductInfo());
+
+        boolean confirmed = promptForYesNo(
+                "\nAre you sure you want to delete this product? (Y/N): "
+        );
+
+        if (!confirmed) {
+            System.out.println("\nDeletion canceled.");
+            return;
+        }
+
+        boolean wasDeleted =
+                inventoryService.deleteProduct(productID);
+
+        if (wasDeleted) {
+            System.out.println("\nProduct deleted successfully!");
+        } else {
+            System.out.println("\nUnable to delete product.");
+        }
+    }
+
+    private boolean promptForYesNo(String message) {
+
+        while (true) {
+            System.out.print(message);
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("Y")) {
+                return true;
+            }
+
+            if (input.equalsIgnoreCase("N")) {
+                return false;
+            }
+
+            System.out.println("Please enter Y or N.");
+        }
+    }
+
     private Double promptForOptionalNonNegativeDouble(String message) {
 
         while (true) {
@@ -340,10 +395,12 @@ public class MainMenu {
     }
 
     private boolean confirmExit() {
-        System.out.print("\nAre you sure you want to exit? (Y/N): ");
-        String confirmation = scanner.nextLine().trim();
 
-        return !confirmation.equalsIgnoreCase("Y");
+        boolean wantsToExit = promptForYesNo(
+                "\nAre you sure you want to exit? (Y/N): "
+        );
+
+        return !wantsToExit;
     }
 
     private void pause() {

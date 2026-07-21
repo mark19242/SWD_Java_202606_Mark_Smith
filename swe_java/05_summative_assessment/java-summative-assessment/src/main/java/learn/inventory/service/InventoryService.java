@@ -80,4 +80,18 @@ public class InventoryService {
 
         return product.updatePrice(newPrice);
     }
+
+    // Removes a product when a matching product ID exists.
+    public boolean deleteProduct(String productID) {
+
+        Product product = findProductById(productID);
+
+        if (product == null) {
+            return false;
+        }
+
+        return products.remove(product);
+    }
+
+
 }
