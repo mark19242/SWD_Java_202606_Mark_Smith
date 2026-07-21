@@ -26,7 +26,7 @@ public class MainMenu {
             switch (choice) {
                 case "1" -> addProduct();
                 case "2" -> viewProducts();
-                case "3" -> System.out.println("\nSearch Product selected.");
+                case "3" -> searchProduct();
                 case "4" -> System.out.println("\nUpdate Product selected.");
                 case "5" -> System.out.println("\nDelete Product selected.");
                 case "6" -> System.out.println("\nSave Inventory selected.");
@@ -110,6 +110,40 @@ public class MainMenu {
                     product.getQuantity(),
                     product.getPrice()
             );
+        }
+    }
+
+    private void searchProduct() {
+
+        System.out.println("\n===== Search Product =====");
+
+        String searchTerm =
+                promptForRequiredText("Enter Product ID or Name: ");
+
+        // Search by product ID first.
+        Product productByID =
+                inventoryService.findProductById(searchTerm);
+
+        if (productByID != null) {
+            System.out.println("\nProduct Found:");
+            System.out.println(productByID.displayProductInfo());
+            return;
+        }
+
+        // If no ID matched, search by product name.
+        List<Product> matchingProducts =
+                inventoryService.findProductsByName(searchTerm);
+
+        if (matchingProducts.isEmpty()) {
+            System.out.println("\nProduct not found!");
+            return;
+        }
+
+        System.out.println("\nMatching Products:");
+
+        for (Product product : matchingProducts) {
+            System.out.println("-------------------------");
+            System.out.println(product.displayProductInfo());
         }
     }
 
