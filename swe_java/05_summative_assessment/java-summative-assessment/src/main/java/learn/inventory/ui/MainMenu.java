@@ -1,10 +1,16 @@
 package learn.inventory.ui;
+import learn.inventory.service.InventoryService;
 
 import java.util.Scanner;
 
 public class MainMenu {
 
     private final Scanner scanner = new Scanner(System.in);
+    private final InventoryService inventoryService;
+
+    public MainMenu(InventoryService inventoryService) {
+        this.inventoryService = inventoryService;
+    }
 
     public void run() {
 
