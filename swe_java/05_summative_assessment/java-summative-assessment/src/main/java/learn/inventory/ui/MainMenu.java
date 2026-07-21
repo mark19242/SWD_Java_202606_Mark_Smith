@@ -27,7 +27,7 @@ public class MainMenu {
                 case "1" -> addProduct();
                 case "2" -> viewProducts();
                 case "3" -> searchProduct();
-                case "4" -> System.out.println("\nUpdate Product selected.");
+                case "4" -> updateProduct();
                 case "5" -> System.out.println("\nDelete Product selected.");
                 case "6" -> System.out.println("\nSave Inventory selected.");
                 case "7" -> System.out.println("\nLoad Inventory selected.");
@@ -144,6 +144,120 @@ public class MainMenu {
         for (Product product : matchingProducts) {
             System.out.println("-------------------------");
             System.out.println(product.displayProductInfo());
+        }
+    }
+
+    private void updateProduct() {
+
+        System.out.println("\n===== Update Product =====");
+
+        String productID =
+                promptForRequiredText("Enter Product ID: ");
+
+        Product product =
+                inventoryService.findProductById(productID);
+
+        if (product == null) {
+            System.out.println("\nProduct not found!");
+            return;
+        }
+
+        System.out.println("\nCurrent Details:");
+        System.out.println(product.displayProductInfo());
+
+        Integer newQuantity = promptForOptionalNonNegativeInt(
+                "\nEnter New Quantity (or press Enter to skip): "
+        );
+
+        Double newPrice = promptForOptionalNonNegativeDouble(
+                "Enter New Price (or press Enter to skip): "
+        );
+
+        if (newQuantity == null && newPrice == null) {
+            System.out.println("\nNo changes were made.");
+            return;
+        }
+
+        int quantityToUse = newQuantity == null
+                ? product.getQuantity()
+                : newQuantity;
+
+        double priceToUse = newPrice == null
+                ? product.getPrice()
+                : newPrice;
+
+        boolean wasUpdated = inventoryService.updateProduct(
+                productID,
+                quantityToUse,
+                priceToUse
+        );
+
+        if (wasUpdated) {
+            System.out.println("\nProduct updated successfully!");
+            System.out.println("\nUpdated Details:");
+            System.out.println(product.displayProductInfo());
+        } else {
+            System.out.println("\nUnable to update product.");
+        }
+    }
+
+    private Double promptForOptionalNonNegativeDouble(String message) {
+
+        while (true) {
+            System.out.print(message);
+            String input = scanner.nextLine().trim();
+
+            if (input.isBlank()) {
+                return null;
+            }
+
+            try {
+                double number = Double.parseDouble(input);
+
+                if (number < 0) {
+                    System.out.println(
+                            "Please enter zero or a positive number."
+                    );
+                    continue;
+                }
+
+                return number;
+
+            } catch (NumberFormatException ex) {
+                System.out.println(
+                        "Please enter a valid price or press Enter to skip."
+                );
+            }
+        }
+    }
+
+    private Integer promptForOptionalNonNegativeInt(String message) {
+
+        while (true) {
+            System.out.print(message);
+            String input = scanner.nextLine().trim();
+
+            if (input.isBlank()) {
+                return null;
+            }
+
+            try {
+                int number = Integer.parseInt(input);
+
+                if (number < 0) {
+                    System.out.println(
+                            "Please enter zero or a positive number."
+                    );
+                    continue;
+                }
+
+                return number;
+
+            } catch (NumberFormatException ex) {
+                System.out.println(
+                        "Please enter a valid whole number or press Enter to skip."
+                );
+            }
         }
     }
 

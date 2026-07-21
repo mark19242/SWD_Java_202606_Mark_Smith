@@ -58,4 +58,26 @@ public class InventoryService {
 
         return matchingProducts;
     }
+
+    public boolean updateProduct(
+            String productID,
+            int newQuantity,
+            double newPrice
+    ) {
+        Product product = findProductById(productID);
+
+        if (product == null || newQuantity < 0 || newPrice < 0) {
+            return false;
+        }
+
+        int quantityDifference = newQuantity - product.getQuantity();
+
+        if (quantityDifference > 0) {
+            product.addStock(quantityDifference);
+        } else if (quantityDifference < 0) {
+            product.removeStock(Math.abs(quantityDifference));
+        }
+
+        return product.updatePrice(newPrice);
+    }
 }
