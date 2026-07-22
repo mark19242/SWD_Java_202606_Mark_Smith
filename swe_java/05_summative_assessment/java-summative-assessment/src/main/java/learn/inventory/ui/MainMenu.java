@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.nio.file.NoSuchFileException;
 
 import java.util.List;
 import java.util.Scanner;
@@ -36,7 +37,7 @@ public class MainMenu {
                 case "4" -> updateProduct();
                 case "5" -> deleteProduct();
                 case "6" -> saveInventory();
-                case "7" -> System.out.println("\nLoad Inventory selected.");
+                case "7" -> loadInventory();
                 case "8" -> running = confirmExit();
                 default -> System.out.println("\nPlease enter a number from 1 through 8.");
             }
@@ -277,6 +278,36 @@ public class MainMenu {
         } catch (IOException ex) {
             System.out.println(
                     "Error saving inventory data!"
+            );
+        }
+    }
+
+    private void loadInventory() {
+
+        System.out.println("\n===== Load Inventory =====");
+        System.out.println("Loading inventory data...");
+
+        try {
+            inventoryService.loadInventory();
+
+            int productCount =
+                    inventoryService.getAllProducts().size();
+
+            System.out.printf(
+                    "Inventory successfully loaded from " +
+                            "data/inventory.txt!%n" +
+                            "%d product(s) loaded.%n",
+                    productCount
+            );
+
+        } catch (NoSuchFileException ex) {
+            System.out.println(
+                    "No saved inventory file was found."
+            );
+
+        } catch (IOException ex) {
+            System.out.println(
+                    "Error loading inventory data!"
             );
         }
     }

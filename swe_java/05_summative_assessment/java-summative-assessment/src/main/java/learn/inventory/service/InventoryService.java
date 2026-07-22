@@ -29,6 +29,15 @@ public class InventoryService {
         repository.save(products);
     }
 
+    public void loadInventory() throws IOException {
+
+        // Load first so the current inventory remains safe if an error occurs.
+        List<Product> loadedProducts = repository.load();
+
+        products.clear();
+        products.addAll(loadedProducts);
+    }
+
     // Adds a product only when its ID is not already in the inventory.
     public boolean addProduct(Product product) {
 
