@@ -1,6 +1,7 @@
 package learn.inventory.ui;
 import learn.inventory.service.InventoryService;
 import learn.inventory.model.Product;
+import learn.inventory.model.StandardProduct;
 
 import java.util.List;
 import java.util.Scanner;
@@ -65,7 +66,7 @@ public class MainMenu {
         int quantity = promptForNonNegativeInt("Enter Quantity: ");
         double price = promptForNonNegativeDouble("Enter Price: ");
 
-        Product product = new Product(
+        Product product = new StandardProduct(
                 productID,
                 productName,
                 quantity,

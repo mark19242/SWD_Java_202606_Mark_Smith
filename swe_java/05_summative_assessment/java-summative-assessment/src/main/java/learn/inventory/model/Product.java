@@ -1,6 +1,6 @@
 package learn.inventory.model;
 
-public class Product {
+public abstract class Product {
 
     private String productID;
     private String productName;
@@ -62,11 +62,18 @@ public class Product {
 
     public String displayProductInfo() {
         return String.format(
-                "Product ID: %s%nProduct Name: %s%nQuantity: %d%nPrice: $%.2f",
+                "Product Type: %s%n" +
+                        "Product ID: %s%n" +
+                        "Product Name: %s%n" +
+                        "Quantity: %d%n" +
+                        "Price: $%.2f",
+                getProductType(),
                 productID,
                 productName,
                 quantity,
                 price
         );
     }
+
+    public abstract String getProductType();
 }
