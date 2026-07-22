@@ -2,6 +2,11 @@ package learn.inventory.ui;
 import learn.inventory.service.InventoryService;
 import learn.inventory.model.Product;
 import learn.inventory.model.StandardProduct;
+import learn.inventory.model.PerishableProduct;
+import learn.inventory.model.StandardProduct;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import java.util.List;
 import java.util.Scanner;
@@ -61,17 +66,35 @@ public class MainMenu {
 
         System.out.println("\n===== Add Product =====");
 
+        int productType = promptForProductType();
+
         String productID = promptForUniqueProductID();
         String productName = promptForRequiredText("Enter Product Name: ");
         int quantity = promptForNonNegativeInt("Enter Quantity: ");
         double price = promptForNonNegativeDouble("Enter Price: ");
 
-        Product product = new StandardProduct(
-                productID,
-                productName,
-                quantity,
-                price
-        );
+        Product product;
+
+        if (productType == 1) {
+            product = new StandardProduct(
+                    productID,
+                    productName,
+                    quantity,
+                    price
+            );
+        } else {
+            LocalDate expirationDate = promptForExpirationDate(
+                    "Enter Expiration Date (YYYY-MM-DD): "
+            );
+
+            product = new PerishableProduct(
+                    productID,
+                    productName,
+                    quantity,
+                    price,
+                    expirationDate
+            );
+        }
 
         boolean wasAdded = inventoryService.addProduct(product);
 
@@ -236,6 +259,46 @@ public class MainMenu {
             System.out.println("\nProduct deleted successfully!");
         } else {
             System.out.println("\nUnable to delete product.");
+        }
+    }
+
+    private int promptForProductType() {
+
+        while (true) {
+            System.out.println("1. Standard Product");
+            System.out.println("2. Perishable Product");
+            System.out.print("Select Product Type: ");
+
+            String input = scanner.nextLine().trim();
+
+            if (input.equals("1")) {
+                return 1;
+            }
+
+            if (input.equals("2")) {
+                return 2;
+            }
+
+            System.out.println(
+                    "Please enter 1 for Standard or 2 for Perishable."
+            );
+        }
+    }
+
+    private LocalDate promptForExpirationDate(String message) {
+
+        while (true) {
+            System.out.print(message);
+            String input = scanner.nextLine().trim();
+
+            try {
+                return LocalDate.parse(input);
+
+            } catch (DateTimeParseException ex) {
+                System.out.println(
+                        "Please enter the date using the YYYY-MM-DD format."
+                );
+            }
         }
     }
 
