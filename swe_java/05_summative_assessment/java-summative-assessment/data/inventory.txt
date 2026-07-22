@@ -1,0 +1,2 @@
+Standard	101	Laptop	10	999.99	
+Perishable	201	Milk	12	4.99	2026-08-01

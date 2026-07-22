@@ -1,13 +1,33 @@
 package learn.inventory.service;
 
 import learn.inventory.model.Product;
+import learn.inventory.data.InventoryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.IOException;
+import java.nio.file.Path;
 
 public class InventoryService {
 
     private final List<Product> products = new ArrayList<>();
+    private final InventoryRepository repository;
+
+    public InventoryService() {
+        this(
+                new InventoryRepository(
+                        Path.of("data", "inventory.txt")
+                )
+        );
+    }
+
+    public InventoryService(InventoryRepository repository) {
+        this.repository = repository;
+    }
+
+    public void saveInventory() throws IOException {
+        repository.save(products);
+    }
 
     // Adds a product only when its ID is not already in the inventory.
     public boolean addProduct(Product product) {

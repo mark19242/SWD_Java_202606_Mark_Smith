@@ -3,7 +3,7 @@ import learn.inventory.service.InventoryService;
 import learn.inventory.model.Product;
 import learn.inventory.model.StandardProduct;
 import learn.inventory.model.PerishableProduct;
-import learn.inventory.model.StandardProduct;
+import java.io.IOException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -35,7 +35,7 @@ public class MainMenu {
                 case "3" -> searchProduct();
                 case "4" -> updateProduct();
                 case "5" -> deleteProduct();
-                case "6" -> System.out.println("\nSave Inventory selected.");
+                case "6" -> saveInventory();
                 case "7" -> System.out.println("\nLoad Inventory selected.");
                 case "8" -> running = confirmExit();
                 default -> System.out.println("\nPlease enter a number from 1 through 8.");
@@ -259,6 +259,25 @@ public class MainMenu {
             System.out.println("\nProduct deleted successfully!");
         } else {
             System.out.println("\nUnable to delete product.");
+        }
+    }
+
+    private void saveInventory() {
+
+        System.out.println("\n===== Save Inventory =====");
+        System.out.println("Saving inventory data...");
+
+        try {
+            inventoryService.saveInventory();
+
+            System.out.println(
+                    "Inventory successfully saved to data/inventory.txt!"
+            );
+
+        } catch (IOException ex) {
+            System.out.println(
+                    "Error saving inventory data!"
+            );
         }
     }
 
