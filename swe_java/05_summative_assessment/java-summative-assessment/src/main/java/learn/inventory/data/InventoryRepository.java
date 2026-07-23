@@ -2,6 +2,8 @@ package learn.inventory.data;
 
 import learn.inventory.model.Expirable;
 import learn.inventory.model.Product;
+import learn.inventory.model.PerishableProduct;
+import learn.inventory.model.StandardProduct;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -10,8 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
-import learn.inventory.model.PerishableProduct;
-import learn.inventory.model.StandardProduct;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
