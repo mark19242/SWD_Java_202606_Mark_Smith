@@ -23,12 +23,20 @@ products. The project will not include separate user roles or permissions.
 
 ## Product Information
 
-Each product will contain:
+The application supports two product types:
 
+### Standard Product
 - Product ID
-- Product name
+- Product Name
 - Quantity
 - Price
+
+### Perishable Product
+- Product ID
+- Product Name
+- Quantity
+- Price
+- Expiration Date
 
 ## Data Structure
 
@@ -40,17 +48,20 @@ application is running.
 Inventory data will be saved to and loaded from a text or CSV file so that
 products can remain available between program sessions.
 
-## Planned Classes
+
+## Project Classes
 
 - App
-- Product
+- MainMenu
+- Product (Abstract)
+- StandardProduct
 - PerishableProduct
+- Expirable (Interface)
 - InventoryService
 - InventoryRepository
-- ConsoleIO or MainMenu
 
-Additional abstract classes or interfaces may be introduced during the
-advanced OOP stage.
+These classes separate user interaction, business logic, product models,
+and file persistence to keep the project organized and maintainable.
 
 ## Project Scope
 
@@ -63,3 +74,22 @@ The project will not include:
 - A database
 - Advanced inventory reports
 - Optional bonus features
+
+## Current Project Status
+
+The following features have been completed:
+
+- Add standard products
+- Add perishable products
+- View inventory
+- Search by product ID or product name
+- Update quantity and price
+- Delete products with confirmation
+- Save inventory to a text file
+- Load inventory from a text file
+- Input validation
+- Exception handling
+- Unit testing for `PerishableProduct`
+- Project planning documentation
+- Class diagram
+- Application flowchart
