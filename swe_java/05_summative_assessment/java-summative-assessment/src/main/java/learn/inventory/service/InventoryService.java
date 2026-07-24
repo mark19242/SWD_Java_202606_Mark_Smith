@@ -1,6 +1,7 @@
 package learn.inventory.service;
 
 import learn.inventory.model.Product;
+import learn.inventory.data.FileInventoryRepository;
 import learn.inventory.data.InventoryRepository;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class InventoryService {
 
     public InventoryService() {
         this(
-                new InventoryRepository(
+                new FileInventoryRepository(
                         Path.of("data", "inventory.txt")
                 )
         );
