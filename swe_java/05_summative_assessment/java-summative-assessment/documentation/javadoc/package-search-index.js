@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"learn.inventory"},{"l":"learn.inventory.data"},{"l":"learn.inventory.model"},{"l":"learn.inventory.service"},{"l":"learn.inventory.ui"}];updateSearchResults();
