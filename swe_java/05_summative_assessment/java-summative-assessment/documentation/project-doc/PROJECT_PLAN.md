@@ -73,6 +73,18 @@ and file persistence to keep the project organized and maintainable.
 `InventoryService` depends on the `InventoryRepository` interface instead
 of directly depending on the file-based implementation.
 
+## Project Documentation
+
+Additional project materials are located in the `documentation` folder:
+
+- `documentation/project-doc` contains the project plan, class diagram,
+  application flowchart, and handwritten pseudocode.
+- `documentation/javadoc` contains generated HTML Javadoc documentation
+  for the application's Java classes, interfaces, constructors, and methods.
+
+Open `documentation/javadoc/index.html` in a browser to view the generated
+documentation.
+
 ## Project Scope
 
 The project is a console-based Java application.
