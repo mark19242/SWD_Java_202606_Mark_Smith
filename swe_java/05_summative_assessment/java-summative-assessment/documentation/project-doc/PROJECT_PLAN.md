@@ -7,8 +7,8 @@ manage products stored in an inventory.
 
 ## User
 
-The application will have one general inventory user who can manage all
-products. The project will not include separate user roles or permissions.
+The application has one general inventory user who can manage all products.
+The project does not include separate user roles or permissions.
 
 ## Core Features
 
@@ -26,12 +26,14 @@ products. The project will not include separate user roles or permissions.
 The application supports two product types:
 
 ### Standard Product
+
 - Product ID
 - Product Name
 - Quantity
 - Price
 
 ### Perishable Product
+
 - Product ID
 - Product Name
 - Quantity
@@ -40,34 +42,42 @@ The application supports two product types:
 
 ## Data Structure
 
-An ArrayList will store and manage multiple Product objects while the
-application is running.
+An `ArrayList<Product>` stores and manages multiple product objects while
+the application is running.
+
+Because both `StandardProduct` and `PerishableProduct` inherit from
+`Product`, the same collection can manage both product types.
 
 ## Data Persistence
 
-Inventory data will be saved to and loaded from a text or CSV file so that
-products can remain available between program sessions.
+Inventory data is saved to and loaded from a tab-separated text file.
 
+Each saved record includes the product type so the application can recreate
+either a `StandardProduct` or a `PerishableProduct` when the file is loaded.
 
 ## Project Classes
 
-- App
-- MainMenu
-- Product (Abstract)
-- StandardProduct
-- PerishableProduct
-- Expirable (Interface)
-- InventoryService
-- InventoryRepository
+- `App`
+- `MainMenu`
+- `Product` — abstract parent class
+- `StandardProduct`
+- `PerishableProduct`
+- `Expirable` — interface
+- `InventoryService`
+- `InventoryRepository` — interface
+- `FileInventoryRepository`
 
 These classes separate user interaction, business logic, product models,
 and file persistence to keep the project organized and maintainable.
 
+`InventoryService` depends on the `InventoryRepository` interface instead
+of directly depending on the file-based implementation.
+
 ## Project Scope
 
-The project will be a console-based Java application.
+The project is a console-based Java application.
 
-The project will not include:
+The project does not include:
 
 - A graphical user interface
 - User authentication
@@ -83,13 +93,21 @@ The following features have been completed:
 - Add perishable products
 - View inventory
 - Search by product ID or product name
-- Update quantity and price
+- Update product quantity and price
 - Delete products with confirmation
 - Save inventory to a text file
 - Load inventory from a text file
+- Recreate the correct product type when loading
 - Input validation
 - Exception handling
+- Abstract class, inheritance, polymorphism, and interfaces
+- Repository interface and file-based repository implementation
 - Unit testing for `PerishableProduct`
+- Unit testing for shared `Product` behavior
+- Unit testing for `InventoryService`
 - Project planning documentation
 - Class diagram
 - Application flowchart
+- Handwritten pseudocode documentation
+- Javadoc comments for production classes
+- Generated HTML Javadoc documentation
