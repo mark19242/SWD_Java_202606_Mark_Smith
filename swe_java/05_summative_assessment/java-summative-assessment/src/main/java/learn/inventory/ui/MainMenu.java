@@ -1,31 +1,56 @@
 package learn.inventory.ui;
+
 import learn.inventory.service.InventoryService;
 import learn.inventory.model.Product;
 import learn.inventory.model.StandardProduct;
 import learn.inventory.model.PerishableProduct;
-import java.io.IOException;
 
+import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.nio.file.NoSuchFileException;
-
 import java.util.List;
 import java.util.Scanner;
 
+
+/**
+ * Provides the console-based user interface for the Inventory Manager.
+ *
+ * <p>This class displays menu options, collects and validates user input,
+ * delegates inventory operations to {@link InventoryService}, and displays
+ * the results to the user.</p>
+ */
 public class MainMenu {
+
+
 
     private final Scanner scanner = new Scanner(System.in);
     private final InventoryService inventoryService;
 
+
+    /**
+     * Creates the main menu using the supplied inventory service.
+     *
+     * @param inventoryService service used to manage inventory operations
+     */
+
     public MainMenu(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
     }
+
+    /**
+     * Runs the main application loop until the user confirms that they want
+     * to exit.
+     */
 
     public void run() {
 
         boolean running = true;
 
         while (running) {
+            /**
+             * Displays the available Inventory Manager menu options.
+             */
             displayMenu();
 
             String choice = scanner.nextLine().trim();
@@ -63,6 +88,10 @@ public class MainMenu {
         System.out.print("Enter your choice: ");
     }
 
+    /**
+     * Collects product information, creates either a standard or perishable
+     * product, and requests that the service add it to the inventory.
+     */
     private void addProduct() {
 
         System.out.println("\n===== Add Product =====");
@@ -106,6 +135,13 @@ public class MainMenu {
         }
     }
 
+    /**
+     * Displays all current inventory products in a formatted table.
+     *
+     * <p>If the inventory is empty, an informational message is displayed
+     * instead.</p>
+     */
+
     private void viewProducts() {
 
         System.out.println("\n===== Inventory List =====");
@@ -138,6 +174,13 @@ public class MainMenu {
         }
     }
 
+    /**
+     * Searches for a product by ID first and then by full or partial name.
+     *
+     * <p>Matching products are displayed when found. Otherwise, the user is
+     * informed that no product matched the search.</p>
+     */
+
     private void searchProduct() {
 
         System.out.println("\n===== Search Product =====");
@@ -145,7 +188,6 @@ public class MainMenu {
         String searchTerm =
                 promptForRequiredText("Enter Product ID or Name: ");
 
-        // Search by product ID first.
         Product productByID =
                 inventoryService.findProductById(searchTerm);
 
@@ -155,7 +197,6 @@ public class MainMenu {
             return;
         }
 
-        // If no ID matched, search by product name.
         List<Product> matchingProducts =
                 inventoryService.findProductsByName(searchTerm);
 
@@ -171,6 +212,14 @@ public class MainMenu {
             System.out.println(product.displayProductInfo());
         }
     }
+
+    /**
+     * Allows the user to update the quantity, price, or both values for an
+     * existing product.
+     *
+     * <p>Pressing Enter without entering a value leaves that product value
+     * unchanged.</p>
+     */
 
     private void updateProduct() {
 
@@ -226,6 +275,10 @@ public class MainMenu {
         }
     }
 
+    /**
+     * Locates a product by ID and requests confirmation before deleting it.
+     */
+
     private void deleteProduct() {
 
         System.out.println("\n===== Delete Product =====");
@@ -263,6 +316,13 @@ public class MainMenu {
         }
     }
 
+    /**
+     * Requests that the inventory service save the current inventory.
+     *
+     * <p>Any file-writing error is handled and reported to the user without
+     * terminating the application.</p>
+     */
+
     private void saveInventory() {
 
         System.out.println("\n===== Save Inventory =====");
@@ -281,6 +341,13 @@ public class MainMenu {
             );
         }
     }
+
+    /**
+     * Requests that the inventory service load products from persistent storage.
+     *
+     * <p>This method separately handles a missing file and other file-reading
+     * errors so the application can continue running.</p>
+     */
 
     private void loadInventory() {
 
@@ -312,6 +379,13 @@ public class MainMenu {
         }
     }
 
+    /**
+     * Prompts the user to select either a standard or perishable product.
+     *
+     * @return {@code 1} for a standard product or {@code 2} for a perishable
+     *         product
+     */
+
     private int promptForProductType() {
 
         while (true) {
@@ -335,6 +409,14 @@ public class MainMenu {
         }
     }
 
+    /**
+     * Repeatedly prompts for an expiration date until the user enters a valid
+     * ISO date in {@code YYYY-MM-DD} format.
+     *
+     * @param message prompt displayed to the user
+     * @return the validated expiration date
+     */
+
     private LocalDate promptForExpirationDate(String message) {
 
         while (true) {
@@ -351,6 +433,13 @@ public class MainMenu {
             }
         }
     }
+
+    /**
+     * Repeatedly prompts the user until either Y or N is entered.
+     *
+     * @param message confirmation prompt displayed to the user
+     * @return {@code true} for Y or {@code false} for N
+     */
 
     private boolean promptForYesNo(String message) {
 
@@ -369,6 +458,14 @@ public class MainMenu {
             System.out.println("Please enter Y or N.");
         }
     }
+
+    /**
+     * Prompts for an optional nonnegative decimal value.
+     *
+     * @param message prompt displayed to the user
+     * @return the entered value, or {@code null} when the user presses Enter
+     *         without entering a value
+     */
 
     private Double promptForOptionalNonNegativeDouble(String message) {
 
@@ -400,6 +497,15 @@ public class MainMenu {
         }
     }
 
+
+    /**
+     * Prompts for an optional nonnegative whole number.
+     *
+     * @param message prompt displayed to the user
+     * @return the entered value, or {@code null} when the user presses Enter
+     *         without entering a value
+     */
+
     private Integer promptForOptionalNonNegativeInt(String message) {
 
         while (true) {
@@ -430,6 +536,13 @@ public class MainMenu {
         }
     }
 
+    /**
+     * Repeatedly prompts until the user enters nonblank text.
+     *
+     * @param message prompt displayed to the user
+     * @return the validated text with surrounding whitespace removed
+     */
+
     private String promptForRequiredText(String message) {
 
         while (true) {
@@ -443,6 +556,14 @@ public class MainMenu {
             System.out.println("This field cannot be empty.");
         }
     }
+
+    /**
+     * Repeatedly prompts for a nonblank product ID that is not already used
+     * by another inventory product.
+     *
+     * @return a unique product ID
+     */
+
 
     private String promptForUniqueProductID() {
 
@@ -463,6 +584,13 @@ public class MainMenu {
             return productID;
         }
     }
+
+    /**
+     * Repeatedly prompts for a valid nonnegative whole number.
+     *
+     * @param message prompt displayed to the user
+     * @return the validated whole number
+     */
 
     private int promptForNonNegativeInt(String message) {
 
@@ -486,6 +614,13 @@ public class MainMenu {
         }
     }
 
+    /**
+     * Repeatedly prompts for a valid nonnegative decimal number.
+     *
+     * @param message prompt displayed to the user
+     * @return the validated decimal number
+     */
+
     private double promptForNonNegativeDouble(String message) {
 
         while (true) {
@@ -508,6 +643,16 @@ public class MainMenu {
         }
     }
 
+    /**
+     * Asks the user whether the application should exit.
+     *
+     * <p>The returned value represents whether the main application loop should
+     * continue running.</p>
+     *
+     * @return {@code false} when the user confirms exiting; otherwise
+     *         {@code true}
+     */
+
     private boolean confirmExit() {
 
         boolean wantsToExit = promptForYesNo(
@@ -516,6 +661,10 @@ public class MainMenu {
 
         return !wantsToExit;
     }
+
+    /**
+     * Pauses the application until the user presses Enter.
+     */
 
     private void pause() {
         System.out.print("\nPress Enter to return to the main menu...");
