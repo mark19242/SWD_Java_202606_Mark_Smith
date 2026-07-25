@@ -50,3 +50,4 @@ class ProductTest {
         assertTrue(result);
         assertEquals(6, product.getQuantity());
     }
+}
