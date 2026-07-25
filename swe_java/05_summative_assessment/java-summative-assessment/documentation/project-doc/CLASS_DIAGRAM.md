@@ -1,8 +1,8 @@
 # Inventory Manager Class Diagram
 
 This diagram shows the current class structure of the Inventory Manager
-application. It will be updated as additional product types, interfaces,
-and persistence classes are added.
+application. The application separates product models, user interaction,
+business logic, and file persistence.
 
 ```mermaid
 classDiagram
@@ -22,16 +22,39 @@ classDiagram
         -searchProduct() void
         -updateProduct() void
         -deleteProduct() void
+        -saveInventory() void
+        -loadInventory() void
     }
 
     class InventoryService {
         -List~Product~ products
+        -InventoryRepository repository
+        +InventoryService()
+        +InventoryService(InventoryRepository repository)
+        +saveInventory() void
+        +loadInventory() void
         +addProduct(Product product) boolean
         +getAllProducts() List~Product~
         +findProductById(String productID) Product
         +findProductsByName(String productName) List~Product~
         +updateProduct(String productID, int quantity, double price) boolean
         +deleteProduct(String productID) boolean
+    }
+
+    class InventoryRepository {
+        <<interface>>
+        +save(List~Product~ products) void
+        +load() List~Product~
+    }
+
+    class FileInventoryRepository {
+        -Path filePath
+        +FileInventoryRepository(Path filePath)
+        +save(List~Product~ products) void
+        +load() List~Product~
+        -formatProduct(Product product) String
+        -cleanField(String value) String
+        -parseProduct(String line, int lineNumber) Product
     }
 
     class Product {
@@ -57,29 +80,51 @@ classDiagram
         +getProductType() String
     }
 
+    class PerishableProduct {
+        -LocalDate expirationDate
+        +PerishableProduct(String productID, String productName, int quantity, double price, LocalDate expirationDate)
+        +getProductType() String
+        +getExpirationDate() LocalDate
+        +isExpired() boolean
+        +displayProductInfo() String
+    }
+
+    class Expirable {
+        <<interface>>
+        +getExpirationDate() LocalDate
+        +isExpired() boolean
+    }
+
     Product <|-- StandardProduct
+    Product <|-- PerishableProduct
+    Expirable <|.. PerishableProduct
+
+    InventoryRepository <|.. FileInventoryRepository
+    InventoryService --> InventoryRepository : depends on
     InventoryService "1" o-- "*" Product : manages
+
     MainMenu --> InventoryService : uses
     App --> InventoryService : creates
     App --> MainMenu : starts
+
+    FileInventoryRepository ..> Product : saves and recreates
+    FileInventoryRepository ..> StandardProduct : creates
+    FileInventoryRepository ..> PerishableProduct : creates
 ```
 
 ## Relationship Summary
 
-- `App` creates the `InventoryService` and starts the `MainMenu`.
-- `MainMenu` handles user interaction and sends inventory requests to
-  `InventoryService`.
-- `InventoryService` manages a collection of `Product` objects.
-- `Product` is an abstract parent class containing information and behavior
-  shared by all product types.
-- `StandardProduct` inherits from `Product` and represents a regular
-  inventory item.
-
-## Planned Updates
-
-This diagram will be updated after adding:
-
-- `PerishableProduct`
-- An interface for advanced product behavior
-- `InventoryRepository`
-- File-saving and loading relationships
+- `App` creates the `InventoryService`, supplies it to `MainMenu`, and starts
+  the application.
+- `MainMenu` handles console input and output and delegates inventory
+  operations to `InventoryService`.
+- `InventoryService` manages the in-memory collection of `Product` objects.
+- `InventoryService` depends on the `InventoryRepository` interface rather
+  than a specific storage implementation.
+- `InventoryRepository` defines the required save and load operations.
+- `FileInventoryRepository` implements the repository interface using a
+  tab-separated text file.
+- `Product` is the abstract parent class for all inventory products.
+- `StandardProduct` represents a regular inventory item.
+- `PerishableProduct` extends `Product` and implements `Expirable`.
+- `Expirable` defines the behavior required for objects with expiration dates.
