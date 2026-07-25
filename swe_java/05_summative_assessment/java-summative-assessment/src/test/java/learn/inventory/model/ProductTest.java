@@ -50,4 +50,46 @@ class ProductTest {
         assertTrue(result);
         assertEquals(6, product.getQuantity());
     }
+
+    @Test
+    void removeStockRejectsMoreThanAvailableQuantity() {
+        boolean result = product.removeStock(11);
+
+        assertFalse(result);
+        assertEquals(10, product.getQuantity());
+    }
+
+    @Test
+    void removeStockRejectsZeroOrNegativeAmount() {
+        assertFalse(product.removeStock(0));
+        assertFalse(product.removeStock(-2));
+        assertEquals(10, product.getQuantity());
+    }
+
+    @Test
+    void updatePriceChangesPrice() {
+        boolean result = product.updatePrice(899.99);
+
+        assertTrue(result);
+        assertEquals(899.99, product.getPrice());
+    }
+
+    @Test
+    void updatePriceRejectsNegativePrice() {
+        boolean result = product.updatePrice(-1.00);
+
+        assertFalse(result);
+        assertEquals(999.99, product.getPrice());
+    }
+
+    @Test
+    void displayProductInfoContainsExpectedDetails() {
+        String result = product.displayProductInfo();
+
+        assertTrue(result.contains("Product Type: Standard"));
+        assertTrue(result.contains("Product ID: 101"));
+        assertTrue(result.contains("Product Name: Laptop"));
+        assertTrue(result.contains("Quantity: 10"));
+        assertTrue(result.contains("Price: $999.99"));
+    }
 }
