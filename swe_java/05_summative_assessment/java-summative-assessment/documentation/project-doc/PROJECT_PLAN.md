@@ -117,6 +117,7 @@ The following features have been completed:
 - Unit testing for `PerishableProduct`
 - Unit testing for shared `Product` behavior
 - Unit testing for `InventoryService`
+- Unit testing for `FileInventoryRepository` save, load, and error-handling behavior
 - Project planning documentation
 - Class diagram
 - Application flowchart
