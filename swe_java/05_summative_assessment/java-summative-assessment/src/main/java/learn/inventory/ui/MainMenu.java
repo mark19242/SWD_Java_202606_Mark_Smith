@@ -26,6 +26,7 @@ public class MainMenu {
 
     private final Scanner scanner = new Scanner(System.in);
     private final InventoryService inventoryService;
+    private static final long DISPLAY_DELAY_MS = 400;
 
 
     /**
@@ -97,8 +98,26 @@ public class MainMenu {
      */
     private void displayDivider() {
         System.out.println(".-.-.  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.");
+        delayDisplay(DISPLAY_DELAY_MS);
+
         System.out.println("/ / \\\\ \\\\/ / \\\\ \\\\/ / \\\\ \\\\/ / \\\\ \\\\/ / \\\\ \\\\/ / \\\\ \\\\/ / \\\\ \\\\");
+        delayDisplay(DISPLAY_DELAY_MS);
+
         System.out.println("`-'   `-'   `-'   `-'   `-'   `-'   `-'");
+        delayDisplay(DISPLAY_DELAY_MS);
+    }
+
+    /**
+     * Briefly pauses the display to make console output easier to follow.
+     *
+     * @param milliseconds length of the pause in milliseconds
+     */
+    private void delayDisplay(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     /**
