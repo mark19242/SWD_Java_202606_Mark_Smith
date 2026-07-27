@@ -76,7 +76,11 @@ public class MainMenu {
     }
 
     private void displayMenu() {
-        System.out.println("\n===== Inventory Manager =====");
+
+        displayDivider();
+        System.out.println("                    INVENTORY MANAGER");
+        displayDivider();
+
         System.out.println("1. Add Product");
         System.out.println("2. View Products");
         System.out.println("3. Search Product");
@@ -86,6 +90,15 @@ public class MainMenu {
         System.out.println("7. Load Inventory from File");
         System.out.println("8. Exit");
         System.out.print("Enter your choice: ");
+    }
+
+    /**
+     * Displays the decorative divider used around the main menu heading.
+     */
+    private void displayDivider() {
+        System.out.println(".-.-.  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.  .-.-.");
+        System.out.println("/ / \\\\ \\\\/ / \\\\ \\\\/ / \\\\ \\\\/ / \\\\ \\\\/ / \\\\ \\\\/ / \\\\ \\\\/ / \\\\ \\\\");
+        System.out.println("`-'   `-'   `-'   `-'   `-'   `-'   `-'");
     }
 
     /**

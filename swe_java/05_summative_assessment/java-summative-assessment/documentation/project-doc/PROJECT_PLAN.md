@@ -85,6 +85,16 @@ Additional project materials are located in the `documentation` folder:
 Open `documentation/javadoc/index.html` in a browser to view the generated
 documentation.
 
+## Credits
+
+The decorative ASCII divider used in the main menu was sourced from
+ASCII Art Archive.
+
+- Artist: Richard Kirk
+- Category: Dividers
+- Source: ASCII Art Archive
+- Accessed: July 26, 2026
+
 ## Project Scope
 
 The project is a console-based Java application.
