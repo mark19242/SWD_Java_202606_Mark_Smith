@@ -1,2 +1,7 @@
-Standard	101	Laptop	10	999.99	
-Perishable	201	Milk	12	4.99	2026-08-01
+Standard	A101	Laptop	10	999.99	
+Standard	A102	Wireless Mouse	25	29.99	
+Standard	A103	Mechanical Keyboard	15	89.99	
+Standard	A104	Office Chair	8	249.99	
+Perishable	P201	Whole Milk	12	4.99	2026-08-05
+Perishable	P202	Greek Yogurt	18	4.99	2026-08-12
+Perishable	P203	Sandwich Bread	9	3.49	2026-07-20

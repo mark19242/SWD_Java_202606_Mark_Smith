@@ -134,3 +134,17 @@ The following features have been completed:
 - Handwritten pseudocode documentation
 - Javadoc comments for production classes
 - Generated HTML Javadoc documentation
+
+## Timeline and Milestones
+
+| Date | Focus | Milestone |
+|---|---|---|
+| July 19 | Pre-assessment review and planning | Reviewed the rubric, identified requirements, and began handwritten pseudocode |
+| July 20 | Continued preparation | Refined pseudocode, reviewed project expectations, and planned the initial class structure |
+| July 21 | Official project start, setup, and core features | Created the project, product model, service, menu, and core CRUD workflow |
+| July 22 | Advanced OOP and persistence | Added product hierarchy, interfaces, standard and perishable products, save, and load |
+| July 23 | Documentation and stabilization | Added project status, pseudocode images, class diagram, flowchart, and documentation organization |
+| July 24 | Architecture and code quality | Refactored persistence to code to an interface, added Javadocs, and generated HTML documentation |
+| July 25 | Testing | Expanded model, service, and repository test coverage |
+| July 26 | Final refinement | Updated documentation, completed repository testing, and refined console presentation |
+| July 27 | Final review and presentation | Final application review, final push, demonstration practice, and code-defense preparation |

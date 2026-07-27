@@ -49,9 +49,7 @@ public class MainMenu {
         boolean running = true;
 
         while (running) {
-            /**
-             * Displays the available Inventory Manager menu options.
-             */
+
             displayMenu();
 
             String choice = scanner.nextLine().trim();
@@ -76,6 +74,9 @@ public class MainMenu {
         System.out.println("\nThank you for using Inventory Manager!");
     }
 
+    /**
+     * Displays the available Inventory Manager menu options.
+     */
     private void displayMenu() {
 
         displayDivider();
