@@ -22,7 +22,7 @@ function buildLegends(legendListJson) {
     for (let legend of legendListJson) {
         table += `
         <tr>
-            <td class="image"><img src="https://storage.googleapis.com/web-server-images/images/${legend.imageName}"/></td>
+            <img src="images/${legend.imageName}"/>
             <td class="legend">${legend.imageLegend}</td>
         </tr>
         `;
@@ -33,8 +33,22 @@ function buildLegends(legendListJson) {
 }
 
 // Add all listeners when the document first loads
-window.addEventListener('DOMContentLoaded', (event) => {
-    // Go get the legends now
-    fetchPetLegends();
+window.addEventListener('DOMContentLoaded', () => {
+    const localPetLegends = [
+        {
+            imageName: "cat.png",
+            imageLegend: "A friendly cat"
+        },
+        {
+            imageName: "dog.png",
+            imageLegend: "A playful dog"
+        },
+        {
+            imageName: "turtle.png",
+            imageLegend: "A calm turtle"
+        }
+    ];
+
+    buildLegends(localPetLegends);
 });
 
