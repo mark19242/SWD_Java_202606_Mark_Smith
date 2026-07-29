@@ -22,10 +22,12 @@ function buildLegends(legendListJson) {
     for (let legend of legendListJson) {
         table += `
         <tr>
-            <img src="images/${legend.imageName}"/>
+            <td class="image">
+                <img src="images/${legend.imageName}" alt="${legend.imageLegend}">
+            </td>
             <td class="legend">${legend.imageLegend}</td>
         </tr>
-        `;
+    `;
     }
 
     // Setting innerHTML as the built-up table
