@@ -1,0 +1,7 @@
+{
+    "name": "image-legends-manager-http",
+    "version": "1.0.0",
+    "dependencies": {
+        "@google-cloud/datastore": "^7.0.0"
+    }
+}

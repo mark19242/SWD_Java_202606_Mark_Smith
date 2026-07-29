@@ -1,0 +1,31 @@
+h1 {
+  font-family: 'Helvetica', "sans-serif";
+  font-size: 36px;
+  color: black;
+}
+
+body{
+  margin: 16px;
+  background-color: #ABC2B5;
+  color: #36454F;
+}
+
+div {
+  margin-bottom: 16px;
+  color: #36454F;
+}
+
+img {
+  width: 100px;
+}
+
+td.image {
+  width: 20%;
+  padding-right: 16px;
+}
+
+td.legend {
+  width: 80%;
+  font-size: 24px;
+  font-weight: bold;
+}
