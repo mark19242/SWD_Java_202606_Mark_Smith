@@ -1,18 +1,18 @@
 // Javascript code to go along with our pet gallery website
 
 // Fetch legends from the Cloud Function API call
-const fetchPetLegends = async () => {
-    const response = await fetch(
-        'https://us-central1-web-storage-demo.cloudfunctions.net/function-legends',
-        {
-            method: 'GET',
-            headers: {
-                accept: 'application/json',
-            },
-        });
-    const listJson = await response.json(); //extract JSON from the http response
-    buildLegends(listJson);
-}
+// const fetchPetLegends = async () => {
+//     const response = await fetch(
+//         'https://us-central1-web-storage-demo.cloudfunctions.net/function-legends',
+//         {
+//             method: 'GET',
+//             headers: {
+//                 accept: 'application/json',
+//             },
+//         });
+//     const listJson = await response.json(); //extract JSON from the http response
+//     buildLegends(listJson);
+// }
 
 // Function to add all legends returned from storage
 function buildLegends(petList) {
