@@ -20,8 +20,18 @@ SELECT 6 + 6 as six_six_sum;
 SELECT 5/2 as five_by_two;
 
 -- 5. Write a SELECT query that divides 5.0 by 2.0.
+
+SELECT 5.0 / 2.0 AS five_point_zero_div_two_point_zero;
+
 -- 6. Write a SELECT query with 2 values - 6 divided by 4 and the remainder.
+
+SELECT
+    6 / 4 AS quotient,
+    6 % 4 AS remainder;
+
 -- 7. Write a SELECT query for 6 squared.
+
+SELECT POWER(6, 2) AS six_squared;
 
 /* ------------------------------------------------------------------------------------ */
 /* SELECT AGAINST TABLES EXERCISE: ANSWERS INCLUDED AFTER THE SOURCE QUERY AS A COMMENT */
@@ -155,15 +165,15 @@ SELECT 5/2 as five_by_two;
 -- ANSWER: 13 rows;
 -- Most room descriptions are NULL (empty).
 -- Only two rooms have descriptions:
--- Room 100: "Gymnasium"
--- Room 100: "Chemistry Lab"
+-- Building 1, Room 100: "Gymnasium"
+-- Building 2, Room 100: "Chemistry Lab"
 
 -- 9. How many unique SubjectIDs appear in the Course table?
 
 	SELECT COUNT(DISTINCT subject_id) AS unique_subjects
 	FROM course;
 	
--- ANSWER: 1 row; 5;
+-- ANSWER: 1 row; There are 5 unique SubjectIDs.;
 
 
 -- 10.How many grade types are there?
@@ -198,8 +208,8 @@ SELECT 5/2 as five_by_two;
 	FROM grade_item;
 	
 -- ANSWER: 2 rows;
--- 3
--- 4
+-- 3 "Project"
+-- 4 "Exam"
 
 	
 	
