@@ -1,0 +1,49 @@
+Exercise: Case, Casting, and Formatting
+Written Answers
+
+
+Part 1: Case Sensitivity & Case Formatting
+
+Question 2:
+The query returned 0 rows because the stored value is "john", but the
+query searched for "JOHN". This shows that the text comparison is
+case-sensitive.
+
+
+Part 2: Casting
+
+Question 1:
+The order_total column needs casting because it is stored as VARCHAR,
+even though it contains monetary values. It should be cast to
+DECIMAL(10,2) before performing numeric calculations or formatting.
+
+
+Reflection Questions
+
+1. What potential issues could arise from leaving order_total as a string?
+
+Leaving order_total as a string could cause incorrect sorting and make
+numeric calculations more difficult. It could also allow invalid
+characters to be stored with the monetary values.
+
+
+2. How does your database's case sensitivity impact query design?
+
+Case sensitivity means text values must use the correct capitalization
+when they are compared. Queries may need consistent casing or functions
+such as UPPER(), LOWER(), or ILIKE when a case-insensitive search is
+needed.
+
+
+3. What are the risks of relying solely on implicit casting?
+
+Implicit casting may cause unexpected results, conversion errors,
+precision loss, or performance problems. Explicit casting makes the
+intended data type clearer and more predictable.
+
+
+4. Why is formatting critical in customer-facing reports?
+
+Formatting makes reports consistent, readable, and professional.
+Customer names, dates, and monetary values should be displayed in a
+clear format that is easy for the customer to understand.
