@@ -1,0 +1,117 @@
+Exercise: Joins
+Written Answers
+
+
+Question 1
+
+The course and subject tables were joined using subject_id.
+
+The query did not use table aliases and explicitly used INNER JOIN.
+It filtered the results to the History subject and ordered the courses
+alphabetically by course name.
+
+Results:
+African History
+American History
+Asian History
+European History
+Middle Eastern History
+
+Total rows returned: 5
+
+
+Question 2
+
+The course and subject tables were joined using subject_id.
+
+The query used c as the alias for course and s as the alias for
+subject. It used JOIN without the optional INNER keyword.
+
+Results:
+African History
+American History
+Asian History
+European History
+Middle Eastern History
+
+Total rows returned: 5
+
+
+Question 3
+
+The course and subject tables were joined using subject_id.
+
+The query used table aliases and explicitly included the INNER keyword.
+
+Results:
+African History
+American History
+Asian History
+European History
+Middle Eastern History
+
+Total rows returned: 5
+
+
+Question 4
+
+LIKE '%Art%' was used to find subject names containing "Art"
+anywhere in the name.
+
+The query returned courses from the Arts and Language Arts subjects.
+The results were ordered by subject name and then course name.
+
+Results:
+
+Arts:
+Art 1
+Art 2
+Band
+Choir
+Theater
+
+Language Arts:
+AP English
+English 1
+English 2
+English 3
+
+Total rows returned: 9
+
+
+Question 5
+
+The room and building tables were joined using building_id.
+
+IS NULL was used to find rooms that were missing description
+information.
+
+Results:
+Room 204 - Main Campus
+Room 203 - Main Campus
+Room 202 - Main Campus
+Room 201 - Main Campus
+Room 200 - Main Campus
+Room 105 - Main Campus
+Room 104 - Main Campus
+Room 103 - Main Campus
+Room 102 - Main Campus
+Room 101 - Main Campus
+Room 101 - Vocational Tech Campus
+
+Total rows returned: 11
+
+
+Question 6
+
+The teacher, section, and course tables were joined together.
+
+The section table acted as the bridge between the teacher and course
+tables. The results were filtered to Geno Booy and courses worth more
+than three credit hours.
+
+Results:
+Anatomy
+Chemistry
+
+Total rows returned: 2
