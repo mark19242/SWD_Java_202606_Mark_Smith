@@ -1,0 +1,14 @@
+Exercise: Inserting SQL
+Reflection Questions
+
+1. What happens if you try to insert a record that violates a foreign key constraint?
+
+The database will reject the insert because the value does not match an existing record in the related table. For example, PostgreSQL would not allow us to use PaymentMethodId 999 because that payment method did not exist.
+
+2. Why is using auto-increment helpful for primary keys?
+
+Auto-increment makes it easier because the database creates a unique ID for each new record automatically. This means we do not have to keep track of the next ID ourselves.
+
+3. What are the benefits of bulk inserting records?
+
+Bulk inserting lets us add several records with one INSERT statement instead of writing a separate statement for each one. This saves time and makes the SQL easier to manage.
