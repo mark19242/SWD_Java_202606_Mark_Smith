@@ -1,0 +1,14 @@
+Exercise: Updating SQL
+Reflection Questions
+
+1. Why is it important to run a SELECT query before updating?
+
+Running a SELECT query first lets you see exactly which record or records will be changed. This helps you catch mistakes before making changes to the database.
+
+2. What risks are associated with forgetting a WHERE clause?
+
+If you forget the WHERE clause, the UPDATE statement can change every record in the table instead of only the records you intended to update.
+
+3. How do foreign keys protect data consistency during updates?
+
+Foreign keys make sure that a value matches an existing record in the related table. For example, PostgreSQL would not allow us to change a product's CategoryId to 999 because that category did not exist. This prevents records from being connected to missing or invalid data.
