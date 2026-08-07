@@ -1,0 +1,14 @@
+Exercise: Deleting SQL
+Reflection Questions
+
+1. Why is it important to use SELECT before DELETE?
+
+Using SELECT first lets you see exactly which records will be deleted. This helps make sure your WHERE clause is correct before you remove any data.
+
+2. What happens if you try to delete a parent record that is referenced by a foreign key?
+
+The database will usually stop the delete because another record still depends on it. You need to delete or update the related child records first before deleting the parent record.
+
+3. How would you protect critical records in a production environment?
+
+I would avoid deleting records directly in production unless it was necessary. Deletions should be handled through the application or by a database administrator, with checks in place to make sure the correct data is being removed.
