@@ -1,0 +1,14 @@
+Exercise: Stored Procedures and Transactions
+Reflection Answers
+
+1. Why are stored procedures useful in maintaining consistency across database operations?
+
+Stored procedures keep reusable SQL in one place, so the same database operation can be performed the same way each time. Instead of rewriting the same query in different parts of an application, we can call the stored procedure by name. This helps reduce mistakes and keeps database behavior more consistent.
+
+2. How can stored procedures improve performance and security in database systems?
+
+In general, stored procedures can improve performance because commonly used database logic is stored on the database server and can be called when needed instead of repeatedly sending the full SQL logic from an application. They can also improve security because an application can be given permission to run a stored procedure without necessarily being given direct access to every table or database operation.
+
+3. What are the key differences between writing stored procedures in PostgreSQL and MySQL?
+
+The main difference is the syntax used to create the procedure. MySQL uses DELIMITER commands and BEGIN/END blocks so it can separate the statements inside the procedure. PostgreSQL can use LANGUAGE SQL or PL/pgSQL with dollar-quoted blocks such as $$ ... $$. Both databases use CALL to run a stored procedure, but the exact procedure syntax and some database-specific features are different.
