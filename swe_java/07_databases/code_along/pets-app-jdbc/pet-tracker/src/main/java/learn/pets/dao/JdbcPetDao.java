@@ -57,6 +57,30 @@ public class JdbcPetDao implements PetDao{
      */
     @Override
     public Pet findPetById(int id) {
+
+        final String sql = BASE_PET_SELECT + "WHERE pet_id = ?;";
+
+        try (
+                Connection conn = dataSource.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setInt(1, id);
+
+            try (ResultSet results = stmt.executeQuery()) {
+
+                if (results.next()) {
+                    return mapRowToPet(results);
+                }
+            }
+
+        } catch (SQLException sqlex) {
+            throw new RuntimeException(
+                    "Error communicating with Database: "
+                            + sqlex.getErrorCode()
+            );
+        }
+
         return null;
     }
 
@@ -66,7 +90,41 @@ public class JdbcPetDao implements PetDao{
      */
     @Override
     public Pet add(Pet pet) {
-        return null;
+
+        final String sql =
+                "INSERT INTO pet (name, type) VALUES (?, ?);";
+
+        try (
+                Connection conn = dataSource.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(
+                        sql,
+                        Statement.RETURN_GENERATED_KEYS)
+        ) {
+
+            stmt.setString(1, pet.getName());
+            stmt.setString(2, pet.getType());
+
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected <= 0) {
+                return null;
+            }
+
+            try (ResultSet keys = stmt.getGeneratedKeys()) {
+
+                if (keys.next()) {
+                    pet.setId(keys.getInt(1));
+                }
+            }
+
+            return pet;
+
+        } catch (SQLException sqlex) {
+            throw new RuntimeException(
+                    "Error Communication with Database: "
+                            + sqlex.getErrorCode()
+            );
+        }
     }
 
     /**
@@ -75,7 +133,29 @@ public class JdbcPetDao implements PetDao{
      */
     @Override
     public Boolean update(Pet pet) {
-        return null;
+
+        final String sql =
+                "UPDATE pet SET name = ?, type = ? WHERE pet_id = ?;";
+
+        try (
+                Connection conn = dataSource.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setString(1, pet.getName());
+            stmt.setString(2, pet.getType());
+            stmt.setInt(3, pet.getId());
+
+            int rowsAffected = stmt.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException sqlex) {
+            throw new RuntimeException(
+                    "Error Communication with Database: "
+                            + sqlex.getErrorCode()
+            );
+        }
     }
 
     /**
@@ -84,7 +164,27 @@ public class JdbcPetDao implements PetDao{
      */
     @Override
     public Boolean deleteById(int id) {
-        return null;
+
+        final String sql =
+                "DELETE FROM pet WHERE pet_id = ?;";
+
+        try (
+                Connection conn = dataSource.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setInt(1, id);
+
+            int rowsAffected = stmt.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException sqlex) {
+            throw new RuntimeException(
+                    "Error Communication with Database: "
+                            + sqlex.getErrorCode()
+            );
+        }
     }
 
 
