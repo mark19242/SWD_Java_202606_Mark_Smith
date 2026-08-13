@@ -2,6 +2,7 @@ package org.example.data.impl;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.example.data.exceptions.InternalErrorException;
 import org.example.data.PaymentTypeRepo;
 import org.example.model.PaymentType;
@@ -31,13 +32,21 @@ public class PaymentTypeJdbcRepository implements PaymentTypeRepo {
     public List<PaymentType> getAll() throws InternalErrorException {
 
         String sql = """
-            SELECT
-                payment_type_id,
-                payment_type_name
-            FROM payment_type
-            ORDER BY payment_type_id;
-            """;
+                SELECT
+                    payment_type_id,
+                    payment_type_name
+                FROM payment_type
+                ORDER BY payment_type_id;
+                """;
 
-        return jdbcTemplate.query(sql, paymentTypeMapper);
+        try {
+            return jdbcTemplate.query(sql, paymentTypeMapper);
+        } catch (DataAccessException ex) {
+            throw new InternalErrorException(
+                    "Unable to retrieve payment types.",
+                    ex
+            );
+        }
     }
+
 }
