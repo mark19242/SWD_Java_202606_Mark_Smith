@@ -1,5 +1,8 @@
 package org.example.service;
 
+import java.util.List;
+import java.util.Collections;
+
 import org.example.data.exceptions.InternalErrorException;
 import org.example.data.exceptions.RecordNotFoundException;
 import org.example.data.impl.ServerJdbcRepository;
@@ -82,4 +85,68 @@ class ServerJdbcRepositoryTest {
                 () -> repository.getServerById(1)
         );
     }
+
+    @Test
+    void getAllAvailableServersReturnsServersForValidDate() throws Exception {
+
+        LocalDate date = LocalDate.of(2022, 6, 1);
+
+        Server server = new Server();
+        server.setServerID(1);
+        server.setFirstName("Mersey");
+        server.setLastName("Giacometti");
+        server.setHireDate(LocalDate.of(2020, 2, 27));
+        server.setTermDate(null);
+
+        when(jdbcTemplate.query(
+                anyString(),
+                any(RowMapper.class),
+                eq(date),
+                eq(date)))
+                .thenReturn(List.of(server));
+
+        List<Server> actual = repository.getAllAvailableServers(date);
+
+        assertNotNull(actual);
+        assertEquals(1, actual.size());
+        assertEquals(server, actual.get(0));
+    }
+
+    @Test
+    void getAllAvailableServersReturnsEmptyListWhenNoneAreAvailable()
+            throws Exception {
+
+        LocalDate date = LocalDate.of(2019, 12, 31);
+
+        when(jdbcTemplate.query(
+                anyString(),
+                any(RowMapper.class),
+                eq(date),
+                eq(date)))
+                .thenReturn(Collections.emptyList());
+
+        List<Server> actual = repository.getAllAvailableServers(date);
+
+        assertNotNull(actual);
+        assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    void getAllAvailableServersThrowsInternalErrorWhenDatabaseFails() {
+
+        LocalDate date = LocalDate.of(2022, 6, 1);
+
+        when(jdbcTemplate.query(
+                anyString(),
+                any(RowMapper.class),
+                eq(date),
+                eq(date)))
+                .thenThrow(new DataAccessException("Database error") {});
+
+        assertThrows(
+                InternalErrorException.class,
+                () -> repository.getAllAvailableServers(date)
+        );
+    }
+
 }
