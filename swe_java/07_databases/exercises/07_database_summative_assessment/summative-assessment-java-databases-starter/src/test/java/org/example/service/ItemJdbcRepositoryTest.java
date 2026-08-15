@@ -245,4 +245,53 @@ class ItemJdbcRepositoryTest {
         );
     }
 
+    @Test
+    void getAllItemCategoriesReturnsCategories() throws Exception {
+
+        ItemCategory category =
+                new ItemCategory(1, "Appetizers");
+
+        when(jdbcTemplate.query(
+                anyString(),
+                any(RowMapper.class)))
+                .thenReturn(List.of(category));
+
+        List<ItemCategory> actual =
+                repository.getAllItemCategories();
+
+        assertNotNull(actual);
+        assertEquals(1, actual.size());
+        assertEquals(category, actual.get(0));
+    }
+
+    @Test
+    void getAllItemCategoriesReturnsEmptyListWhenNoneExist()
+            throws Exception {
+
+        when(jdbcTemplate.query(
+                anyString(),
+                any(RowMapper.class)))
+                .thenReturn(Collections.emptyList());
+
+        List<ItemCategory> actual =
+                repository.getAllItemCategories();
+
+        assertNotNull(actual);
+        assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    void getAllItemCategoriesThrowsInternalErrorWhenDatabaseFails() {
+
+        when(jdbcTemplate.query(
+                anyString(),
+                any(RowMapper.class)))
+                .thenThrow(new DataAccessException("Database error") {});
+
+        assertThrows(
+                InternalErrorException.class,
+                () -> repository.getAllItemCategories()
+        );
+    }
+
 }
