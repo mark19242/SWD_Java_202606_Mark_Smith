@@ -240,18 +240,59 @@ public class OrderJdbcRepository implements OrderRepo {
     }
 
     @Override
-    public List<Order> getAllOrders() throws InternalErrorException, RecordNotFoundException {
-        final String sql = "SELECT order_id, server_id, order_date, sub_total, tax, tip, total FROM orders;";
+    public List<Order> getAllOrders()
+            throws InternalErrorException, RecordNotFoundException {
+
+        String sql = """
+            SELECT
+                o.order_id,
+                o.server_id,
+                o.order_date,
+                o.sub_total,
+                o.tax,
+                o.tip,
+                o.total,
+                s.first_name AS server_first_name,
+                s.last_name AS server_last_name,
+                s.hire_date AS server_hire_date,
+                s.term_date AS server_term_date
+            FROM orders o
+            INNER JOIN server s
+                ON o.server_id = s.server_id
+            ORDER BY o.order_id
+            """;
+
         try {
-            List<Order> orders = jdbcTemplate.query(sql, orderMapper);
+            List<Order> orders = jdbcTemplate.query(
+                    sql,
+                    orderWithServerMapper
+            );
+
             if (orders.isEmpty()) {
-                throw new RecordNotFoundException("No orders found in database.");
+                throw new RecordNotFoundException(
+                        "No orders found in database."
+                );
             }
+
+            for (Order order : orders) {
+                order.setItems(
+                        loadOrderItems(order.getOrderID())
+                );
+
+                order.setPayments(
+                        loadPayments(order.getOrderID())
+                );
+            }
+
             return orders;
+
         } catch (RecordNotFoundException ex) {
             throw ex;
         } catch (DataAccessException ex) {
-            throw new InternalErrorException("Database error fetching all orders.", ex);
+            throw new InternalErrorException(
+                    "Database error fetching all orders.",
+                    ex
+            );
         }
     }
 
