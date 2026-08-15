@@ -19,13 +19,14 @@ class BistroServiceTest {
     private BistroService svc;
 
     @Test
-    void testCalculateOrderTotals() throws RecordNotFoundException, InternalErrorException {
-//        Order expected = orderRepo.getOrderById(1);
-//        Order actual = orderRepo.getOrderById(1);
-//
-//        svc.calculateOrderTotals(actual);
-//        assertEquals(expected, actual);
-        //Remove this when all of the repos are ready for the Service test
-        assertTrue(false);
+    void testCalculateOrderTotals()
+            throws RecordNotFoundException, InternalErrorException {
+
+        Order expected = orderRepo.getOrderById(1);
+        Order actual = orderRepo.getOrderById(1);
+
+        svc.calculateOrderTotals(actual);
+
+        assertEquals(expected, actual);
     }
 }
