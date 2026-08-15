@@ -1,0 +1,163 @@
+# Project Journal - Java Databases Summative Assessment
+
+## Project Overview
+
+The goal of this project was to finish the database portion of the Simple Bistro restaurant application using Java, Spring JDBC, and PostgreSQL.
+
+A lot of the project was already provided, including the user interface, models, service classes, and repository interfaces. My main job was to connect those parts to the database by completing the repository classes, writing SQL queries, creating row mappers, handling database errors, and testing everything.
+
+## Database Setup
+
+I used PostgreSQL and pgAdmin4 for the database.
+
+I worked with two databases:
+
+- simple_bistro - the main application database
+- simple_bistro_test - the database used for testing
+
+The test database was reset using the SQL scripts that were provided so the tests could start with the same data each time.
+
+## Repository Implementations
+
+### PaymentType Repository
+
+For the PaymentType repository, I created the code needed to retrieve all of the available payment types from the database.
+
+I worked on:
+
+- PaymentTypeJdbcRepository
+- PaymentType RowMapper
+- PaymentType.sql
+- Unit tests
+
+### Tax Repository
+
+For the Tax repository, I created the code needed to find the correct tax rate for a certain date.
+
+The query checks that the tax started on or before the date being searched and that the tax has either not ended yet or ended after that date.
+
+I worked on:
+
+- TaxJdbcRepository
+- Tax RowMapper
+- Tax.sql
+- Unit tests
+
+### Server Repository
+
+For the Server repository, I created methods to:
+
+- Find a server by ID
+- Find all servers that were available on a certain date
+
+The available server query checks the server's hire date and termination date.
+
+I worked on:
+
+- ServerJdbcRepository
+- Server RowMapper
+- Server.sql
+- Unit tests
+
+### Item Repository
+
+For the Item repository, I created methods to:
+
+- Find an item by ID
+- Find all available items
+- Find items by category
+- Get all item categories
+
+I joined the Item and ItemCategory tables so that an Item could include its category information instead of only having the category ID.
+
+I worked on:
+
+- ItemJdbcRepository
+- Item RowMapper
+- ItemCategory RowMapper
+- Item.sql
+- Unit tests
+
+### Order Repository
+
+The Order repository was the most challenging part of the project.
+
+The starter code only loaded the basic information from the orders table. However, an Order also contains a Server, OrderItems, and Payments.
+
+I updated the repository so that when an Order is loaded, it also includes:
+
+- Server information
+- OrderItems
+- Item information
+- ItemCategory information
+- Payments
+- PaymentType information
+
+Instead of putting everything into one very large SQL join, I used separate queries to load the related information. This made the data easier to work with and avoided getting duplicate rows.
+
+I also updated addOrder and updateOrder so that OrderItems and Payments are saved along with the main Order.
+
+Transactions were used when multiple database tables had to be changed together.
+
+I worked on:
+
+- OrderJdbcRepository
+- Additional RowMappers
+- Order.sql
+- Repository unit tests
+- Integration tests using PostgreSQL
+
+## Testing
+
+I tested each repository while I was building it.
+
+After all of the repositories were finished, I ran the full test suite.
+
+Final test results:
+
+- 40 tests passed!
+- 0 tests failed 😀
+
+I also created integration tests for the Order repository. These tests used the real PostgreSQL test database instead of only using mocked database calls.
+
+This helped me find problems that the regular unit tests did not catch, such as getting the generated Order ID from PostgreSQL and making sure OrderItems and Payments were actually being saved.
+
+## Application Verification
+
+After all 40 tests passed, I ran the actual console application to make sure everything worked together.
+
+I tested:
+
+- Displaying all orders
+- Displaying one complete order
+- Adding a new order
+- Saving and reopening the new order
+- Editing an order
+- Saving and reopening the edited order
+- Deleting an order
+
+For the add, edit, and delete testing, I used the simple_bistro_test database so I would not change the main database.
+
+After testing was finished, I changed the application back to the simple_bistro database.
+
+## Challenges and Lessons Learned
+
+This project was definitely more than meets the eye. At first, it looked like I was mainly going to be completing repositories and connecting them to the database, but it became much more challenging once I started working through the existing code.
+
+One of the hardest parts for me was working with legacy code, or code that someone else had already written. I learned that you cannot just jump in and start changing things. You have to take time to understand how the different classes, models, repositories, services, tests, and database tables all work together.
+
+The process was also very tedious at times because changing one thing could create a domino effect. I might fix one part of the Order repository, but then realize that another part also needed to change because it depended on the first part. Then that change could affect the tests, the related database records, or how the application displayed the data.
+
+The Order repository was the best example of this. At first, it looked like I only needed to retrieve information from the orders table. As I worked through it, I realized that a complete Order also depended on Server, OrderItem, Item, ItemCategory, Payment, and PaymentType information. Fixing how an Order was loaded eventually led to checking how Orders were added, updated, and deleted as well.
+
+It was challenging, but it helped me understand why planning is so important when refactoring existing code. Sometimes the first problem you see is only the beginning of the actual problem. I learned to make smaller changes, test them, and make sure everything still worked before moving on to the next change.
+
+I also learned that unit tests using mocks do not always catch the same problems that happen when the application connects to a real database. The integration tests helped me find issues with generated IDs and making sure related OrderItem and Payment records were actually saved.
+
+Overall, this project helped me better understand how connected the different layers of an application can be and why making one change can sometimes lead to several other changes.
+
+## Final Status
+
+The database repositories are complete and the application is working.
+
+All of the required SQL planning files are included, the application was tested from beginning to end, and the final test suite passed with 40 out of 40 tests!
