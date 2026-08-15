@@ -297,6 +297,7 @@ public class OrderJdbcRepository implements OrderRepo {
     }
 
     @Override
+    @Transactional
     public Order addOrder(Order order) throws InternalErrorException {
         final String sql = "INSERT INTO orders (server_id, order_date, sub_total, tax, tip, total) " +
                 "VALUES (?, ?, ?, ?, ?, ?);";
@@ -304,7 +305,10 @@ public class OrderJdbcRepository implements OrderRepo {
 
         try {
             jdbcTemplate.update(connection -> {
-                PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement ps = connection.prepareStatement(
+                        sql,
+                        new String[]{"order_id"}
+                );
                 ps.setInt(1, order.getServerID());
                 ps.setTimestamp(2, Timestamp.valueOf(order.getOrderDate()));
                 ps.setBigDecimal(3, order.getSubTotal());
@@ -317,9 +321,71 @@ public class OrderJdbcRepository implements OrderRepo {
             if (keyHolder.getKey() != null) {
                 order.setOrderID(keyHolder.getKey().intValue());
             }
+
+            addOrderItems(order);
+            addPayments(order);
+
             return order;
         } catch (DataAccessException ex) {
             throw new InternalErrorException("Database error inserting order.", ex);
+        }
+    }
+
+    private void addOrderItems(Order order) {
+
+        if (order.getItems() == null) {
+            return;
+        }
+
+        String sql = """
+            INSERT INTO order_item (
+                order_id,
+                item_id,
+                quantity,
+                price
+            )
+            VALUES (?, ?, ?, ?)
+            """;
+
+        for (OrderItem orderItem : order.getItems()) {
+
+            jdbcTemplate.update(
+                    sql,
+                    order.getOrderID(),
+                    orderItem.getItemID(),
+                    orderItem.getQuantity(),
+                    orderItem.getPrice()
+            );
+
+            orderItem.setOrderID(order.getOrderID());
+        }
+    }
+
+    private void addPayments(Order order) {
+
+        if (order.getPayments() == null) {
+            return;
+        }
+
+        String sql = """
+            INSERT INTO payment (
+                payment_type_id,
+                order_id,
+                amount
+            )
+            VALUES (?, ?, ?)
+            """;
+
+        for (Payment payment : order.getPayments()) {
+
+            jdbcTemplate.update(
+                    sql,
+                    payment.getPaymentTypeID(),
+                    order.getOrderID(),
+                    payment.getAmount()
+            );
+
+            payment.setOrderID(order.getOrderID());
         }
     }
 

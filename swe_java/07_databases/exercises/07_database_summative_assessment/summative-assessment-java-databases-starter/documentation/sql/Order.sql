@@ -88,3 +88,27 @@ FROM orders o
          INNER JOIN server s
                     ON o.server_id = s.server_id
 ORDER BY o.order_id;
+
+-- ==========================================
+-- Add Order Item
+-- ==========================================
+
+INSERT INTO order_item (
+    order_id,
+    item_id,
+    quantity,
+    price
+)
+VALUES (?, ?, ?, ?);
+
+
+-- ==========================================
+-- Add Payment
+-- ==========================================
+
+INSERT INTO payment (
+    payment_type_id,
+    order_id,
+    amount
+)
+VALUES (?, ?, ?);

@@ -73,4 +73,56 @@ class OrderJdbcRepositoryIntegrationTest extends BaseJdbcTest {
 
         assertNotNull(firstPayment.getPaymentType());
     }
+
+    @Test
+    void addOrderPersistsItemsAndPayments() throws Exception {
+
+        Order order = new Order();
+        order.setServerID(1);
+        order.setOrderDate(
+                java.time.LocalDateTime.of(2022, 6, 1, 12, 0)
+        );
+        order.setSubTotal(new java.math.BigDecimal("8.00"));
+        order.setTax(new java.math.BigDecimal("0.50"));
+        order.setTip(new java.math.BigDecimal("1.50"));
+        order.setTotal(new java.math.BigDecimal("10.00"));
+
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItemID(1);
+        orderItem.setQuantity(1);
+        orderItem.setPrice(new java.math.BigDecimal("8.00"));
+
+        order.setItems(java.util.List.of(orderItem));
+
+        Payment payment = new Payment();
+        payment.setPaymentTypeID(1);
+        payment.setAmount(new java.math.BigDecimal("10.00"));
+
+        order.setPayments(java.util.List.of(payment));
+
+        Order added = repository.addOrder(order);
+
+        assertTrue(added.getOrderID() > 0);
+
+        // Reload from Postgres
+        Order reloaded =
+                repository.getOrderById(added.getOrderID());
+
+        assertNotNull(reloaded.getItems());
+        assertEquals(1, reloaded.getItems().size());
+
+        assertNotNull(reloaded.getPayments());
+        assertEquals(1, reloaded.getPayments().size());
+
+        assertEquals(
+                1,
+                reloaded.getItems().get(0).getItemID()
+        );
+
+        assertEquals(
+                1,
+                reloaded.getPayments().get(0).getPaymentTypeID()
+        );
+    }
+
 }
