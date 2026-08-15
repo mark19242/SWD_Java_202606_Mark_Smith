@@ -164,4 +164,85 @@ class ItemJdbcRepositoryTest {
         );
     }
 
+    @Test
+    void getItemsByCategoryReturnsItemsForValidDateAndCategory()
+            throws Exception {
+
+        LocalDate date = LocalDate.of(2022, 6, 1);
+        int categoryID = 1;
+
+        ItemCategory category = new ItemCategory(1, "Appetizers");
+
+        Item item = new Item();
+        item.setItemID(6);
+        item.setItemCategoryID(1);
+        item.setItemName("Mini Corn Dogs");
+        item.setStartDate(LocalDate.of(2022, 6, 1));
+        item.setEndDate(LocalDate.of(2022, 9, 30));
+        item.setItemCategory(category);
+
+        when(jdbcTemplate.query(
+                anyString(),
+                any(RowMapper.class),
+                eq(date),
+                eq(date),
+                eq(categoryID)))
+                .thenReturn(List.of(item));
+
+        List<Item> actual =
+                repository.getItemsByCategory(date, categoryID);
+
+        assertNotNull(actual);
+        assertEquals(1, actual.size());
+        assertEquals(item, actual.get(0));
+
+        assertNotNull(actual.get(0).getItemCategory());
+        assertEquals(
+                "Appetizers",
+                actual.get(0).getItemCategory().getItemCategoryName()
+        );
+    }
+
+    @Test
+    void getItemsByCategoryReturnsEmptyListWhenNoneMatch()
+            throws Exception {
+
+        LocalDate date = LocalDate.of(2019, 12, 31);
+        int categoryID = 1;
+
+        when(jdbcTemplate.query(
+                anyString(),
+                any(RowMapper.class),
+                eq(date),
+                eq(date),
+                eq(categoryID)))
+                .thenReturn(Collections.emptyList());
+
+        List<Item> actual =
+                repository.getItemsByCategory(date, categoryID);
+
+        assertNotNull(actual);
+        assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    void getItemsByCategoryThrowsInternalErrorWhenDatabaseFails() {
+
+        LocalDate date = LocalDate.of(2022, 6, 1);
+        int categoryID = 1;
+
+        when(jdbcTemplate.query(
+                anyString(),
+                any(RowMapper.class),
+                eq(date),
+                eq(date),
+                eq(categoryID)))
+                .thenThrow(new DataAccessException("Database error") {});
+
+        assertThrows(
+                InternalErrorException.class,
+                () -> repository.getItemsByCategory(date, categoryID)
+        );
+    }
+
 }
