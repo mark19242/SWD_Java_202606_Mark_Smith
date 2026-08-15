@@ -1,5 +1,8 @@
 package org.example.service;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.example.data.impl.ItemJdbcRepository;
 import org.example.model.Item;
 import org.example.model.ItemCategory;
@@ -91,6 +94,73 @@ class ItemJdbcRepositoryTest {
         assertThrows(
                 InternalErrorException.class,
                 () -> repository.getItemById(1)
+        );
+    }
+
+    @Test
+    void getAllAvailableItemsReturnsItemsForValidDate() throws Exception {
+
+        LocalDate date = LocalDate.of(2022, 6, 1);
+
+        ItemCategory category = new ItemCategory(1, "Appetizers");
+
+        Item item = new Item();
+        item.setItemID(6);
+        item.setItemCategoryID(1);
+        item.setItemName("Mini Corn Dogs");
+        item.setItemDescription("Battered with honey mustard, perfect for summer");
+        item.setStartDate(LocalDate.of(2022, 6, 1));
+        item.setEndDate(LocalDate.of(2022, 9, 30));
+        item.setItemCategory(category);
+
+        when(jdbcTemplate.query(
+                anyString(),
+                any(RowMapper.class),
+                eq(date),
+                eq(date)))
+                .thenReturn(List.of(item));
+
+        List<Item> actual = repository.getAllAvailableItems(date);
+
+        assertNotNull(actual);
+        assertEquals(1, actual.size());
+        assertEquals(item, actual.get(0));
+    }
+
+    @Test
+    void getAllAvailableItemsReturnsEmptyListWhenNoneAreAvailable()
+            throws Exception {
+
+        LocalDate date = LocalDate.of(2019, 12, 31);
+
+        when(jdbcTemplate.query(
+                anyString(),
+                any(RowMapper.class),
+                eq(date),
+                eq(date)))
+                .thenReturn(Collections.emptyList());
+
+        List<Item> actual = repository.getAllAvailableItems(date);
+
+        assertNotNull(actual);
+        assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    void getAllAvailableItemsThrowsInternalErrorWhenDatabaseFails() {
+
+        LocalDate date = LocalDate.of(2022, 6, 1);
+
+        when(jdbcTemplate.query(
+                anyString(),
+                any(RowMapper.class),
+                eq(date),
+                eq(date)))
+                .thenThrow(new DataAccessException("Database error") {});
+
+        assertThrows(
+                InternalErrorException.class,
+                () -> repository.getAllAvailableItems(date)
         );
     }
 
