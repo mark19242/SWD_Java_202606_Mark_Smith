@@ -390,6 +390,7 @@ public class OrderJdbcRepository implements OrderRepo {
     }
 
     @Override
+    @Transactional
     public void updateOrder(Order order) throws InternalErrorException {
         final String sql = "UPDATE orders SET server_id = ?, order_date = ?, sub_total = ?, " +
                 "tax = ?, tip = ?, total = ? WHERE order_id = ?;";
@@ -406,9 +407,41 @@ public class OrderJdbcRepository implements OrderRepo {
             if (rowsAffected == 0) {
                 throw new InternalErrorException("Update failed. Order ID " + order.getOrderID() + " does not exist.");
             }
+
+            replaceOrderItems(order);
+            replacePayments(order);
+
         } catch (DataAccessException ex) {
             throw new InternalErrorException("Database error updating order ID " + order.getOrderID(), ex);
         }
+    }
+
+    private void replaceOrderItems(Order order) {
+
+        if (order.getItems() == null) {
+            return;
+        }
+
+        jdbcTemplate.update(
+                "DELETE FROM order_item WHERE order_id = ?",
+                order.getOrderID()
+        );
+
+        addOrderItems(order);
+    }
+
+    private void replacePayments(Order order) {
+
+        if (order.getPayments() == null) {
+            return;
+        }
+
+        jdbcTemplate.update(
+                "DELETE FROM payment WHERE order_id = ?",
+                order.getOrderID()
+        );
+
+        addPayments(order);
     }
 
     @Override

@@ -112,3 +112,18 @@ INSERT INTO payment (
     amount
 )
 VALUES (?, ?, ?);
+
+-- ==========================================
+-- Replace Order Items
+-- ==========================================
+
+DELETE FROM order_item
+WHERE order_id = ?;
+
+
+-- ==========================================
+-- Replace Payments
+-- ==========================================
+
+DELETE FROM payment
+WHERE order_id = ?;

@@ -125,4 +125,69 @@ class OrderJdbcRepositoryIntegrationTest extends BaseJdbcTest {
         );
     }
 
+    @Test
+    void updateOrderPersistsUpdatedItemsAndPayments() throws Exception {
+
+        // Create a new order first
+        Order order = new Order();
+        order.setServerID(1);
+        order.setOrderDate(
+                java.time.LocalDateTime.of(2022, 6, 1, 12, 0)
+        );
+        order.setSubTotal(new java.math.BigDecimal("8.00"));
+        order.setTax(new java.math.BigDecimal("0.50"));
+        order.setTip(new java.math.BigDecimal("1.50"));
+        order.setTotal(new java.math.BigDecimal("10.00"));
+
+        OrderItem originalItem = new OrderItem();
+        originalItem.setItemID(1);
+        originalItem.setQuantity(1);
+        originalItem.setPrice(new java.math.BigDecimal("8.00"));
+
+        Payment originalPayment = new Payment();
+        originalPayment.setPaymentTypeID(1);
+        originalPayment.setAmount(new java.math.BigDecimal("10.00"));
+
+        order.setItems(java.util.List.of(originalItem));
+        order.setPayments(java.util.List.of(originalPayment));
+
+        Order added = repository.addOrder(order);
+
+
+
+        OrderItem updatedItem = new OrderItem();
+        updatedItem.setItemID(2);
+        updatedItem.setQuantity(2);
+        updatedItem.setPrice(new java.math.BigDecimal("9.00"));
+
+        Payment updatedPayment = new Payment();
+        updatedPayment.setPaymentTypeID(2);
+        updatedPayment.setAmount(new java.math.BigDecimal("20.00"));
+
+        added.setItems(java.util.List.of(updatedItem));
+        added.setPayments(java.util.List.of(updatedPayment));
+
+        added.setSubTotal(new java.math.BigDecimal("18.00"));
+        added.setTax(new java.math.BigDecimal("1.00"));
+        added.setTip(new java.math.BigDecimal("1.00"));
+        added.setTotal(new java.math.BigDecimal("20.00"));
+
+        repository.updateOrder(added);
+
+
+        // Reload from Postgres
+        Order reloaded =
+                repository.getOrderById(added.getOrderID());
+
+        assertEquals(1, reloaded.getItems().size());
+        assertEquals(2, reloaded.getItems().get(0).getItemID());
+        assertEquals(2, reloaded.getItems().get(0).getQuantity());
+
+        assertEquals(1, reloaded.getPayments().size());
+        assertEquals(
+                2,
+                reloaded.getPayments().get(0).getPaymentTypeID()
+        );
+    }
+
 }
