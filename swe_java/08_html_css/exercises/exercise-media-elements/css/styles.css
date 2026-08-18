@@ -1,0 +1,62 @@
+body {
+  min-height: 100vh;
+  margin: 0;
+
+  background-image: url("../images/thragg-background.jpg");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  color: white;
+}
+
+section {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  margin: 20px;
+}
+
+body {
+  line-height: 1.5;
+}
+
+.hero {
+  padding: 30px 42px;
+}
+
+.media-section,
+.recruitment-section,
+.reflection-section {
+  padding: 28px;
+  margin: 20px;
+  background-color: rgba(0, 0, 0, 0.78);
+  border-left: 4px solid darkred;
+}
+
+.recruit-button,
+.recruitment-section button {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: darkred;
+  color: white;
+  text-decoration: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.recruit-button:hover,
+.recruitment-section button:hover {
+  background-color: crimson;
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
+}
+
+footer {
+  padding: 20px 42px;
+}
