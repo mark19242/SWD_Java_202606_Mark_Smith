@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Landmark Elements & Cell Spanning</title>
+  </head>
+
+  <body>
+    <header>
+      <h1>Landmark Elements & Cell Spanning</h1>
+    </header>
+
+    <main>
+      <table>
+        <caption>
+          Cohort 2026 Enrollment Summary
+        </caption>
+
+        <thead>
+          <tr>
+            <th scope="col">Track</th>
+            <th scope="col">Module</th>
+            <th scope="col">Enrolled</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <th scope="row" rowspan="2">Full Stack</th>
+            <td>Enterprise Java</td>
+            <td>28</td>
+          </tr>
+
+          <tr>
+            <td>Web Standards &amp; CSS</td>
+            <td>30</td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <th scope="row" colspan="2">Total Active Seats</th>
+            <td>58</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <p>
+        <a href="index.html">Back to Home</a>
+      </p>
+    </main>
+  </body>
+</html>
