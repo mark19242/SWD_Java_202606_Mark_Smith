@@ -34,6 +34,26 @@
             required
           />
         </fieldset>
+        <fieldset>
+          <legend>Inquiry Information</legend>
+
+          <label for="contact-reason">Reason for Contact:</label>
+          <select id="contact-reason" name="reason" required>
+            <option value="" disabled selected>-- Select a reason --</option>
+            <option value="support">Support</option>
+            <option value="feedback">Feedback</option>
+            <option value="general">General Inquiry</option>
+          </select>
+
+          <label for="user-message">Message:</label>
+          <textarea
+            id="user-message"
+            name="message"
+            rows="5"
+            minlength="10"
+            required
+          ></textarea>
+        </fieldset>
       </form>
     </main>
   </body>
