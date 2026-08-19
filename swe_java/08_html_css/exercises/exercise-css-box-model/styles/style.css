@@ -1,0 +1,25 @@
+.block-example {
+  background-color: lightblue;
+  padding: 20px;
+  border: 3px solid navy;
+}
+
+.inline-example {
+  background-color: lightgreen;
+  padding: 5px;
+}
+
+.block-conversion {
+  display: block;
+  background-color: lightcoral;
+  padding: 10px;
+  margin-top: 15px;
+}
+
+.inline-block-example {
+  display: inline-block;
+  background-color: lightgoldenrodyellow;
+  padding: 10px;
+  margin-top: 15px;
+  border: 2px solid goldenrod;
+}
