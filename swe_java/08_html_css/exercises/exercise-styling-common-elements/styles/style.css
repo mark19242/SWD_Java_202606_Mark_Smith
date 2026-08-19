@@ -30,3 +30,16 @@ p {
   max-width: 700px;
   hyphens: auto;
 }
+
+.gear-list {
+  list-style-type: square;
+}
+
+.launch-list {
+  list-style-type: upper-roman;
+}
+
+.gear-list li,
+.launch-list li {
+  margin-bottom: 10px;
+}
