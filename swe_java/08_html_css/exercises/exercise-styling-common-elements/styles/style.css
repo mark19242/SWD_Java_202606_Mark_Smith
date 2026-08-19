@@ -43,3 +43,123 @@ p {
 .launch-list li {
   margin-bottom: 10px;
 }
+
+.space-links a {
+  text-decoration: none;
+  padding: 10px 15px;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.space-links a:link {
+  color: darkblue;
+}
+
+.space-links a:visited {
+  color: purple;
+}
+
+.space-links a:hover {
+  color: white;
+  background-color: black;
+}
+
+.space-links a:focus {
+  outline: 3px solid orange;
+}
+
+.space-links a:active {
+  color: red;
+}
+
+.image-container {
+  max-width: 500px;
+  margin: 30px auto;
+}
+
+.space-court-image {
+  width: 400px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border: 3px solid orangered;
+  border-radius: 12px;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #05070d;
+  color: white;
+  margin: 0;
+  padding: 30px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+h1 {
+  color: white;
+  letter-spacing: 4px;
+}
+
+h2 {
+  color: orangered;
+  letter-spacing: 3px;
+  margin-top: 40px;
+}
+
+h3 {
+  color: lightgray;
+}
+
+section {
+  max-width: 900px;
+  margin: 0 auto 50px;
+  padding: 25px;
+  border: 1px solid dimgray;
+  border-radius: 10px;
+  background-color: #11141c;
+}
+
+p {
+  color: lightgray;
+}
+
+.gear-list,
+.launch-list {
+  color: white;
+}
+
+.space-links {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.space-links a {
+  display: inline-block;
+  border: 2px solid orangered;
+  border-radius: 6px;
+}
+
+.space-links a:link {
+  color: white;
+}
+
+.space-links a:visited {
+  color: lightgray;
+}
+
+.space-links a:hover {
+  color: black;
+  background-color: orangered;
+}
+
+.space-links a:focus {
+  outline: 3px solid white;
+}
+
+.space-links a:active {
+  color: red;
+}
