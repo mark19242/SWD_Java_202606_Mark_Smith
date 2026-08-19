@@ -12,7 +12,29 @@
     </header>
 
     <main>
-      <form action="/submit-contact" method="post"></form>
+      <form action="/submit-contact" method="post">
+        <fieldset>
+          <legend>Your Details</legend>
+
+          <label for="user-name">Name:</label>
+          <input
+            type="text"
+            id="user-name"
+            name="full_name"
+            autocomplete="name"
+            required
+          />
+
+          <label for="user-email">Email:</label>
+          <input
+            type="email"
+            id="user-email"
+            name="email"
+            autocomplete="email"
+            required
+          />
+        </fieldset>
+      </form>
     </main>
   </body>
 </html>
