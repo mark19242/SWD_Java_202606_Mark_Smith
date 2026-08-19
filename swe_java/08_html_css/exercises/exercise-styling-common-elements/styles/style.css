@@ -11,3 +11,22 @@ h2 {
 .italic-text {
   font-style: italic;
 }
+
+h1,
+h2 {
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+p {
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+  word-spacing: 1px;
+  text-indent: 30px;
+}
+
+.justified-text {
+  text-align: justify;
+  max-width: 700px;
+  hyphens: auto;
+}
