@@ -62,6 +62,29 @@
           specified width.
         </p>
       </section>
+      <section>
+        <h2>Nested Boxes and Margin Collapsing</h2>
+
+        <div class="nested-parent">
+          <div class="nested-child child-one">Child Box One</div>
+
+          <div class="nested-child child-two">Child Box Two</div>
+        </div>
+
+        <h3>Parent and Child Margin Collapse</h3>
+
+        <div class="collapse-parent">
+          <div class="collapse-child">
+            My top margin can collapse with my parent.
+          </div>
+        </div>
+
+        <div class="protected-parent">
+          <div class="collapse-child">
+            This parent has padding, so the top margin stays inside.
+          </div>
+        </div>
+      </section>
     </main>
   </body>
 </html>

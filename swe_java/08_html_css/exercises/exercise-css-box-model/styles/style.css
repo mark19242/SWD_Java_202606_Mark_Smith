@@ -60,3 +60,46 @@
   margin: 10px;
   background-color: peachpuff;
 }
+
+.nested-parent {
+  width: 400px;
+  padding: 20px;
+  margin: 20px;
+  border: 5px solid purple;
+  background-color: lavender;
+}
+
+.nested-child {
+  padding: 15px;
+  border: 3px solid indigo;
+}
+
+.child-one {
+  margin-bottom: 30px;
+  background-color: plum;
+}
+
+.child-two {
+  margin-top: 50px;
+  background-color: lightcyan;
+}
+
+.collapse-parent {
+  width: 400px;
+  margin: 30px 20px;
+  background-color: lightgray;
+}
+
+.protected-parent {
+  width: 400px;
+  margin: 30px 20px;
+  padding-top: 1px;
+  background-color: lightgray;
+}
+
+.collapse-child {
+  margin-top: 40px;
+  padding: 15px;
+  background-color: lightsalmon;
+  border: 3px solid darkred;
+}
