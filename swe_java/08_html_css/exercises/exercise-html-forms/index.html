@@ -54,6 +54,21 @@
             required
           ></textarea>
         </fieldset>
+        <label for="contact-subject">Preferred Contact Subject:</label>
+        <input
+          type="text"
+          id="contact-subject"
+          name="subject"
+          list="subject-suggestions"
+        />
+
+        <datalist id="subject-suggestions">
+          <option value="Technical Support"></option>
+          <option value="Program Feedback"></option>
+          <option value="General Question"></option>
+        </datalist>
+
+        <button type="submit">Send Message</button>
 
         <button type="submit">Send Message</button>
       </form>
