@@ -240,3 +240,47 @@ body {
   color: gray;
   font-size: 0.85rem;
 }
+
+@media (max-width: 767px) {
+  .site-header {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .site-header nav {
+    gap: 15px;
+  }
+
+  .hero {
+    flex-direction: column;
+    min-height: auto;
+    padding: 50px 25px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-description {
+    margin: 0 auto;
+  }
+
+  .hero-image img {
+    margin: 0 auto;
+  }
+
+  .models-section {
+    padding: 60px 25px;
+  }
+
+  .section-heading h2 {
+    font-size: 2rem;
+  }
+
+  .footer-nav,
+  .social-links {
+    flex-wrap: wrap;
+  }
+}
