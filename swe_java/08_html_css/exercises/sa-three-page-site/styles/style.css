@@ -288,3 +288,63 @@ a {
   color: #d9cfe3;
   font-size: 0.8rem;
 }
+
+/* ==========================================================================
+   Tablet Viewport - 768px and Up
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  /* Header */
+  .site-header {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1.5rem 3rem;
+    text-align: left;
+  }
+
+  .main-nav {
+    justify-content: flex-end;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 75vh;
+    padding: 5rem 3rem;
+  }
+
+  .hero h1 {
+    font-size: 3.5rem;
+  }
+
+  .hero-tagline {
+    font-size: 1.3rem;
+  }
+
+  /* Journey */
+  .journey-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 4rem 3rem;
+  }
+
+  .journey-content {
+    margin-top: 0;
+  }
+
+  /* Adventures */
+  .adventures-section {
+    padding: 4rem 3rem;
+  }
+
+  .adventures-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  /* Footer */
+  .site-footer {
+    padding: 3rem;
+  }
+}
