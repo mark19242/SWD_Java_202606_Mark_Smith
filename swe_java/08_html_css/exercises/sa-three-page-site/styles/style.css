@@ -348,3 +348,87 @@ a {
     padding: 3rem;
   }
 }
+
+/* ==========================================================================
+   Desktop Viewport - 1024px and Up
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+  /* Header */
+  .site-header {
+    padding: 1.5rem 6%;
+  }
+
+  .brand a {
+    font-size: 1.5rem;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 80vh;
+    padding: 6rem 6%;
+  }
+
+  .hero-content {
+    max-width: 800px;
+  }
+
+  .hero h1 {
+    font-size: 4.5rem;
+  }
+
+  .hero-tagline {
+    font-size: 1.5rem;
+  }
+
+  /* Journey */
+  .journey-section {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 3rem;
+  }
+
+  .journey-content h2 {
+    font-size: 2.25rem;
+  }
+
+  /* Adventures */
+  .adventures-section {
+    padding: 5rem 6%;
+  }
+
+  .section-heading {
+    max-width: 750px;
+    margin: 0 auto 3rem;
+  }
+
+  .section-heading h2 {
+    font-size: 2.4rem;
+  }
+
+  .adventures-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Destination Cards */
+  .destination-card {
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .destination-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 24px rgba(52, 37, 68, 0.2);
+  }
+
+  /* Footer */
+  .site-footer {
+    padding: 3.5rem 6%;
+  }
+}
