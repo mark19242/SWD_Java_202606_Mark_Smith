@@ -1,0 +1,290 @@
+/* ==========================================================================
+   Base Reset & Typography
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.6;
+  color: #2f2840;
+  background-color: #fff8f2;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+/* ==========================================================================
+   Header & Navigation - Mobile First
+   ========================================================================== */
+
+.site-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background-color: #342544;
+  color: white;
+  text-align: center;
+}
+
+.brand a {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.12rem;
+  text-decoration: none;
+}
+
+.brand p {
+  margin-top: 0.25rem;
+  color: #f5a6c8;
+  font-size: 0.85rem;
+}
+
+.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.main-nav a {
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.main-nav a:hover {
+  color: #ffc857;
+}
+
+.main-nav a[aria-current="page"] {
+  border-bottom: 3px solid #f5a6c8;
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.hero {
+  min-height: 70vh;
+  padding: 4rem 1.25rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  color: white;
+
+  background-image:
+    linear-gradient(rgba(46, 28, 67, 0.55), rgba(46, 28, 67, 0.72)),
+    url("../resources/images/skyline.png");
+
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-content {
+  max-width: 650px;
+}
+
+.hero-label,
+.section-label {
+  color: #ffc857;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.15rem;
+}
+
+.hero h1 {
+  margin-top: 0.75rem;
+  font-size: 2.5rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.hero-tagline {
+  margin-top: 1rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.hero-quote {
+  margin-top: 0.5rem;
+  color: #f5d7e5;
+  font-style: italic;
+}
+
+.hero-button {
+  display: inline-block;
+  margin-top: 1.5rem;
+  padding: 0.85rem 1.25rem;
+
+  background-color: #f05b78;
+  color: white;
+
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.hero-button:hover {
+  background-color: #ffc857;
+  color: #342544;
+}
+
+/* ==========================================================================
+   Journey Section
+   ========================================================================== */
+
+.journey-section {
+  padding: 3rem 1.25rem;
+}
+
+.journey-image img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.journey-content {
+  margin-top: 1.5rem;
+}
+
+.journey-content h2 {
+  margin-top: 0.5rem;
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.journey-content p:not(.section-label) {
+  margin-top: 1rem;
+  color: #61576c;
+}
+
+/* ==========================================================================
+   Latest Adventures
+   ========================================================================== */
+
+.adventures-section {
+  padding: 3rem 1.25rem;
+  background-color: #f7edf4;
+}
+
+.section-heading {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.section-heading h2 {
+  margin-top: 0.5rem;
+  font-size: 1.8rem;
+}
+
+.section-heading > p:last-child {
+  margin-top: 0.75rem;
+  color: #61576c;
+}
+
+.adventures-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.destination-card {
+  overflow: hidden;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(52, 37, 68, 0.12);
+}
+
+.destination-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.destination-content {
+  padding: 1.25rem;
+}
+
+.destination-location {
+  color: #d84d72;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08rem;
+}
+
+.destination-card h3 {
+  margin-top: 0.35rem;
+  font-size: 1.4rem;
+}
+
+.destination-content > p:last-child {
+  margin-top: 0.75rem;
+  color: #61576c;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.site-footer {
+  padding: 2.5rem 1.25rem;
+  background-color: #342544;
+  color: white;
+  text-align: center;
+}
+
+.footer-title {
+  font-weight: 800;
+  letter-spacing: 0.12rem;
+}
+
+.footer-brand > p:last-child {
+  margin-top: 0.25rem;
+  color: #f5a6c8;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.footer-nav a {
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.footer-nav a:hover {
+  color: #ffc857;
+}
+
+.copyright {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #5c496d;
+  color: #d9cfe3;
+  font-size: 0.8rem;
+}
