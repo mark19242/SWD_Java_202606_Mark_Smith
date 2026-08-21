@@ -841,3 +841,48 @@ a {
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
+
+/* Contact Page - Desktop */
+.contact-hero {
+  padding: 6rem 6%;
+}
+
+.contact-hero-content {
+  max-width: 800px;
+}
+
+.contact-hero h1 {
+  font-size: 4rem;
+}
+
+.contact-section {
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 3rem;
+}
+
+.contact-form-container h2 {
+  font-size: 2.25rem;
+}
+
+.contact-image img {
+  max-height: 650px;
+  object-fit: cover;
+}
+
+.contact-details {
+  padding: 5rem 6%;
+}
+
+.details-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+.detail-card {
+  padding: 2rem;
+}
