@@ -612,3 +612,50 @@ a {
 .sandy-content {
   margin-top: 0;
 }
+
+/* About Page - Desktop */
+.about-hero {
+  grid-template-columns: 1.15fr 1fr;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 3rem;
+}
+
+.about-hero-content h1 {
+  font-size: 3.4rem;
+}
+
+.about-intro {
+  font-size: 1.15rem;
+}
+
+.about-story,
+.philosophy-section,
+.travel-buddy,
+.sandy-section {
+  padding: 5rem 6%;
+}
+
+.about-story .section-heading,
+.philosophy-section,
+.travel-buddy > div {
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sandy-section {
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sandy-content h2 {
+  font-size: 2.25rem;
+}
+
+.sandy-content audio {
+  max-width: 500px;
+}
