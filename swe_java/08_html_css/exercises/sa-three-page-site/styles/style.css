@@ -561,3 +561,54 @@ a {
   width: 100%;
   margin-top: 1.5rem;
 }
+
+/* About Page - Tablet */
+.about-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 4rem 3rem;
+}
+
+.about-hero-content {
+  margin-top: 0;
+}
+
+.about-story,
+.philosophy-section,
+.travel-buddy,
+.sandy-section {
+  padding: 4rem 3rem;
+}
+
+.story-content {
+  max-width: 750px;
+  margin: 1.5rem auto 0;
+}
+
+.philosophy-section {
+  text-align: center;
+}
+
+.travel-rules {
+  display: inline-block;
+  text-align: left;
+}
+
+.travel-buddy > div {
+  max-width: 750px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sandy-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.sandy-content {
+  margin-top: 0;
+}
