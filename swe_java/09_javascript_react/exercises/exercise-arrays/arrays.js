@@ -50,3 +50,23 @@ for (const fruit of fruits) {
 for (let i = 0; i < fruits.length; i += 2) {
   console.log(fruits[i])
 }
+
+// ========================================
+// Part 4: Advanced Array Methods
+// ========================================
+
+// Find the index of "cherry"
+const cherryIndex = fruits.indexOf("cherry")
+console.log("Cherry index:", cherryIndex)
+
+// Remove "cherry" from the array
+fruits.splice(cherryIndex, 1)
+
+// Create another array
+const moreFruits = ["fig", "grape", "honeydew"]
+
+// Combine the arrays
+const finalFruits = fruits.concat(moreFruits)
+
+// Print the final array
+console.log("Final fruits:", finalFruits)
