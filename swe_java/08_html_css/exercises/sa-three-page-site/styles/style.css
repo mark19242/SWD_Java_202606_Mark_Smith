@@ -659,3 +659,145 @@ a {
 .sandy-content audio {
   max-width: 500px;
 }
+
+/* ==========================================================================
+   Contact Page - Mobile First
+   ========================================================================== */
+
+.contact-hero {
+  padding: 4rem 1.25rem;
+  background-color: #342544;
+  color: white;
+  text-align: center;
+}
+
+.contact-hero-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact-hero h1 {
+  margin-top: 0.5rem;
+  font-size: 2.5rem;
+  line-height: 1.1;
+}
+
+.contact-hero-content > p:last-child {
+  margin-top: 1rem;
+  color: #e5dce9;
+}
+
+/* ==========================================================================
+   Contact Form & Image
+   ========================================================================== */
+
+.contact-section {
+  padding: 3rem 1.25rem;
+  background-color: #fff8f2;
+}
+
+.contact-form-container h2 {
+  margin-top: 0.5rem;
+  font-size: 1.8rem;
+}
+
+.contact-form {
+  margin-top: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.85rem;
+
+  font: inherit;
+  color: #2f2840;
+  background-color: white;
+
+  border: 2px solid #d9cfe3;
+  border-radius: 8px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: 3px solid #f5a6c8;
+  border-color: #d84d72;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 0.9rem 1.25rem;
+
+  background-color: #f05b78;
+  color: white;
+
+  border: none;
+  border-radius: 999px;
+
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #ffc857;
+  color: #342544;
+}
+
+.contact-image {
+  margin-top: 2.5rem;
+}
+
+.contact-image img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+/* ==========================================================================
+   Contact Details
+   ========================================================================== */
+
+.contact-details {
+  padding: 3rem 1.25rem;
+  background-color: #f7edf4;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.detail-card {
+  padding: 1.5rem;
+
+  background-color: white;
+  border-radius: 12px;
+
+  text-align: center;
+
+  box-shadow: 0 4px 14px rgba(52, 37, 68, 0.1);
+}
+
+.detail-card h3 {
+  color: #d84d72;
+}
+
+.detail-card p {
+  margin-top: 0.5rem;
+  color: #61576c;
+}
