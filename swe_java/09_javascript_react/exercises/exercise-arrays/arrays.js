@@ -36,3 +36,17 @@ console.log("Removed last:", removedLast)
 
 // Print the updated array
 console.log("Updated fruits:", fruits)
+
+// ========================================
+// Part 3: Looping Through an Array
+// ========================================
+
+// Print every element in the fruits array
+for (const fruit of fruits) {
+  console.log(fruit)
+}
+
+// Skip every other element
+for (let i = 0; i < fruits.length; i += 2) {
+  console.log(fruits[i])
+}
