@@ -65,5 +65,17 @@ rl.question("Enter a number from 0 to 6: ", (answer) => {
     console.log("Dice roll:", roll)
   }
 
-  rl.close()
+  // ========================================
+  // Part 4: For Loop - Counting Down
+  // ========================================
+
+  rl.question("Enter a starting number: ", (answer) => {
+    const startingNumber = Number(answer)
+
+    for (let i = startingNumber; i >= 0; i--) {
+      console.log(i)
+    }
+
+    rl.close()
+  })
 })
