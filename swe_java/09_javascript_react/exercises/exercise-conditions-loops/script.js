@@ -54,5 +54,16 @@ rl.question("Enter a number from 0 to 6: ", (answer) => {
       console.log("Error: Please enter a number from 0 to 6.")
   }
 
+  // ========================================
+  // Part 3: While Loop - Rolling a Dice
+  // ========================================
+
+  let roll = 0
+
+  while (roll !== 6) {
+    roll = Math.floor(Math.random() * 6) + 1
+    console.log("Dice roll:", roll)
+  }
+
   rl.close()
 })
