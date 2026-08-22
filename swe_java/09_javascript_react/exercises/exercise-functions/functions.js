@@ -52,3 +52,23 @@ function getRandomColor() {
 console.log(getRandomColor())
 console.log(getRandomColor())
 console.log(getRandomColor())
+
+// ========================================
+// Part 5: Random Fortune Teller
+// ========================================
+
+let fortunes = [
+  "You will have a great day!",
+  "A surprise is waiting for you.",
+  "Something exciting is coming soon.",
+  "Be cautious with your decisions today.",
+  "Happiness is around the corner.",
+]
+
+function tellFortune() {
+  const randomIndex = Math.floor(Math.random() * fortunes.length)
+
+  return fortunes[randomIndex]
+}
+
+console.log(tellFortune())
