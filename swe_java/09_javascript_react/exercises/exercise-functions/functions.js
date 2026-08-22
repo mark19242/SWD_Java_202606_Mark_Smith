@@ -22,3 +22,17 @@ const squareOfSeven = squareNumber(7)
 
 console.log(squareOfFour)
 console.log(squareOfSeven)
+
+// ========================================
+// Part 3: Multiple Parameters
+// ========================================
+
+function addNumbers(number1, number2) {
+  return number1 + number2
+}
+
+const firstSum = addNumbers(10, 5)
+const secondSum = addNumbers(3, 8)
+
+console.log(firstSum)
+console.log(secondSum)
