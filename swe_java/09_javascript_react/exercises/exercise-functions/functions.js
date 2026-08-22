@@ -36,3 +36,19 @@ const secondSum = addNumbers(3, 8)
 
 console.log(firstSum)
 console.log(secondSum)
+
+// ========================================
+// Part 4: Random Color Generator
+// ========================================
+
+let colors = ["red", "blue", "green", "yellow", "purple", "orange"]
+
+function getRandomColor() {
+  const randomIndex = Math.floor(Math.random() * colors.length)
+
+  return colors[randomIndex]
+}
+
+console.log(getRandomColor())
+console.log(getRandomColor())
+console.log(getRandomColor())
