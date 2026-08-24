@@ -31,3 +31,30 @@ console.log("Extracted Word:", extractedWord)
 const modifiedMessage = message.replace("JavaScript", "Coding")
 
 console.log("Modified Message:", modifiedMessage)
+
+// ========================================
+// Part 2: Working with the Math Object
+// ========================================
+
+// Generate a random number between 1 and 100
+const randomNumber = Math.floor(Math.random() * 100) + 1
+console.log("Random Number (1-100):", randomNumber)
+
+// Square root of 144
+console.log("Square Root of 144:", Math.sqrt(144))
+
+// 3 to the power of 4
+console.log("3^4:", Math.pow(3, 4))
+
+// Absolute value of -25
+console.log("Absolute Value of -25:", Math.abs(-25))
+
+// Round 7.8 using different Math methods
+console.log("Rounded (7.8):", Math.round(7.8))
+console.log("Ceiled (7.8):", Math.ceil(7.8))
+console.log("Floored (7.8):", Math.floor(7.8))
+console.log("Truncated (7.8):", Math.trunc(7.8))
+
+// Calculate cosine of 45 degrees
+const radians = 45 * (Math.PI / 180)
+console.log("Cosine of 45 degrees:", Math.cos(radians))
