@@ -6,10 +6,14 @@ const title = "Software Engineer"
 const company = "Tech Corp"
 const location = "New York"
 
+// ========================================
+// Part 2: Object Shorthand
+// ========================================
+
 const job = {
-  title: title,
-  company: company,
-  location: location,
+  title,
+  company,
+  location,
 }
 
 console.log(job)
