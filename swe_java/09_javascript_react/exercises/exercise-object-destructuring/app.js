@@ -18,3 +18,11 @@ console.log(book.title, book.author, book.year)
 const { title, author, year } = book
 
 console.log(title, author, year)
+
+// ========================================
+// Challenge: Rename Destructured Variables
+// ========================================
+
+const { title: bookTitle, author: writer } = book
+
+console.log(bookTitle, writer)
