@@ -1,0 +1,48 @@
+.admin-page {
+  max-width: 640px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.admin-page h1 {
+  margin-bottom: 1.25rem;
+  color: #1f2933;
+}
+
+.admin-error {
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border: 1px solid #e4e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid #e4e7eb;
+}
+
+.admin-table th {
+  background-color: #f0f4f8;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: #3e4c59;
+}
+
+.admin-status-enabled {
+  color: #15803d;
+  font-weight: 600;
+}
+
+.admin-status-disabled {
+  color: #dc2626;
+  font-weight: 600;
+}

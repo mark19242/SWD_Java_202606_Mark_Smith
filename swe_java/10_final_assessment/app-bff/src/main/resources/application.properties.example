@@ -1,0 +1,17 @@
+spring.application.name=app-bff
+
+# Server Port
+server.port=8443
+
+# SSL/TLS Configuration
+server.ssl.enabled=true
+server.ssl.key-store-type=PKCS12
+server.ssl.key-store=classpath:keystore.p12
+server.ssl.key-store-password=YOUR_KEYSTORE_PASSWORD
+server.ssl.key-alias=1
+
+# PostgreSQL Database Configuration
+spring.datasource.url=jdbc:postgresql://localhost:5432/app_db
+spring.datasource.username=YOUR_POSTGRES_USERNAME
+spring.datasource.password=YOUR_POSTGRES_PASSWORD
+spring.datasource.driver-class-name=org.postgresql.Driver
