@@ -499,4 +499,58 @@ class RecommendationServiceTest {
         );
     }
 
+    @Test
+    void shouldFindStrongestPositiveGenresInRankOrder() {
+
+        VibeProfile profile
+                = recommendationService.buildVibeProfile(
+                        CurrentFeeling.STRESSED,
+                        DesiredFeeling.MAKE_ME_LAUGH,
+                        List.of(
+                                MovieVibe.LIGHT_AND_FUNNY,
+                                MovieVibe.ROMANTIC
+                        ),
+                        Intensity.CHILL,
+                        RuntimePreference.STANDARD
+                );
+
+        List<Genre> strongestGenres
+                = recommendationService
+                        .findStrongestPositiveGenres(
+                                profile,
+                                3
+                        );
+
+        assertEquals(
+                List.of(
+                        Genre.COMEDY,
+                        Genre.ROMANCE,
+                        Genre.ANIMATION
+                ),
+                strongestGenres
+        );
+    }
+
+    @Test
+    void strongestGenresShouldOnlyIncludePositiveWeights() {
+
+        VibeProfile profile = new VibeProfile();
+
+        profile.adjustGenreWeight(Genre.COMEDY, 5);
+        profile.adjustGenreWeight(Genre.HORROR, -3);
+        profile.adjustGenreWeight(Genre.THRILLER, -1);
+
+        List<Genre> strongestGenres
+                = recommendationService
+                        .findStrongestPositiveGenres(
+                                profile,
+                                3
+                        );
+
+        assertEquals(
+                List.of(Genre.COMEDY),
+                strongestGenres
+        );
+    }
+
 }

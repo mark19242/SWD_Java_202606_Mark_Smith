@@ -1,6 +1,7 @@
 package org.apprenti.app_bff.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apprenti.app_bff.model.CurrentFeeling;
 import org.apprenti.app_bff.model.DesiredFeeling;
@@ -418,6 +419,40 @@ public class RecommendationService {
             case ANY_RUNTIME ->
                 profile.setMaxRuntimeMinutes(null);
         }
+    }
+
+    public List<Genre> findStrongestPositiveGenres(
+            VibeProfile profile,
+            int limit
+    ) {
+        if (profile == null) {
+            throw new IllegalArgumentException(
+                    "Vibe profile is required."
+            );
+        }
+
+        if (limit <= 0) {
+            throw new IllegalArgumentException(
+                    "Genre limit must be greater than zero."
+            );
+        }
+
+        return profile.getGenreWeights()
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() > 0)
+                .sorted(
+                        Map.Entry
+                                .<Genre, Integer>comparingByValue()
+                                .reversed()
+                                .thenComparing(
+                                        entry
+                                        -> entry.getKey().name()
+                                )
+                )
+                .limit(limit)
+                .map(Map.Entry::getKey)
+                .toList();
     }
 
 }
