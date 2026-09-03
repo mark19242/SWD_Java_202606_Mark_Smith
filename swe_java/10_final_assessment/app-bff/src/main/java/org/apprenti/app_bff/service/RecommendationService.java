@@ -1,8 +1,11 @@
 package org.apprenti.app_bff.service;
 
+import java.util.List;
+
 import org.apprenti.app_bff.model.CurrentFeeling;
 import org.apprenti.app_bff.model.DesiredFeeling;
 import org.apprenti.app_bff.model.Genre;
+import org.apprenti.app_bff.model.MovieVibe;
 import org.apprenti.app_bff.model.VibeProfile;
 import org.springframework.stereotype.Service;
 
@@ -173,6 +176,121 @@ public class RecommendationService {
                 profile.adjustGenreWeight(Genre.ANIMATION, 2);
                 profile.adjustGenreWeight(Genre.ACTION, 1);
             }
+        }
+    }
+
+    public VibeProfile buildVibeProfile(
+            CurrentFeeling currentFeeling,
+            DesiredFeeling desiredFeeling,
+            List<MovieVibe> movieVibes
+    ) {
+        if (movieVibes == null || movieVibes.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "At least one movie vibe is required."
+            );
+        }
+
+        if (movieVibes.size() > 2) {
+            throw new IllegalArgumentException(
+                    "A maximum of two movie vibes may be selected."
+            );
+        }
+
+        if (movieVibes.contains(MovieVibe.SURPRISE_ME)
+                && movieVibes.size() > 1) {
+            throw new IllegalArgumentException(
+                    "Surprise Me must be selected by itself."
+            );
+        }
+
+        VibeProfile profile
+                = buildVibeProfile(
+                        currentFeeling,
+                        desiredFeeling
+                );
+
+        for (MovieVibe movieVibe : movieVibes) {
+            applyMovieVibeRules(
+                    profile,
+                    movieVibe
+            );
+        }
+
+        return profile;
+    }
+
+    private void applyMovieVibeRules(
+            VibeProfile profile,
+            MovieVibe movieVibe
+    ) {
+
+        switch (movieVibe) {
+
+            case LIGHT_AND_FUNNY -> {
+                profile.adjustGenreWeight(Genre.COMEDY, 4);
+                profile.adjustGenreWeight(Genre.FAMILY, 2);
+                profile.adjustGenreWeight(Genre.ANIMATION, 2);
+                profile.adjustGenreWeight(Genre.ROMANCE, 1);
+            }
+
+            case ACTION_PACKED -> {
+                profile.adjustGenreWeight(Genre.ACTION, 4);
+                profile.adjustGenreWeight(Genre.ADVENTURE, 3);
+                profile.adjustGenreWeight(Genre.THRILLER, 2);
+                profile.adjustGenreWeight(Genre.SCIENCE_FICTION, 1);
+            }
+
+            case ROMANTIC -> {
+                profile.adjustGenreWeight(Genre.ROMANCE, 4);
+                profile.adjustGenreWeight(Genre.COMEDY, 1);
+                profile.adjustGenreWeight(Genre.DRAMA, 1);
+            }
+
+            case SUSPENSEFUL -> {
+                profile.adjustGenreWeight(Genre.THRILLER, 4);
+                profile.adjustGenreWeight(Genre.MYSTERY, 3);
+                profile.adjustGenreWeight(Genre.CRIME, 2);
+                profile.adjustGenreWeight(Genre.HORROR, 1);
+            }
+
+            case DARK_AND_INTENSE -> {
+                profile.adjustGenreWeight(Genre.THRILLER, 4);
+                profile.adjustGenreWeight(Genre.CRIME, 3);
+                profile.adjustGenreWeight(Genre.DRAMA, 2);
+                profile.adjustGenreWeight(Genre.HORROR, 2);
+                profile.adjustGenreWeight(Genre.MYSTERY, 1);
+            }
+
+            case MIND_BENDING -> {
+                profile.adjustGenreWeight(
+                        Genre.SCIENCE_FICTION,
+                        4
+                );
+                profile.adjustGenreWeight(Genre.MYSTERY, 4);
+                profile.adjustGenreWeight(Genre.THRILLER, 2);
+                profile.adjustGenreWeight(Genre.FANTASY, 2);
+            }
+
+            case EMOTIONAL -> {
+                profile.adjustGenreWeight(Genre.DRAMA, 4);
+                profile.adjustGenreWeight(Genre.ROMANCE, 2);
+                profile.adjustGenreWeight(Genre.FAMILY, 1);
+            }
+
+            case EPIC_AND_ADVENTUROUS -> {
+                profile.adjustGenreWeight(Genre.ADVENTURE, 4);
+                profile.adjustGenreWeight(Genre.ACTION, 3);
+                profile.adjustGenreWeight(Genre.FANTASY, 3);
+                profile.adjustGenreWeight(
+                        Genre.SCIENCE_FICTION,
+                        2
+                );
+                profile.adjustGenreWeight(Genre.HISTORY, 1);
+                profile.adjustGenreWeight(Genre.WAR, 1);
+            }
+
+            case SURPRISE_ME ->
+                profile.setSurpriseMe(true);
         }
     }
 

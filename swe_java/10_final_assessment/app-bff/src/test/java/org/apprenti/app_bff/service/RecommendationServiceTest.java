@@ -1,11 +1,15 @@
 package org.apprenti.app_bff.service;
 
+import java.util.List;
+
 import org.apprenti.app_bff.model.CurrentFeeling;
 import org.apprenti.app_bff.model.DesiredFeeling;
 import org.apprenti.app_bff.model.Genre;
+import org.apprenti.app_bff.model.MovieVibe;
 import org.apprenti.app_bff.model.VibeProfile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 class RecommendationServiceTest {
@@ -179,6 +183,105 @@ class RecommendationServiceTest {
 
         assertEquals(
                 "Desired feeling is required.",
+                exception.getMessage()
+        );
+    }
+
+    @Test
+    void twoMovieVibesShouldAccumulateGenreWeights() {
+
+        VibeProfile profile
+                = recommendationService.buildVibeProfile(
+                        CurrentFeeling.STRESSED,
+                        DesiredFeeling.MAKE_ME_LAUGH,
+                        List.of(
+                                MovieVibe.LIGHT_AND_FUNNY,
+                                MovieVibe.ROMANTIC
+                        )
+                );
+
+        assertEquals(
+                11,
+                profile.getGenreWeight(Genre.COMEDY)
+        );
+
+        assertEquals(
+                6,
+                profile.getGenreWeight(Genre.ROMANCE)
+        );
+
+        assertEquals(
+                5,
+                profile.getGenreWeight(Genre.ANIMATION)
+        );
+
+        assertEquals(
+                3,
+                profile.getGenreWeight(Genre.FAMILY)
+        );
+
+        assertEquals(
+                1,
+                profile.getGenreWeight(Genre.DRAMA)
+        );
+    }
+
+    @Test
+    void surpriseMeShouldActivateSurpriseMode() {
+
+        VibeProfile profile
+                = recommendationService.buildVibeProfile(
+                        CurrentFeeling.HAPPY,
+                        DesiredFeeling.HELP_ME_ESCAPE,
+                        List.of(MovieVibe.SURPRISE_ME)
+                );
+
+        assertTrue(profile.isSurpriseMe());
+    }
+
+    @Test
+    void surpriseMeWithSecondVibeShouldThrowException() {
+
+        IllegalArgumentException exception
+                = assertThrows(
+                        IllegalArgumentException.class,
+                        ()
+                        -> recommendationService.buildVibeProfile(
+                                CurrentFeeling.HAPPY,
+                                DesiredFeeling.HELP_ME_ESCAPE,
+                                List.of(
+                                        MovieVibe.SURPRISE_ME,
+                                        MovieVibe.ROMANTIC
+                                )
+                        )
+                );
+
+        assertEquals(
+                "Surprise Me must be selected by itself.",
+                exception.getMessage()
+        );
+    }
+
+    @Test
+    void moreThanTwoMovieVibesShouldThrowException() {
+
+        IllegalArgumentException exception
+                = assertThrows(
+                        IllegalArgumentException.class,
+                        ()
+                        -> recommendationService.buildVibeProfile(
+                                CurrentFeeling.HAPPY,
+                                DesiredFeeling.GET_ME_EXCITED,
+                                List.of(
+                                        MovieVibe.ACTION_PACKED,
+                                        MovieVibe.SUSPENSEFUL,
+                                        MovieVibe.EPIC_AND_ADVENTUROUS
+                                )
+                        )
+                );
+
+        assertEquals(
+                "A maximum of two movie vibes may be selected.",
                 exception.getMessage()
         );
     }
