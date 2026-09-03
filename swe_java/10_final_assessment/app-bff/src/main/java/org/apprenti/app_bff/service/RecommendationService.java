@@ -7,6 +7,7 @@ import org.apprenti.app_bff.model.DesiredFeeling;
 import org.apprenti.app_bff.model.Genre;
 import org.apprenti.app_bff.model.Intensity;
 import org.apprenti.app_bff.model.MovieVibe;
+import org.apprenti.app_bff.model.RuntimePreference;
 import org.apprenti.app_bff.model.VibeProfile;
 import org.springframework.stereotype.Service;
 
@@ -366,6 +367,56 @@ public class RecommendationService {
             case ANY_INTENSITY -> {
                 // No adjustment needed.
             }
+        }
+    }
+
+    public VibeProfile buildVibeProfile(
+            CurrentFeeling currentFeeling,
+            DesiredFeeling desiredFeeling,
+            List<MovieVibe> movieVibes,
+            Intensity intensity,
+            RuntimePreference runtimePreference
+    ) {
+        if (runtimePreference == null) {
+            throw new IllegalArgumentException(
+                    "Runtime preference is required."
+            );
+        }
+
+        VibeProfile profile
+                = buildVibeProfile(
+                        currentFeeling,
+                        desiredFeeling,
+                        movieVibes,
+                        intensity
+                );
+
+        applyRuntimeRules(
+                profile,
+                runtimePreference
+        );
+
+        return profile;
+    }
+
+    private void applyRuntimeRules(
+            VibeProfile profile,
+            RuntimePreference runtimePreference
+    ) {
+
+        switch (runtimePreference) {
+
+            case QUICK ->
+                profile.setMaxRuntimeMinutes(89);
+
+            case STANDARD ->
+                profile.setMaxRuntimeMinutes(120);
+
+            case EXTENDED ->
+                profile.setMaxRuntimeMinutes(150);
+
+            case ANY_RUNTIME ->
+                profile.setMaxRuntimeMinutes(null);
         }
     }
 

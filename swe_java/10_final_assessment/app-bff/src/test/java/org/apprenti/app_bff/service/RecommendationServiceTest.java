@@ -7,8 +7,10 @@ import org.apprenti.app_bff.model.DesiredFeeling;
 import org.apprenti.app_bff.model.Genre;
 import org.apprenti.app_bff.model.Intensity;
 import org.apprenti.app_bff.model.MovieVibe;
+import org.apprenti.app_bff.model.RuntimePreference;
 import org.apprenti.app_bff.model.VibeProfile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
@@ -391,6 +393,108 @@ class RecommendationServiceTest {
 
         assertEquals(
                 "Intensity is required.",
+                exception.getMessage()
+        );
+    }
+
+    @Test
+    void quickRuntimeShouldSetMaximumTo89Minutes() {
+
+        VibeProfile profile
+                = recommendationService.buildVibeProfile(
+                        CurrentFeeling.HAPPY,
+                        DesiredFeeling.MAKE_ME_LAUGH,
+                        List.of(MovieVibe.LIGHT_AND_FUNNY),
+                        Intensity.ANY_INTENSITY,
+                        RuntimePreference.QUICK
+                );
+
+        assertEquals(
+                89,
+                profile.getMaxRuntimeMinutes()
+        );
+    }
+
+    @Test
+    void standardRuntimeShouldSetMaximumTo120Minutes() {
+
+        VibeProfile profile
+                = recommendationService.buildVibeProfile(
+                        CurrentFeeling.STRESSED,
+                        DesiredFeeling.MAKE_ME_LAUGH,
+                        List.of(
+                                MovieVibe.LIGHT_AND_FUNNY,
+                                MovieVibe.ROMANTIC
+                        ),
+                        Intensity.CHILL,
+                        RuntimePreference.STANDARD
+                );
+
+        assertEquals(
+                120,
+                profile.getMaxRuntimeMinutes()
+        );
+
+        // Genre calculations should still be intact.
+        assertEquals(
+                13,
+                profile.getGenreWeight(Genre.COMEDY)
+        );
+    }
+
+    @Test
+    void extendedRuntimeShouldSetMaximumTo150Minutes() {
+
+        VibeProfile profile
+                = recommendationService.buildVibeProfile(
+                        CurrentFeeling.ENERGETIC,
+                        DesiredFeeling.GET_ME_EXCITED,
+                        List.of(MovieVibe.ACTION_PACKED),
+                        Intensity.BRING_IT_ON,
+                        RuntimePreference.EXTENDED
+                );
+
+        assertEquals(
+                150,
+                profile.getMaxRuntimeMinutes()
+        );
+    }
+
+    @Test
+    void anyRuntimeShouldHaveNoMaximumRuntime() {
+
+        VibeProfile profile
+                = recommendationService.buildVibeProfile(
+                        CurrentFeeling.RELAXED,
+                        DesiredFeeling.COMFORT_ME,
+                        List.of(MovieVibe.ROMANTIC),
+                        Intensity.CHILL,
+                        RuntimePreference.ANY_RUNTIME
+                );
+
+        assertNull(
+                profile.getMaxRuntimeMinutes()
+        );
+    }
+
+    @Test
+    void nullRuntimePreferenceShouldThrowException() {
+
+        IllegalArgumentException exception
+                = assertThrows(
+                        IllegalArgumentException.class,
+                        ()
+                        -> recommendationService.buildVibeProfile(
+                                CurrentFeeling.HAPPY,
+                                DesiredFeeling.MAKE_ME_LAUGH,
+                                List.of(MovieVibe.LIGHT_AND_FUNNY),
+                                Intensity.ANY_INTENSITY,
+                                null
+                        )
+                );
+
+        assertEquals(
+                "Runtime preference is required.",
                 exception.getMessage()
         );
     }
