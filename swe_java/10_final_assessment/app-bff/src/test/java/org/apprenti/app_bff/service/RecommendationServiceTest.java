@@ -1,6 +1,7 @@
 package org.apprenti.app_bff.service;
 
 import org.apprenti.app_bff.model.CurrentFeeling;
+import org.apprenti.app_bff.model.DesiredFeeling;
 import org.apprenti.app_bff.model.Genre;
 import org.apprenti.app_bff.model.VibeProfile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -96,4 +97,90 @@ class RecommendationServiceTest {
                 exception.getMessage()
         );
     }
+
+    @Test
+    void makeMeLaughShouldCombineWithCurrentFeelingWeights() {
+
+        VibeProfile profile
+                = recommendationService.buildVibeProfile(
+                        CurrentFeeling.STRESSED,
+                        DesiredFeeling.MAKE_ME_LAUGH
+                );
+
+        assertEquals(
+                6,
+                profile.getGenreWeight(Genre.COMEDY)
+        );
+
+        assertEquals(
+                3,
+                profile.getGenreWeight(Genre.ANIMATION)
+        );
+
+        assertEquals(
+                1,
+                profile.getGenreWeight(Genre.FAMILY)
+        );
+
+        assertEquals(
+                1,
+                profile.getGenreWeight(Genre.ROMANCE)
+        );
+
+        assertEquals(
+                -1,
+                profile.getGenreWeight(Genre.HORROR)
+        );
+
+        assertEquals(
+                -1,
+                profile.getGenreWeight(Genre.THRILLER)
+        );
+    }
+
+    @Test
+    void scareMeShouldOverrideStressedHorrorPenalty() {
+
+        VibeProfile profile
+                = recommendationService.buildVibeProfile(
+                        CurrentFeeling.STRESSED,
+                        DesiredFeeling.SCARE_ME
+                );
+
+        assertEquals(
+                4,
+                profile.getGenreWeight(Genre.HORROR)
+        );
+
+        assertEquals(
+                2,
+                profile.getGenreWeight(Genre.THRILLER)
+        );
+
+        assertEquals(
+                2,
+                profile.getGenreWeight(Genre.MYSTERY)
+        );
+    }
+
+    @Test
+    void nullDesiredFeelingShouldThrowException() {
+
+        IllegalArgumentException exception
+                = assertThrows(
+                        IllegalArgumentException.class,
+                        ()
+                        -> recommendationService
+                                .buildVibeProfile(
+                                        CurrentFeeling.HAPPY,
+                                        null
+                                )
+                );
+
+        assertEquals(
+                "Desired feeling is required.",
+                exception.getMessage()
+        );
+    }
+
 }
