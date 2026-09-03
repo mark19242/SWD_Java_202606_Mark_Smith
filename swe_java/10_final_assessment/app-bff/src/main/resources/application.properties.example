@@ -15,3 +15,7 @@ spring.datasource.url=jdbc:postgresql://localhost:5432/app_db
 spring.datasource.username=YOUR_POSTGRES_USERNAME
 spring.datasource.password=YOUR_POSTGRES_PASSWORD
 spring.datasource.driver-class-name=org.postgresql.Driver
+
+# TMDB API Configuration
+tmdb.api.token=YOUR_TMDB_API_READ_ACCESS_TOKEN
+tmdb.api.base-url=https://api.themoviedb.org/3

@@ -1,0 +1,18 @@
+package org.apprenti.app_bff.dto;
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public record TmdbDiscoverResponse(
+        Integer page,
+        List<MovieResult> results,
+        @JsonProperty("total_pages")
+        Integer totalPages,
+        @JsonProperty("total_results")
+        Integer totalResults
+        ) {
+
+}
