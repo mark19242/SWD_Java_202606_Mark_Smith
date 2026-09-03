@@ -5,6 +5,7 @@ import java.util.List;
 import org.apprenti.app_bff.model.CurrentFeeling;
 import org.apprenti.app_bff.model.DesiredFeeling;
 import org.apprenti.app_bff.model.Genre;
+import org.apprenti.app_bff.model.Intensity;
 import org.apprenti.app_bff.model.MovieVibe;
 import org.apprenti.app_bff.model.VibeProfile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -282,6 +283,114 @@ class RecommendationServiceTest {
 
         assertEquals(
                 "A maximum of two movie vibes may be selected.",
+                exception.getMessage()
+        );
+    }
+
+    @Test
+    void chillShouldProduceExpectedFullVibeProfile() {
+
+        VibeProfile profile
+                = recommendationService.buildVibeProfile(
+                        CurrentFeeling.STRESSED,
+                        DesiredFeeling.MAKE_ME_LAUGH,
+                        List.of(
+                                MovieVibe.LIGHT_AND_FUNNY,
+                                MovieVibe.ROMANTIC
+                        ),
+                        Intensity.CHILL
+                );
+
+        assertEquals(13, profile.getGenreWeight(Genre.COMEDY));
+        assertEquals(8, profile.getGenreWeight(Genre.ROMANCE));
+        assertEquals(6, profile.getGenreWeight(Genre.ANIMATION));
+        assertEquals(5, profile.getGenreWeight(Genre.FAMILY));
+        assertEquals(1, profile.getGenreWeight(Genre.DRAMA));
+
+        assertEquals(-1, profile.getGenreWeight(Genre.CRIME));
+        assertEquals(-2, profile.getGenreWeight(Genre.WAR));
+        assertEquals(-3, profile.getGenreWeight(Genre.THRILLER));
+        assertEquals(-4, profile.getGenreWeight(Genre.HORROR));
+    }
+
+    @Test
+    void goAllOutShouldCreateStrongHorrorThrillerProfile() {
+
+        VibeProfile profile
+                = recommendationService.buildVibeProfile(
+                        CurrentFeeling.STRESSED,
+                        DesiredFeeling.SCARE_ME,
+                        List.of(MovieVibe.DARK_AND_INTENSE),
+                        Intensity.GO_ALL_OUT
+                );
+
+        assertEquals(
+                9,
+                profile.getGenreWeight(Genre.HORROR)
+        );
+
+        assertEquals(
+                9,
+                profile.getGenreWeight(Genre.THRILLER)
+        );
+
+        assertEquals(
+                5,
+                profile.getGenreWeight(Genre.CRIME)
+        );
+
+        assertEquals(
+                3,
+                profile.getGenreWeight(Genre.ACTION)
+        );
+    }
+
+    @Test
+    void anyIntensityShouldNotChangeGenreWeights() {
+
+        VibeProfile profile
+                = recommendationService.buildVibeProfile(
+                        CurrentFeeling.HAPPY,
+                        DesiredFeeling.MAKE_ME_LAUGH,
+                        List.of(MovieVibe.LIGHT_AND_FUNNY),
+                        Intensity.ANY_INTENSITY
+                );
+
+        assertEquals(
+                10,
+                profile.getGenreWeight(Genre.COMEDY)
+        );
+
+        assertEquals(
+                4,
+                profile.getGenreWeight(Genre.ANIMATION)
+        );
+
+        assertEquals(
+                2,
+                profile.getGenreWeight(Genre.FAMILY)
+        );
+    }
+
+    @Test
+    void nullIntensityShouldThrowException() {
+
+        IllegalArgumentException exception
+                = assertThrows(
+                        IllegalArgumentException.class,
+                        ()
+                        -> recommendationService.buildVibeProfile(
+                                CurrentFeeling.HAPPY,
+                                DesiredFeeling.MAKE_ME_LAUGH,
+                                List.of(
+                                        MovieVibe.LIGHT_AND_FUNNY
+                                ),
+                                null
+                        )
+                );
+
+        assertEquals(
+                "Intensity is required.",
                 exception.getMessage()
         );
     }

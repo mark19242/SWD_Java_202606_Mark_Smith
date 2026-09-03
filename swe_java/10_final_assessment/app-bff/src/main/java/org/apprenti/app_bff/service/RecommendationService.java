@@ -5,6 +5,7 @@ import java.util.List;
 import org.apprenti.app_bff.model.CurrentFeeling;
 import org.apprenti.app_bff.model.DesiredFeeling;
 import org.apprenti.app_bff.model.Genre;
+import org.apprenti.app_bff.model.Intensity;
 import org.apprenti.app_bff.model.MovieVibe;
 import org.apprenti.app_bff.model.VibeProfile;
 import org.springframework.stereotype.Service;
@@ -291,6 +292,80 @@ public class RecommendationService {
 
             case SURPRISE_ME ->
                 profile.setSurpriseMe(true);
+        }
+    }
+
+    public VibeProfile buildVibeProfile(
+            CurrentFeeling currentFeeling,
+            DesiredFeeling desiredFeeling,
+            List<MovieVibe> movieVibes,
+            Intensity intensity
+    ) {
+        if (intensity == null) {
+            throw new IllegalArgumentException(
+                    "Intensity is required."
+            );
+        }
+
+        VibeProfile profile
+                = buildVibeProfile(
+                        currentFeeling,
+                        desiredFeeling,
+                        movieVibes
+                );
+
+        applyIntensityRules(
+                profile,
+                intensity
+        );
+
+        return profile;
+    }
+
+    private void applyIntensityRules(
+            VibeProfile profile,
+            Intensity intensity
+    ) {
+
+        switch (intensity) {
+
+            case CHILL -> {
+                profile.adjustGenreWeight(Genre.COMEDY, 2);
+                profile.adjustGenreWeight(Genre.ROMANCE, 2);
+                profile.adjustGenreWeight(Genre.FAMILY, 2);
+                profile.adjustGenreWeight(Genre.ANIMATION, 1);
+
+                profile.adjustGenreWeight(Genre.HORROR, -3);
+                profile.adjustGenreWeight(Genre.THRILLER, -2);
+                profile.adjustGenreWeight(Genre.CRIME, -1);
+                profile.adjustGenreWeight(Genre.WAR, -2);
+            }
+
+            case LIGHT_INTENSITY -> {
+                profile.adjustGenreWeight(Genre.ADVENTURE, 1);
+                profile.adjustGenreWeight(Genre.MYSTERY, 1);
+                profile.adjustGenreWeight(Genre.HORROR, -1);
+            }
+
+            case BRING_IT_ON -> {
+                profile.adjustGenreWeight(Genre.ACTION, 2);
+                profile.adjustGenreWeight(Genre.THRILLER, 2);
+                profile.adjustGenreWeight(Genre.ADVENTURE, 1);
+                profile.adjustGenreWeight(Genre.CRIME, 1);
+                profile.adjustGenreWeight(Genre.HORROR, 1);
+            }
+
+            case GO_ALL_OUT -> {
+                profile.adjustGenreWeight(Genre.ACTION, 3);
+                profile.adjustGenreWeight(Genre.THRILLER, 3);
+                profile.adjustGenreWeight(Genre.HORROR, 3);
+                profile.adjustGenreWeight(Genre.CRIME, 2);
+                profile.adjustGenreWeight(Genre.WAR, 2);
+            }
+
+            case ANY_INTENSITY -> {
+                // No adjustment needed.
+            }
         }
     }
 
