@@ -1,31 +1,61 @@
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
-import { AuthProvider, useAuth } from './context/AuthContext'
-import { ProtectedRoute } from './components/ProtectedRoute'
-import { NavBar } from './components/NavBar'
-import { LoginPage } from './pages/LoginPage'
-import { RegisterPage } from './pages/RegisterPage'
-import { NotesPage } from './pages/NotesPage'
-import { AdminPage } from './pages/AdminPage'
+import { Navigate, Route, Routes, useLocation } from "react-router-dom"
+import { AuthProvider, useAuth } from "./context/AuthContext"
+import { ProtectedRoute } from "./components/ProtectedRoute"
+import { NavBar } from "./components/NavBar"
+
+import { LandingPage } from "./pages/LandingPage"
+import { LoginPage } from "./pages/LoginPage"
+import { RegisterPage } from "./pages/RegisterPage"
+import { QuestionnairePage } from "./pages/QuestionnairePage"
+import { RecommendationsPage } from "./pages/RecommendationsPage"
+import { SavedMoviesPage } from "./pages/SavedMoviesPage"
+import { AdminPage } from "./pages/AdminPage"
 
 function Layout() {
   const { token } = useAuth()
   const location = useLocation()
-  const showNav = token && location.pathname !== '/login' && location.pathname !== '/register'
+
+  const showNav =
+    token && location.pathname !== "/login" && location.pathname !== "/register"
 
   return (
     <>
       {showNav && <NavBar />}
+
       <Routes>
+        <Route path="/" element={<LandingPage />} />
+
         <Route path="/login" element={<LoginPage />} />
+
         <Route path="/register" element={<RegisterPage />} />
+
         <Route
-          path="/notes"
+          path="/questionnaire"
           element={
             <ProtectedRoute>
-              <NotesPage />
+              <QuestionnairePage />
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/recommendations"
+          element={
+            <ProtectedRoute>
+              <RecommendationsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/saved"
+          element={
+            <ProtectedRoute>
+              <SavedMoviesPage />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/admin"
           element={
@@ -34,7 +64,8 @@ function Layout() {
             </ProtectedRoute>
           }
         />
-        <Route path="*" element={<Navigate to="/notes" replace />} />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
   )

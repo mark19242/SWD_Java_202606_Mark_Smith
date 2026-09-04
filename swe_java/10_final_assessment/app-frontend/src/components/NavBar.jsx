@@ -1,6 +1,6 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import './NavBar.css'
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
+import "./NavBar.css"
 
 export function NavBar() {
   const { username, isAdmin, logout } = useAuth()
@@ -8,17 +8,22 @@ export function NavBar() {
 
   function handleLogout() {
     logout()
-    navigate('/login')
+    navigate("/")
   }
 
   return (
     <nav className="navbar">
       <div className="navbar-links">
-        <Link to="/notes">Notes</Link>
+        <Link to="/questionnaire">Find My Vibe</Link>
+
+        <Link to="/saved">Saved Movies</Link>
+
         {isAdmin && <Link to="/admin">Admin</Link>}
       </div>
+
       <div className="navbar-user">
         <span className="navbar-username">{username}</span>
+
         <button type="button" className="navbar-logout" onClick={handleLogout}>
           Log out
         </button>

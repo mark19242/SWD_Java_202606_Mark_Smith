@@ -1,15 +1,15 @@
-import { useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { ApiError } from '../api/client'
-import './AuthForm.css'
+import { useState } from "react"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
+import { ApiError } from "../api/client"
+import "./AuthForm.css"
 
 export function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
   const [error, setError] = useState(null)
   const [submitting, setSubmitting] = useState(false)
 
@@ -19,12 +19,12 @@ export function LoginPage() {
     setSubmitting(true)
     try {
       await login(username, password)
-      navigate('/notes')
+      navigate("/questionnaire")
     } catch (err) {
       if (err instanceof ApiError && err.status === 401) {
-        setError('Invalid username or password.')
+        setError("Invalid username or password.")
       } else {
-        setError('Login failed. Is the backend running?')
+        setError("Login failed. Is the backend running?")
       }
     } finally {
       setSubmitting(false)
@@ -62,7 +62,7 @@ export function LoginPage() {
             />
           </div>
           <button type="submit" className="auth-submit" disabled={submitting}>
-            {submitting ? 'Logging in…' : 'Log in'}
+            {submitting ? "Logging in…" : "Log in"}
           </button>
         </form>
         <p className="auth-switch">
