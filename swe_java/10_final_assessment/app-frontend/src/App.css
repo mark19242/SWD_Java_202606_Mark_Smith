@@ -1,0 +1,288 @@
+@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Montserrat:wght@300;400;500;600;700;800&display=swap");
+
+/* --------------------------------
+   REELVIBE DESIGN TOKENS
+-------------------------------- */
+
+:root {
+  --clr-gold: #f2c230;
+  --clr-amber: #f2921d;
+  --clr-orange: #f24f13;
+  --clr-lavender: #8082a6;
+  --clr-plum: #46334f;
+
+  --clr-deep-plum: #211525;
+  --clr-black: #111111;
+  --clr-white: #ffffff;
+  --clr-soft-white: #f7f3f8;
+
+  --font-display: "Bodoni Moda", serif;
+  --font-body: "Montserrat", sans-serif;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+
+  --shadow-soft: 0 0.75rem 2rem rgba(0, 0, 0, 0.22);
+}
+
+/* --------------------------------
+   GLOBAL
+-------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--clr-white);
+  background-color: var(--clr-deep-plum);
+  line-height: 1.5;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+/* --------------------------------
+   UTILITIES
+-------------------------------- */
+
+.display-font {
+  font-family: var(--font-display);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.page-container {
+  width: min(100% - 2rem, 75rem);
+  margin-inline: auto;
+}
+
+/* --------------------------------
+   COMPONENTS
+-------------------------------- */
+
+/* Navigation */
+
+/* Buttons */
+
+/* Forms */
+
+/* Movie Cards */
+
+/* --------------------------------
+   PAGES
+-------------------------------- */
+
+.landing-page {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem 1rem;
+
+  background-image:
+    linear-gradient(
+      to top,
+      rgba(33, 21, 37, 0.96) 0%,
+      rgba(33, 21, 37, 0.7) 35%,
+      rgba(33, 21, 37, 0.12) 70%
+    ),
+    url("./assets/reelvibe-rooftop.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.landing-content {
+  width: 100%;
+  max-width: 36rem;
+  padding: 1.5rem;
+
+  background: rgba(33, 21, 37, 0.68);
+  border: 1px solid rgba(242, 194, 48, 0.25);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+
+  backdrop-filter: blur(0.5rem);
+}
+
+.landing-eyebrow {
+  margin-bottom: 0.75rem;
+
+  color: var(--clr-gold);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.landing-title {
+  margin-bottom: 1rem;
+
+  color: var(--clr-white);
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  line-height: 0.95;
+}
+
+.landing-title span {
+  color: var(--clr-amber);
+}
+
+.landing-description {
+  max-width: 32rem;
+  margin-bottom: 1.5rem;
+
+  color: var(--clr-soft-white);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.landing-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 3rem;
+  padding: 0.75rem 1.5rem;
+
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+
+  font-weight: 700;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-0.125rem);
+  filter: brightness(1.08);
+}
+
+.btn-primary {
+  color: var(--clr-deep-plum);
+  background-color: var(--clr-gold);
+}
+
+.btn-secondary {
+  color: var(--clr-white);
+  background-color: rgba(70, 51, 79, 0.7);
+  border-color: var(--clr-lavender);
+}
+
+.landing-footer {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1rem;
+}
+
+/* Login / Register */
+
+/* Questionnaire */
+
+/* Recommendations */
+
+/* Saved Movies */
+
+/* Admin */
+
+/* --------------------------------
+   RESPONSIVE
+-------------------------------- */
+
+@media (min-width: 768px) {
+  .landing-page {
+    justify-content: center;
+    padding: 3rem;
+    background-position: center;
+  }
+
+  .landing-content {
+    padding: 2rem;
+  }
+
+  .landing-footer {
+    position: absolute;
+    left: 50%;
+    bottom: 2rem;
+
+    width: 100%;
+    margin: 0;
+
+    text-align: center;
+    transform: translateX(-50%);
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-page {
+    padding-left: 6vw;
+
+    background-image:
+      linear-gradient(
+        to right,
+        rgba(33, 21, 37, 0.92) 0%,
+        rgba(33, 21, 37, 0.52) 32%,
+        rgba(33, 21, 37, 0.05) 62%
+      ),
+      url("./assets/reelvibe-rooftop.png");
+  }
+
+  .landing-content {
+    max-width: 38rem;
+  }
+}

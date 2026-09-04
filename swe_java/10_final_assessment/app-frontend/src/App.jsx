@@ -11,6 +11,8 @@ import { RecommendationsPage } from "./pages/RecommendationsPage"
 import { SavedMoviesPage } from "./pages/SavedMoviesPage"
 import { AdminPage } from "./pages/AdminPage"
 
+import "./App.css"
+
 function Layout() {
   const { token } = useAuth()
   const location = useLocation()
