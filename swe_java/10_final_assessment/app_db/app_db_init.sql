@@ -48,17 +48,7 @@ CREATE TABLE IF NOT EXISTS authorities (
 
 CREATE UNIQUE INDEX IF NOT EXISTS ix_auth_username ON authorities (username, authority);
 
-------------------------------------------------------
---  TESTING
-------------------------------------------------------
 
--- Domain Schema Example for Testing or Subsequent Use
-CREATE TABLE IF NOT EXISTS notes (
-    id BIGSERIAL PRIMARY KEY,
-    username VARCHAR(50) NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    content TEXT NOT NULL
-);
 
 ------------------------------------------------------
 --  USER ADMIN

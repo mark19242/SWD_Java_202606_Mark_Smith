@@ -6,10 +6,8 @@
 --   Adds ReelVibe-owned domain tables while preserving
 --   Rich's Spring Security users/authorities tables.
 --
--- Safe during transition:
---   This script does NOT drop the starter notes table yet.
---   We can remove notes after the ReelVibe backend/frontend
---   has replaced the starter Notes feature.
+-- ReelVibe domain schema.
+-- Preserves Spring Security users/authorities tables.
 --------------------------------------------------
 
 \c app_db
