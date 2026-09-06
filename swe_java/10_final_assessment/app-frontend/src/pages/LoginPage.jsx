@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import { ApiError } from "../api/client"
 import "./AuthForm.css"
+import { MovieConcierge } from "../components/MovieConcierge"
 
 export function LoginPage() {
   const { login } = useAuth()
@@ -10,6 +11,7 @@ export function LoginPage() {
   const location = useLocation()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [activeField, setActiveField] = useState("idle")
   const [error, setError] = useState(null)
   const [submitting, setSubmitting] = useState(false)
 
@@ -34,6 +36,10 @@ export function LoginPage() {
   return (
     <div className="auth-page">
       <div className="auth-card">
+        <MovieConcierge
+          activeField={activeField}
+          usernameLength={username.length}
+        />
         <h1>Log in</h1>
         {location.state?.registered && (
           <p className="auth-success">Account created — log in below.</p>
@@ -46,6 +52,8 @@ export function LoginPage() {
               id="username"
               value={username}
               onChange={(event) => setUsername(event.target.value)}
+              onFocus={() => setActiveField("username")}
+              onBlur={() => setActiveField("idle")}
               autoComplete="username"
               required
             />
@@ -57,6 +65,8 @@ export function LoginPage() {
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
+              onFocus={() => setActiveField("password")}
+              onBlur={() => setActiveField("idle")}
               autoComplete="current-password"
               required
             />
