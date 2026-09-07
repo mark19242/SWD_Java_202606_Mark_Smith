@@ -516,8 +516,403 @@ p {
 }
 
 /* Questionnaire */
+.questionnaire-page {
+  min-height: calc(100dvh - 4.75rem);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 2rem 1rem;
+
+  background:
+    radial-gradient(circle at top, rgba(128, 130, 166, 0.25), transparent 40%),
+    linear-gradient(145deg, #211525, #120b16);
+}
+
+.questionnaire-card {
+  width: min(100%, 52rem);
+
+  padding: 1.5rem;
+
+  background: rgba(70, 51, 79, 0.42);
+
+  border: 1px solid rgba(242, 194, 48, 0.25);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-soft);
+}
+
+.questionnaire-progress {
+  width: 100%;
+  height: 0.35rem;
+
+  margin-bottom: 2rem;
+
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  border-radius: 999px;
+}
+
+.questionnaire-progress-bar {
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    var(--clr-gold),
+    var(--clr-amber),
+    var(--clr-orange)
+  );
+
+  border-radius: inherit;
+
+  transition: width 0.35s ease;
+}
+
+.questionnaire-eyebrow {
+  margin-bottom: 0.5rem;
+
+  color: var(--clr-gold);
+
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12rem;
+  text-transform: uppercase;
+}
+
+.questionnaire-title {
+  margin-bottom: 0.75rem;
+
+  font-size: clamp(2rem, 8vw, 3.5rem);
+
+  line-height: 1.05;
+}
+
+.questionnaire-description {
+  margin-bottom: 1.75rem;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  line-height: 1.6;
+}
+
+.questionnaire-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.vibe-option {
+  min-height: 3.25rem;
+
+  padding: 0.8rem 1rem;
+
+  color: var(--clr-white);
+
+  background: rgba(255, 255, 255, 0.06);
+
+  border: 1px solid rgba(128, 130, 166, 0.55);
+
+  border-radius: var(--radius-md);
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.vibe-option:hover {
+  transform: translateY(-0.1rem);
+
+  border-color: var(--clr-gold);
+}
+
+.vibe-option.selected {
+  color: var(--clr-deep-plum);
+
+  background: linear-gradient(135deg, var(--clr-gold), var(--clr-amber));
+
+  border-color: var(--clr-gold);
+
+  font-weight: 800;
+}
+
+.questionnaire-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 1rem;
+
+  margin-top: 2rem;
+}
+
+.questionnaire-back,
+.questionnaire-next {
+  min-height: 3rem;
+
+  padding: 0.7rem 1.25rem;
+
+  border-radius: var(--radius-md);
+
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.questionnaire-back {
+  color: var(--clr-soft-white);
+
+  background: transparent;
+
+  border: 1px solid var(--clr-lavender);
+}
+
+.questionnaire-next {
+  margin-left: auto;
+
+  color: var(--clr-deep-plum);
+
+  background: linear-gradient(135deg, var(--clr-gold), var(--clr-amber));
+
+  border: none;
+}
+
+.questionnaire-next:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 
 /* Recommendations */
+.recommendations-page {
+  min-height: 100dvh;
+  padding: 2rem 1rem 4rem;
+
+  background:
+    radial-gradient(circle at top, rgba(128, 130, 166, 0.18), transparent 32%),
+    linear-gradient(145deg, #211525, #120b16);
+}
+
+.recommendations-header {
+  width: min(100%, 78rem);
+  margin: 0 auto 2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.recommendations-eyebrow {
+  margin-bottom: 0.4rem;
+
+  color: var(--clr-gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14rem;
+  text-transform: uppercase;
+}
+
+.recommendations-title {
+  margin-bottom: 0.5rem;
+
+  font-size: clamp(2.5rem, 8vw, 4rem);
+
+  line-height: 1;
+}
+
+.recommendations-subtitle {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.recommendations-again {
+  align-self: flex-start;
+
+  color: var(--clr-gold);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.movie-grid {
+  width: min(100%, 78rem);
+  margin-inline: auto;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.movie-card {
+  overflow: hidden;
+
+  background: rgba(70, 51, 79, 0.42);
+
+  border: 1px solid rgba(242, 194, 48, 0.2);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-soft);
+}
+
+.movie-poster-wrap {
+  position: relative;
+
+  aspect-ratio: 2 / 3;
+
+  overflow: hidden;
+
+  background: var(--clr-deep-plum);
+}
+
+.movie-poster {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.movie-poster-placeholder {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  place-items: center;
+
+  font-size: 4rem;
+}
+
+.movie-rank {
+  position: absolute;
+  z-index: 2;
+
+  top: 0.75rem;
+  left: 0.75rem;
+
+  min-width: 2.5rem;
+  padding: 0.4rem 0.65rem;
+
+  color: var(--clr-deep-plum);
+  background: linear-gradient(135deg, var(--clr-gold), var(--clr-amber));
+
+  border-radius: 999px;
+
+  font-weight: 800;
+  text-align: center;
+}
+
+.movie-card-content {
+  padding: 1.25rem;
+}
+
+.movie-card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 1rem;
+}
+
+.movie-card-heading h2 {
+  margin-bottom: 0.25rem;
+
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  line-height: 1.15;
+}
+
+.movie-rating {
+  flex-shrink: 0;
+
+  color: var(--clr-gold);
+  font-weight: 700;
+}
+
+.movie-release {
+  margin-bottom: 0.85rem;
+
+  color: var(--clr-lavender);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.movie-overview {
+  display: -webkit-box;
+  overflow: hidden;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+
+  margin-bottom: 1.25rem;
+
+  color: rgba(255, 255, 255, 0.74);
+
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.movie-score-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 0.75rem;
+
+  margin-bottom: 1rem;
+}
+
+.movie-score-row > div {
+  padding: 0.75rem;
+
+  background: rgba(255, 255, 255, 0.05);
+
+  border-radius: var(--radius-sm);
+}
+
+.score-label {
+  display: block;
+
+  margin-bottom: 0.15rem;
+
+  color: rgba(255, 255, 255, 0.6);
+
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04rem;
+  text-transform: uppercase;
+}
+
+.score-value {
+  color: var(--clr-gold);
+  font-size: 1.25rem;
+}
+
+.movie-save-button {
+  width: 100%;
+  min-height: 2.8rem;
+
+  color: var(--clr-deep-plum);
+  background: linear-gradient(135deg, var(--clr-gold), var(--clr-amber));
+
+  border: none;
+  border-radius: var(--radius-md);
+
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.recommendations-empty {
+  width: min(100%, 32rem);
+  margin: 6rem auto;
+
+  text-align: center;
+}
 
 /* Saved Movies */
 
@@ -584,6 +979,27 @@ p {
     width: 23rem;
     padding: 2rem;
   }
+
+  .questionnaire-card {
+    padding: 2.5rem;
+  }
+
+  .questionnaire-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .recommendations-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .recommendations-again {
+    align-self: auto;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (min-width: 1024px) {
@@ -612,5 +1028,9 @@ p {
     justify-content: flex-end;
 
     padding: 7rem 5vw 3rem;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
