@@ -102,8 +102,9 @@ p {
 /* Movie Concierge */
 
 .concierge-container {
-  width: min(70vw, 14rem);
+  width: min(70vw, 13rem);
   aspect-ratio: 1;
+
   margin-inline: auto;
 
   overflow: hidden;
@@ -114,8 +115,8 @@ p {
   background-color: var(--clr-deep-plum);
 
   box-shadow:
-    0 0 0 0.35rem rgba(242, 194, 48, 0.12),
-    var(--shadow-soft);
+    0 0 0 0.35rem rgba(242, 194, 48, 0.1),
+    0 0 2rem rgba(242, 146, 29, 0.28);
 }
 
 .concierge-svg {
@@ -124,7 +125,67 @@ p {
   height: 100%;
 }
 
-/* Navigation */
+/* Public Navigation */
+
+.public-nav {
+  position: absolute;
+  z-index: 10;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  min-height: 4.75rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0.75rem 1rem;
+
+  background: rgba(22, 14, 25, 0.78);
+
+  border-bottom: 1px solid rgba(128, 130, 166, 0.25);
+
+  backdrop-filter: blur(0.75rem);
+}
+
+.public-nav-logo img {
+  width: 8rem;
+}
+
+.public-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.public-nav-links a {
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.public-nav-links a:hover {
+  color: var(--clr-gold);
+}
+
+.public-nav-cta {
+  padding: 0.55rem 0.9rem;
+
+  color: var(--clr-deep-plum);
+
+  background: linear-gradient(135deg, var(--clr-gold), var(--clr-amber));
+
+  border-radius: var(--radius-sm);
+
+  font-weight: 800;
+}
 
 /* Buttons */
 
@@ -255,7 +316,204 @@ p {
   letter-spacing: 0.1rem;
 }
 
-/* Login / Register */
+/* --------------------------------
+   LOGIN / REGISTER
+-------------------------------- */
+
+.auth-page {
+  position: relative;
+
+  min-height: 100dvh;
+
+  background-image:
+    linear-gradient(rgba(20, 12, 25, 0.08), rgba(20, 12, 25, 0.18)),
+    url("./assets/reelvibe-login-bg.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.auth-login-area {
+  min-height: 100dvh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 6.5rem 1rem 2rem;
+}
+
+.auth-card {
+  width: min(100%, 23rem);
+  padding: 1.75rem;
+
+  color: var(--clr-white);
+
+  background: rgba(33, 21, 37, 0.78);
+
+  border: 1px solid rgba(242, 194, 48, 0.35);
+  border-radius: var(--radius-lg);
+
+  box-shadow:
+    0 1.5rem 4rem rgba(0, 0, 0, 0.45),
+    0 0 2rem rgba(242, 146, 29, 0.12);
+
+  backdrop-filter: blur(0.75rem);
+}
+
+.auth-title {
+  margin: 0.75rem 0 1.5rem;
+
+  color: var(--clr-white);
+  font-size: clamp(2rem, 5vw, 2.4rem);
+  line-height: 1;
+  text-align: center;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.auth-field label {
+  color: var(--clr-soft-white);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.03rem;
+}
+
+.auth-field input {
+  width: 100%;
+  min-height: 3rem;
+
+  padding: 0.75rem 1rem;
+
+  color: var(--clr-white);
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border: 1px solid rgba(128, 130, 166, 0.65);
+  border-radius: var(--radius-sm);
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.auth-field input:focus {
+  background: rgba(255, 255, 255, 0.12);
+
+  border-color: var(--clr-gold);
+
+  box-shadow:
+    0 0 0 0.2rem rgba(242, 194, 48, 0.12),
+    0 0 1rem rgba(242, 146, 29, 0.16);
+}
+
+.auth-submit {
+  width: 100%;
+  min-height: 3.1rem;
+
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.25rem;
+
+  color: var(--clr-deep-plum);
+  background: linear-gradient(135deg, var(--clr-gold), var(--clr-amber));
+
+  border: none;
+  border-radius: var(--radius-md);
+
+  font-weight: 800;
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.auth-submit:hover:not(:disabled) {
+  transform: translateY(-0.1rem);
+  filter: brightness(1.07);
+
+  box-shadow: 0 0.65rem 1.5rem rgba(242, 146, 29, 0.22);
+}
+
+.auth-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-switch {
+  margin: 1.25rem 0 0;
+
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.auth-switch a {
+  color: var(--clr-gold);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+.auth-error {
+  margin-bottom: 1rem;
+
+  color: #ff9a8f;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.auth-success {
+  margin-bottom: 1rem;
+
+  color: var(--clr-gold);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.auth-back-link {
+  position: absolute;
+  left: 1.25rem;
+  bottom: 1.25rem;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.auth-back-link:hover {
+  color: var(--clr-gold);
+  transform: translateX(-0.2rem);
+}
 
 /* Questionnaire */
 
@@ -270,6 +528,8 @@ p {
 -------------------------------- */
 
 @media (min-width: 768px) {
+  /* Landing */
+
   .landing-page {
     justify-content: center;
     padding: 3rem;
@@ -291,9 +551,44 @@ p {
     text-align: center;
     transform: translateX(-50%);
   }
+
+  .auth-back-link {
+    left: 4vw;
+    bottom: 2rem;
+  }
+
+  /* Public Navigation */
+
+  .public-nav {
+    padding-inline: 4vw;
+  }
+
+  .public-nav-logo img {
+    width: 10rem;
+  }
+
+  .public-nav-links {
+    gap: 2rem;
+    font-size: 0.9rem;
+  }
+
+  /* Login / Register */
+
+  .auth-login-area {
+    justify-content: flex-end;
+
+    padding: 7rem 5vw 3rem;
+  }
+
+  .auth-card {
+    width: 23rem;
+    padding: 2rem;
+  }
 }
 
 @media (min-width: 1024px) {
+  /* Landing */
+
   .landing-page {
     padding-left: 6vw;
 
@@ -309,5 +604,13 @@ p {
 
   .landing-content {
     max-width: 38rem;
+  }
+
+  /* Login / Register */
+
+  .auth-login-area {
+    justify-content: flex-end;
+
+    padding: 7rem 5vw 3rem;
   }
 }
