@@ -10,6 +10,17 @@ export function SavedMoviesPage() {
   const [savedMovies, setSavedMovies] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [editingMovieId, setEditingMovieId] = useState(null)
+
+  const [editForm, setEditForm] = useState({
+    watchStatus: "WANT_TO_WATCH",
+    personalRating: "",
+    notes: "",
+  })
+
+  const [updatingMovieId, setUpdatingMovieId] = useState(null)
+  const [deletingMovieId, setDeletingMovieId] = useState(null)
+  const [actionError, setActionError] = useState(null)
 
   useEffect(() => {
     async function loadSavedMovies() {
@@ -28,6 +39,96 @@ export function SavedMoviesPage() {
 
     loadSavedMovies()
   }, [authedFetch])
+
+  function handleManageMovie(savedMovie) {
+    setActionError(null)
+
+    if (editingMovieId === savedMovie.savedMovieId) {
+      setEditingMovieId(null)
+      return
+    }
+
+    setEditingMovieId(savedMovie.savedMovieId)
+
+    setEditForm({
+      watchStatus: savedMovie.watchStatus ?? "WANT_TO_WATCH",
+
+      personalRating: savedMovie.personalRating ?? "",
+
+      notes: savedMovie.notes ?? "",
+    })
+  }
+
+  async function handleSaveChanges(savedMovieId) {
+    setActionError(null)
+    setUpdatingMovieId(savedMovieId)
+
+    try {
+      const updatedSavedMovie = await authedFetch(
+        `/saved-movies/${savedMovieId}`,
+        {
+          method: "PUT",
+          body: {
+            watchStatus: editForm.watchStatus,
+
+            personalRating:
+              editForm.personalRating === ""
+                ? null
+                : Number(editForm.personalRating),
+
+            notes: editForm.notes.trim() === "" ? null : editForm.notes.trim(),
+          },
+        },
+      )
+
+      setSavedMovies((current) =>
+        current.map((item) =>
+          item.savedMovie.savedMovieId === savedMovieId
+            ? {
+                ...item,
+                savedMovie: updatedSavedMovie,
+              }
+            : item,
+        ),
+      )
+
+      setEditingMovieId(null)
+    } catch {
+      setActionError("ReelVibe couldn't update this movie.")
+    } finally {
+      setUpdatingMovieId(null)
+    }
+  }
+
+  async function handleRemoveMovie(savedMovieId) {
+    setActionError(null)
+
+    const confirmed = window.confirm(
+      "Remove this movie from your saved collection?",
+    )
+
+    if (!confirmed) {
+      return
+    }
+
+    setDeletingMovieId(savedMovieId)
+
+    try {
+      await authedFetch(`/saved-movies/${savedMovieId}`, {
+        method: "DELETE",
+      })
+
+      setSavedMovies((current) =>
+        current.filter((item) => item.savedMovie.savedMovieId !== savedMovieId),
+      )
+
+      setEditingMovieId(null)
+    } catch {
+      setActionError("ReelVibe couldn't remove this movie.")
+    } finally {
+      setDeletingMovieId(null)
+    }
+  }
 
   if (loading) {
     return (
@@ -90,7 +191,9 @@ export function SavedMoviesPage() {
           + Find Another Movie
         </Link>
       </header>
-
+      {actionError && (
+        <p className="saved-movies-action-error">{actionError}</p>
+      )}
       <section className="saved-movie-grid">
         {savedMovies.map((item) => {
           const { savedMovie, movie } = item
@@ -160,9 +263,118 @@ export function SavedMoviesPage() {
                   <p className="saved-movie-notes">“{savedMovie.notes}”</p>
                 )}
 
-                <button type="button" className="saved-movie-edit">
-                  Manage Movie
+                <button
+                  type="button"
+                  className="saved-movie-edit"
+                  onClick={() => handleManageMovie(savedMovie)}
+                >
+                  {editingMovieId === savedMovie.savedMovieId
+                    ? "Close"
+                    : "Manage Movie"}
                 </button>
+                {editingMovieId === savedMovie.savedMovieId && (
+                  <div className="saved-movie-manager">
+                    <div className="saved-manager-field">
+                      <label htmlFor={`status-${savedMovie.savedMovieId}`}>
+                        Watch Status
+                      </label>
+
+                      <select
+                        id={`status-${savedMovie.savedMovieId}`}
+                        value={editForm.watchStatus}
+                        onChange={(event) =>
+                          setEditForm((current) => ({
+                            ...current,
+                            watchStatus: event.target.value,
+                          }))
+                        }
+                      >
+                        <option value="WANT_TO_WATCH">Want to Watch</option>
+
+                        <option value="WATCHING">Watching</option>
+
+                        <option value="WATCHED">Watched</option>
+                      </select>
+                    </div>
+
+                    <div className="saved-manager-field">
+                      <label htmlFor={`rating-${savedMovie.savedMovieId}`}>
+                        My Rating
+                      </label>
+
+                      <select
+                        id={`rating-${savedMovie.savedMovieId}`}
+                        value={editForm.personalRating}
+                        onChange={(event) =>
+                          setEditForm((current) => ({
+                            ...current,
+                            personalRating: event.target.value,
+                          }))
+                        }
+                      >
+                        <option value="">Not rated</option>
+
+                        <option value="1">1 / 5</option>
+
+                        <option value="2">2 / 5</option>
+
+                        <option value="3">3 / 5</option>
+
+                        <option value="4">4 / 5</option>
+
+                        <option value="5">5 / 5</option>
+                      </select>
+                    </div>
+
+                    <div className="saved-manager-field">
+                      <label htmlFor={`notes-${savedMovie.savedMovieId}`}>
+                        Notes
+                      </label>
+
+                      <textarea
+                        id={`notes-${savedMovie.savedMovieId}`}
+                        value={editForm.notes}
+                        maxLength={2000}
+                        rows={4}
+                        placeholder="What did you think about this movie?"
+                        onChange={(event) =>
+                          setEditForm((current) => ({
+                            ...current,
+                            notes: event.target.value,
+                          }))
+                        }
+                      />
+                    </div>
+
+                    <div className="saved-manager-actions">
+                      <button
+                        type="button"
+                        className="saved-manager-save"
+                        disabled={updatingMovieId === savedMovie.savedMovieId}
+                        onClick={() =>
+                          handleSaveChanges(savedMovie.savedMovieId)
+                        }
+                      >
+                        {updatingMovieId === savedMovie.savedMovieId
+                          ? "Saving..."
+                          : "Save Changes"}
+                      </button>
+
+                      <button
+                        type="button"
+                        className="saved-manager-remove"
+                        disabled={deletingMovieId === savedMovie.savedMovieId}
+                        onClick={() =>
+                          handleRemoveMovie(savedMovie.savedMovieId)
+                        }
+                      >
+                        {deletingMovieId === savedMovie.savedMovieId
+                          ? "Removing..."
+                          : "Remove Movie"}
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </article>
           )

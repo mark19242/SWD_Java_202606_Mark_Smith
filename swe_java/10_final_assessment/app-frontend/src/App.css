@@ -1096,7 +1096,113 @@ p {
 
   text-align: center;
 }
+.saved-movie-manager {
+  margin-top: 1rem;
+  padding-top: 1rem;
 
+  border-top: 1px solid rgba(128, 130, 166, 0.25);
+}
+
+.saved-manager-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  margin-bottom: 1rem;
+}
+
+.saved-manager-field label {
+  color: var(--clr-soft-white);
+
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04rem;
+  text-transform: uppercase;
+}
+
+.saved-manager-field select,
+.saved-manager-field textarea {
+  width: 100%;
+
+  padding: 0.7rem 0.8rem;
+
+  color: var(--clr-white);
+
+  background: rgba(255, 255, 255, 0.07);
+
+  border: 1px solid rgba(128, 130, 166, 0.65);
+
+  border-radius: var(--radius-sm);
+
+  outline: none;
+
+  font-family: var(--font-body);
+}
+
+.saved-manager-field textarea {
+  resize: vertical;
+  min-height: 6rem;
+}
+
+.saved-manager-field select:focus,
+.saved-manager-field textarea:focus {
+  border-color: var(--clr-gold);
+
+  box-shadow: 0 0 0 0.15rem rgba(242, 194, 48, 0.12);
+}
+
+.saved-manager-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  gap: 0.65rem;
+}
+
+.saved-manager-save,
+.saved-manager-remove {
+  min-height: 2.8rem;
+
+  padding: 0.7rem 1rem;
+
+  border-radius: var(--radius-md);
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.saved-manager-save {
+  color: var(--clr-deep-plum);
+
+  background: linear-gradient(135deg, var(--clr-gold), var(--clr-amber));
+
+  border: none;
+}
+
+.saved-manager-remove {
+  color: #ffaaa2;
+
+  background: rgba(220, 38, 38, 0.08);
+
+  border: 1px solid rgba(255, 154, 143, 0.55);
+}
+
+.saved-manager-save:disabled,
+.saved-manager-remove:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.saved-movies-action-error {
+  width: min(100%, 78rem);
+
+  margin: 0 auto 1.5rem;
+
+  color: #ff9a8f;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+}
 /* Admin */
 
 /* --------------------------------
@@ -1194,6 +1300,10 @@ p {
 
   .saved-movie-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .saved-manager-actions {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
