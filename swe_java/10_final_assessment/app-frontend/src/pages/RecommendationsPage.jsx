@@ -1,13 +1,36 @@
+import { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 
 const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500"
 
 export function RecommendationsPage() {
   const location = useLocation()
+  const { authedFetch } = useAuth()
+
+  const [savedMovieIds, setSavedMovieIds] = useState([])
+  const [savingMovieId, setSavingMovieId] = useState(null)
+  const [saveError, setSaveError] = useState(null)
 
   const response = location.state?.recommendationResponse
 
   const recommendations = response?.recommendations ?? []
+
+  useEffect(() => {
+    async function loadSavedMovies() {
+      try {
+        const savedMovies = await authedFetch("/saved-movies")
+
+        setSavedMovieIds(
+          savedMovies.map((savedMovie) => savedMovie.tmdbMovieId),
+        )
+      } catch {
+        // Recommendations can still display if this check fails.
+      }
+    }
+
+    loadSavedMovies()
+  }, [authedFetch])
 
   if (!response) {
     return (
@@ -28,7 +51,25 @@ export function RecommendationsPage() {
       </main>
     )
   }
+  async function handleSaveMovie(tmdbMovieId) {
+    setSaveError(null)
+    setSavingMovieId(tmdbMovieId)
 
+    try {
+      await authedFetch("/saved-movies", {
+        method: "POST",
+        body: {
+          tmdbMovieId,
+        },
+      })
+
+      setSavedMovieIds((current) => [...current, tmdbMovieId])
+    } catch {
+      setSaveError("ReelVibe couldn't save that movie. Please try again.")
+    } finally {
+      setSavingMovieId(null)
+    }
+  }
   return (
     <main className="recommendations-page">
       <header className="recommendations-header">
@@ -48,6 +89,8 @@ export function RecommendationsPage() {
           ↻ Try Another Vibe
         </Link>
       </header>
+
+      {saveError && <p className="recommendations-save-error">{saveError}</p>}
 
       <section className="movie-grid">
         {recommendations.map((recommendation, index) => {
@@ -112,8 +155,20 @@ export function RecommendationsPage() {
                   </div>
                 </div>
 
-                <button type="button" className="movie-save-button">
-                  + Save Movie
+                <button
+                  type="button"
+                  className="movie-save-button"
+                  disabled={
+                    savedMovieIds.includes(movie.id) ||
+                    savingMovieId === movie.id
+                  }
+                  onClick={() => handleSaveMovie(movie.id)}
+                >
+                  {savedMovieIds.includes(movie.id)
+                    ? "✓ Saved"
+                    : savingMovieId === movie.id
+                      ? "Saving..."
+                      : "+ Save Movie"}
                 </button>
               </div>
             </article>

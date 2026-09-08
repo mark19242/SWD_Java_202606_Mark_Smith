@@ -84,4 +84,24 @@ public class TmdbClient {
 
         return response.results();
     }
+
+    public MovieResult findMovieById(Long tmdbMovieId) {
+        if (tmdbMovieId == null || tmdbMovieId <= 0) {
+            throw new IllegalArgumentException(
+                    "TMDB movie ID must be positive."
+            );
+        }
+
+        return restClient
+                .get()
+                .uri(uriBuilder
+                        -> uriBuilder
+                        .path("/movie/{movieId}")
+                        .queryParam("language", "en-US")
+                        .build(tmdbMovieId)
+                )
+                .retrieve()
+                .body(MovieResult.class);
+    }
+
 }

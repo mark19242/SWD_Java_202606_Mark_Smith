@@ -4,8 +4,10 @@ import java.security.Principal;
 import java.util.List;
 
 import org.apprenti.app_bff.dto.SaveMovieRequest;
+import org.apprenti.app_bff.dto.SavedMovieDetails;
 import org.apprenti.app_bff.dto.UpdateSavedMovieRequest;
 import org.apprenti.app_bff.model.SavedMovie;
+import org.apprenti.app_bff.service.SavedMovieDetailsService;
 import org.apprenti.app_bff.service.SavedMovieService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,11 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class SavedMovieController {
 
     private final SavedMovieService savedMovieService;
+    private final SavedMovieDetailsService savedMovieDetailsService;
 
     public SavedMovieController(
-            SavedMovieService savedMovieService
+            SavedMovieService savedMovieService,
+            SavedMovieDetailsService savedMovieDetailsService
     ) {
         this.savedMovieService = savedMovieService;
+        this.savedMovieDetailsService = savedMovieDetailsService;
     }
 
     @PostMapping
@@ -80,5 +85,14 @@ public class SavedMovieController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/details")
+    public List<SavedMovieDetails> getSavedMovieDetails(
+            Principal principal
+    ) {
+        return savedMovieDetailsService.findSavedMovieDetails(
+                principal.getName()
+        );
     }
 }
