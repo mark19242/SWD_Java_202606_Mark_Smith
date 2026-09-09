@@ -54,11 +54,10 @@ CREATE UNIQUE INDEX IF NOT EXISTS ix_auth_username ON authorities (username, aut
 --  USER ADMIN
 ------------------------------------------------------
 
--- Example INSERT statement to add admin role to default admin user
---   TODO: Use API to register a default admin user first. Then
---          execute to add admin role. Consider adding an endpoint
---          to the controller for /admin/user/addRole.
+-- Admin roles should only be assigned after the user exists.
+-- Example:
+-- INSERT INTO authorities (username, authority)
+-- VALUES ('existing_username', 'ROLE_ADMIN');
 
-INSERT INTO authorities
-SELECT 'admin', 'ROLE_ADMIN'
+
 

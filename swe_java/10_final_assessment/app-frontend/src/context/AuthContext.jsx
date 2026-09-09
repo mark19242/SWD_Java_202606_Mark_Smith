@@ -1,15 +1,21 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react'
-import { apiFetch, ApiError } from '../api/client'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react"
+import { apiFetch, ApiError } from "../api/client"
 
 const AuthContext = createContext(null)
 
 function decodeScope(token) {
   try {
-    const payload = token.split('.')[1]
-    const normalized = payload.replace(/-/g, '+').replace(/_/g, '/')
+    const payload = token.split(".")[1]
+    const normalized = payload.replace(/-/g, "+").replace(/_/g, "/")
     const json = atob(normalized)
     const claims = JSON.parse(json)
-    return typeof claims.scope === 'string' ? claims.scope.split(' ') : []
+    return typeof claims.scope === "string" ? claims.scope.split(" ") : []
   } catch {
     return []
   }
@@ -21,19 +27,19 @@ export function AuthProvider({ children }) {
   const [isAdmin, setIsAdmin] = useState(false)
 
   const login = useCallback(async (loginUsername, password) => {
-    const data = await apiFetch('/auth/login', {
-      method: 'POST',
+    const data = await apiFetch("/auth/login", {
+      method: "POST",
       body: { username: loginUsername, password },
     })
     const authorities = decodeScope(data.token)
     setToken(data.token)
     setUsername(loginUsername)
-    setIsAdmin(authorities.includes('ROLE_ADMIN'))
+    setIsAdmin(authorities.includes("ROLE_ADMIN"))
   }, [])
 
   const register = useCallback(async (registerUsername, password) => {
-    await apiFetch('/auth/register', {
-      method: 'POST',
+    await apiFetch("/auth/register", {
+      method: "POST",
       body: { username: registerUsername, password },
     })
   }, [])
@@ -66,10 +72,11 @@ export function AuthProvider({ children }) {
   return <AuthContext value={value}>{children}</AuthContext>
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   const context = useContext(AuthContext)
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider')
+    throw new Error("useAuth must be used within an AuthProvider")
   }
   return context
 }
