@@ -310,10 +310,24 @@ p {
 }
 
 .landing-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
   color: rgba(255, 255, 255, 0.8);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.1rem;
+}
+
+.landing-credits-link {
+  color: var(--clr-gold);
+  text-decoration: none;
+}
+
+.landing-credits-link:hover {
+  text-decoration: underline;
 }
 
 /* --------------------------------
@@ -1431,6 +1445,82 @@ p {
 
   font-size: 0.75rem;
   font-weight: 700;
+}
+
+/* --------------------------------
+   CREDITS
+-------------------------------- */
+
+.credits-page {
+  min-height: 100dvh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 2rem 1rem;
+
+  background:
+    radial-gradient(circle at top, rgba(128, 130, 166, 0.2), transparent 35%),
+    linear-gradient(145deg, var(--clr-deep-plum), #120b16);
+}
+
+.credits-card {
+  width: min(100%, 38rem);
+  padding: 2rem;
+
+  text-align: center;
+
+  background: rgba(70, 51, 79, 0.42);
+
+  border: 1px solid rgba(242, 194, 48, 0.2);
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-soft);
+}
+
+.credits-eyebrow {
+  margin-bottom: 0.5rem;
+
+  color: var(--clr-gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14rem;
+  text-transform: uppercase;
+}
+
+.credits-title {
+  margin-bottom: 1rem;
+
+  font-size: clamp(2.5rem, 8vw, 4rem);
+}
+
+.credits-description,
+.tmdb-notice {
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.7;
+}
+
+.tmdb-logo {
+  width: min(10rem, 50%);
+  margin: 1.5rem auto;
+}
+
+.tmdb-notice {
+  max-width: 30rem;
+  margin: 0 auto 2rem;
+
+  font-size: 0.8rem;
+}
+
+.credits-back {
+  color: var(--clr-gold);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.credits-back:hover {
+  text-decoration: underline;
 }
 
 /* --------------------------------

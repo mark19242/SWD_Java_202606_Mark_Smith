@@ -27,9 +27,13 @@ export function LandingPage() {
         </div>
       </section>
 
-      <p className="landing-footer">
-        What&apos;s your movie vibe in reel time?
-      </p>
+      <footer className="landing-footer">
+        <span>What's your movie vibe in reel time?</span>
+
+        <Link to="/credits" className="landing-credits-link">
+          Credits
+        </Link>
+      </footer>
     </main>
   )
 }

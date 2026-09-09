@@ -10,7 +10,7 @@ import { QuestionnairePage } from "./pages/QuestionnairePage"
 import { RecommendationsPage } from "./pages/RecommendationsPage"
 import { SavedMoviesPage } from "./pages/SavedMoviesPage"
 import { AdminPage } from "./pages/AdminPage"
-
+import { CreditsPage } from "./pages/CreditsPage"
 import "./App.css"
 
 function Layout() {
@@ -66,6 +66,8 @@ function Layout() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/credits" element={<CreditsPage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
