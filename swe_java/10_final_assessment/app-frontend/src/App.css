@@ -658,6 +658,32 @@ p {
   font-weight: 800;
 }
 
+/* Special Surprise Me option */
+
+.vibe-option.surprise-option {
+  color: #ffd9cc;
+
+  background: rgba(242, 79, 19, 0.1);
+
+  border: 1px solid var(--clr-orange);
+}
+
+.vibe-option.surprise-option:hover {
+  background: rgba(242, 79, 19, 0.18);
+
+  border-color: var(--clr-orange);
+
+  box-shadow: 0 0 1rem rgba(242, 79, 19, 0.16);
+}
+
+.vibe-option.surprise-option.selected {
+  color: var(--clr-deep-plum);
+
+  background: linear-gradient(135deg, var(--clr-orange), var(--clr-amber));
+
+  border-color: var(--clr-orange);
+}
+
 .questionnaire-actions {
   display: flex;
   justify-content: space-between;
@@ -779,10 +805,13 @@ p {
 .movie-card {
   overflow: hidden;
 
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
   background: rgba(70, 51, 79, 0.42);
 
   border: 1px solid rgba(242, 194, 48, 0.2);
-
   border-radius: var(--radius-lg);
 
   box-shadow: var(--shadow-soft);
@@ -835,6 +864,10 @@ p {
 }
 
 .movie-card-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
   padding: 1.25rem;
 }
 
@@ -891,6 +924,7 @@ p {
 
   gap: 0.75rem;
 
+  margin-top: auto;
   margin-bottom: 1rem;
 }
 
@@ -1003,10 +1037,13 @@ p {
 .saved-movie-card {
   overflow: hidden;
 
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
   background: rgba(70, 51, 79, 0.42);
 
   border: 1px solid rgba(242, 194, 48, 0.2);
-
   border-radius: var(--radius-lg);
 
   box-shadow: var(--shadow-soft);
@@ -1047,6 +1084,10 @@ p {
 }
 
 .saved-movie-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
   padding: 1.25rem;
 }
 
@@ -1093,6 +1134,8 @@ p {
 .saved-movie-edit {
   width: 100%;
   min-height: 2.8rem;
+
+  margin-top: auto;
 
   color: var(--clr-white);
   background: rgba(128, 130, 166, 0.18);

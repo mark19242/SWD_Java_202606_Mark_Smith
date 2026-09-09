@@ -10,7 +10,6 @@ export function MovieConcierge({ activeField = "idle", usernameLength = 0 }) {
   const pupilRRef = useRef(null)
 
   const mouthSmileRef = useRef(null)
-  const mouthOpenRef = useRef(null)
 
   const armLRef = useRef(null)
   const armRRef = useRef(null)
@@ -22,12 +21,6 @@ export function MovieConcierge({ activeField = "idle", usernameLength = 0 }) {
   useLayoutEffect(() => {
     gsap.set([armLRef.current, armRRef.current], {
       y: 160,
-    })
-
-    gsap.set(mouthOpenRef.current, {
-      opacity: 0,
-      scale: 0.85,
-      transformOrigin: "center center",
     })
   }, [])
 
@@ -49,7 +42,6 @@ export function MovieConcierge({ activeField = "idle", usernameLength = 0 }) {
       ...arms,
       headRef.current,
       mouthSmileRef.current,
-      mouthOpenRef.current,
     ])
 
     /*
@@ -78,15 +70,6 @@ export function MovieConcierge({ activeField = "idle", usernameLength = 0 }) {
       gsap.to(mouthSmileRef.current, {
         opacity: 1,
         duration: 0.2,
-        overwrite: true,
-      })
-
-      gsap.to(mouthOpenRef.current, {
-        opacity: 0,
-        scale: 0.85,
-        y: 2,
-        duration: 0.2,
-        transformOrigin: "center center",
         overwrite: true,
       })
 
@@ -131,7 +114,7 @@ export function MovieConcierge({ activeField = "idle", usernameLength = 0 }) {
      * Look down toward the input,
      * subtly follow the typing,
      * tilt the head,
-     * and open the mouth.
+     * and keep a friendly smile.
      */
     if (activeField === "username") {
       const lookX = Math.min(usernameLength * 0.14, 1.8)
@@ -159,18 +142,8 @@ export function MovieConcierge({ activeField = "idle", usernameLength = 0 }) {
       })
 
       gsap.to(mouthSmileRef.current, {
-        opacity: 0,
-        duration: 0.16,
-        overwrite: true,
-      })
-
-      gsap.to(mouthOpenRef.current, {
         opacity: 1,
-        scale: 1,
-        y: 0,
-        duration: 0.24,
-        ease: "power2.out",
-        transformOrigin: "center center",
+        duration: 0.2,
         overwrite: true,
       })
 
@@ -202,15 +175,6 @@ export function MovieConcierge({ activeField = "idle", usernameLength = 0 }) {
     gsap.to(mouthSmileRef.current, {
       opacity: 1,
       duration: 0.2,
-      overwrite: true,
-    })
-
-    gsap.to(mouthOpenRef.current, {
-      opacity: 0,
-      scale: 0.85,
-      y: 2,
-      duration: 0.2,
-      transformOrigin: "center center",
       overwrite: true,
     })
   }, [activeField, usernameLength])
@@ -405,7 +369,7 @@ export function MovieConcierge({ activeField = "idle", usernameLength = 0 }) {
             <ellipse cx="86" cy="77" rx="4.4" ry="4.8" fill="#ffffff" />
 
             <g ref={pupilLRef}>
-              <circle cx="86" cy="77" r="2.2" fill="#211525" />
+              <circle cx="86" cy="77" r="2.8" fill="#211525" />
 
               <circle cx="85.2" cy="76.2" r="0.7" fill="#ffffff" />
             </g>
@@ -416,7 +380,7 @@ export function MovieConcierge({ activeField = "idle", usernameLength = 0 }) {
             <ellipse cx="114" cy="77" rx="4.4" ry="4.8" fill="#ffffff" />
 
             <g ref={pupilRRef}>
-              <circle cx="114" cy="77" r="2.2" fill="#211525" />
+              <circle cx="114" cy="77" r="2.8" fill="#211525" />
 
               <circle cx="113.2" cy="76.2" r="0.7" fill="#ffffff" />
             </g>
@@ -440,32 +404,14 @@ export function MovieConcierge({ activeField = "idle", usernameLength = 0 }) {
           <path
             ref={mouthSmileRef}
             d="
-              M88 99
-              C94 106 106 106 112 99
-            "
+    M88 99
+    C94 104 106 104 112 99
+  "
             fill="none"
             stroke="#211525"
-            strokeWidth="2.4"
+            strokeWidth="2.3"
             strokeLinecap="round"
           />
-
-          {/* Open / reacting mouth */}
-          <g ref={mouthOpenRef} opacity="0">
-            <ellipse cx="100" cy="100" rx="10" ry="7" fill="#7c3f47" />
-
-            {/* Teeth */}
-            <rect
-              x="94"
-              y="94.5"
-              width="12"
-              height="3"
-              rx="1.5"
-              fill="#ffffff"
-            />
-
-            {/* Tongue */}
-            <ellipse cx="100" cy="103" rx="5.5" ry="2.8" fill="#d97988" />
-          </g>
         </g>
 
         {/* --------------------------------

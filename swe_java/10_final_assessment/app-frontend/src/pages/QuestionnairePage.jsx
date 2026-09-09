@@ -220,9 +220,13 @@ export function QuestionnairePage() {
             <button
               key={value}
               type="button"
-              className={
-                isSelected(value) ? "vibe-option selected" : "vibe-option"
-              }
+              className={[
+                "vibe-option",
+                value === "SURPRISE_ME" ? "surprise-option" : "",
+                isSelected(value) ? "selected" : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
               onClick={() =>
                 question.multiple
                   ? handleMovieVibe(value)
